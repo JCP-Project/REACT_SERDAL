@@ -1,0 +1,272 @@
+[
+  {
+    "id": 0,
+    "name": "Juan Dela Cruz",
+    "email": "JuanDelaCruz.uplb@up.edu.ph",
+    "role": "USER",
+    "isActive": 0,
+    "registeredDate": "01/18/25 10:30 AM",
+    "imagePath": "/images/user/user-01.png"
+  },
+  {
+    "id": 1,
+    "name": "Maria Clara",
+    "email": "MariaClara.manila@up.edu.ph",
+    "role": "USER",
+    "isActive": 1,
+    "registeredDate": "02/15/25 02:15 PM",
+    "imagePath": "/images/user/user-02.png"
+  },
+  {
+    "id": 2,
+    "name": "Pedro Garcia",
+    "email": "PedroGarcía.cebu@up.edu.ph",
+    "role": "USER",
+    "isActive": 0,
+    "registeredDate": "03/22/25 08:45 AM",
+    "imagePath": "/images/user/user-03.png"
+  },
+  {
+    "id": 3,
+    "name": "Ana Santos",
+    "email": "AnaSantos.davao@up.edu.ph",
+    "role": "USER",
+    "isActive": 0,
+    "registeredDate": "04/10/25 04:00 PM",
+    "imagePath": "/images/user/user-04.png"
+  },
+  {
+    "id": 4,
+    "name": "Carlos Reyes",
+    "email": "CarlosReyes.quezon@up.edu.ph",
+    "role": "USER",
+    "isActive": 1,
+    "registeredDate": "05/05/25 11:30 AM",
+    "imagePath": "/images/user/user-05.png"
+  },
+  {
+    "id": 5,
+    "name": "Bea Fernandez",
+    "email": "BeaFernandez.iloilo@up.edu.ph",
+    "role": "USER",
+    "isActive": 0,
+    "registeredDate": "06/18/25 09:00 AM",
+    "imagePath": "/images/user/user-06.png"
+  },
+  {
+    "id": 6,
+    "name": "Rafael Cruz",
+    "email": "RafaelCruz.batangas@up.edu.ph",
+    "role": "USER",
+    "isActive": 0,
+    "registeredDate": "07/20/25 01:15 PM",
+    "imagePath": "/images/user/user-07.png"
+  },
+  {
+    "id": 7,
+    "name": "Sophia Reyes",
+    "email": "SophiaReyes.zamboanga@up.edu.ph",
+    "role": "USER",
+    "isActive": 1,
+    "registeredDate": "08/15/25 10:45 AM",
+    "imagePath": "/images/user/user-08.png"
+  },
+  {
+    "id": 8,
+    "name": "Luis Garcia",
+    "email": "LuisGarcia.taguig@up.edu.ph",
+    "role": "USER",
+    "isActive": 0,
+    "registeredDate": "09/09/25 07:30 PM",
+    "imagePath": "/images/user/user-09.png"
+  },
+  {
+    "id": 9,
+    "name": "Julia Mendoza",
+    "email": "JuliaMendoza.quezonprovince@up.edu.ph",
+    "role": "USER",
+    "isActive": 1,
+    "registeredDate": "10/12/25 03:00 PM",
+    "imagePath": "/images/user/user-10.png"
+  },
+  {
+    "id": 10,
+    "name": "Liza Soberano",
+    "email": "LizaSoberano.cagayan@up.edu.ph",
+    "role": "USER",
+    "isActive": 0,
+    "registeredDate": "11/05/25 10:15 AM",
+    "imagePath": "/images/user/user-11.png"
+  },
+  {
+    "id": 11,
+    "name": "Enrique Gil",
+    "email": "EnriqueGil.baguio@up.edu.ph",
+    "role": "USER",
+    "isActive": 0,
+    "registeredDate": "12/08/25 12:45 PM",
+    "imagePath": "/images/user/user-12.png"
+  },
+  {
+    "id": 12,
+    "name": "Gerald Anderson",
+    "email": "GeraldAnderson.naga@up.edu.ph",
+    "role": "USER",
+    "isActive": 0,
+    "registeredDate": "01/20/26 04:00 PM",
+    "imagePath": "/images/user/user-01.png"
+  },
+  {
+    "id": 13,
+    "name": "Kylie Padilla",
+    "email": "KyliePadilla.dumaguete@up.edu.ph",
+    "role": "USER",
+    "isActive": 1,
+    "registeredDate": "02/10/26 09:30 AM",
+    "imagePath": "/images/user/user-02.png"
+  },
+  {
+    "id": 14,
+    "name": "Alonzo Muhlach",
+    "email": "AlonzoMuhlach.marinduque@up.edu.ph",
+    "role": "USER",
+    "isActive": 1,
+    "registeredDate": "03/17/26 11:00 AM",
+    "imagePath": "/images/user/user-03.png"
+  },
+  {
+    "id": 15,
+    "name": "Diana Zubiri",
+    "email": "DianaZubiri.siquijor@up.edu.ph",
+    "role": "USER",
+    "isActive": 0,
+    "registeredDate": "04/25/26 02:15 PM",
+    "imagePath": "/images/user/user-04.png"
+  },
+  {
+    "id": 16,
+    "name": "Dingdong Dantes",
+    "email": "DingdongDantes.laguna@up.edu.ph",
+    "role": "USER",
+    "isActive": 1,
+    "registeredDate": "05/15/26 08:00 AM",
+    "imagePath": "/images/user/user-05.png"
+  },
+  {
+    "id": 17,
+    "name": "Jennylyn Mercado",
+    "email": "JennylynMercado.tagbilaran@up.edu.ph",
+    "role": "USER",
+    "isActive": 0,
+    "registeredDate": "06/05/26 10:30 AM",
+    "imagePath": "/images/user/user-06.png"
+  },
+  {
+    "id": 18,
+    "name": "Lovi Poe",
+    "email": "LoviPoe.batangas@up.edu.ph",
+    "role": "USER",
+    "isActive": 0,
+    "registeredDate": "07/18/26 01:00 PM",
+    "imagePath": "/images/user/user-07.png"
+  },
+  {
+    "id": 19,
+    "name": "Maja Salvador",
+    "email": "MajaSalvador.davao@up.edu.ph",
+    "role": "USER",
+    "isActive": 1,
+    "registeredDate": "08/09/26 03:30 PM",
+    "imagePath": "/images/user/user-08.png"
+  },
+  {
+    "id": 20,
+    "name": "Rico Yan",
+    "email": "RicoYan.cagayan@up.edu.ph",
+    "role": "USER",
+    "isActive": 1,
+    "registeredDate": "09/05/26 10:30 AM",
+    "imagePath": "/images/user/user-09.png"
+  },
+  {
+    "id": 21,
+    "name": "Catherine Bernardo",
+    "email": "CatherineBernardo.caloocan@up.edu.ph",
+    "role": "USER",
+    "isActive": 0,
+    "registeredDate": "10/01/26 01:30 PM",
+    "imagePath": "/images/user/user-10.png"
+  },
+  {
+    "id": 22,
+    "name": "Kathryn Bernardo",
+    "email": "KathrynBernardo.surigao@up.edu.ph",
+    "role": "USER",
+    "isActive": 0,
+    "registeredDate": "11/10/26 11:45 AM",
+    "imagePath": "/images/user/user-11.png"
+  },
+  {
+    "id": 23,
+    "name": "Jericho Rosales",
+    "email": "JerichoRosales.manila@up.edu.ph",
+    "role": "USER",
+    "isActive": 1,
+    "registeredDate": "12/18/26 02:00 PM",
+    "imagePath": "/images/user/user-12.png"
+  },
+  {
+    "id": 24,
+    "name": "Maja Salvador",
+    "email": "MajaSalvador.davao@up.edu.ph",
+    "role": "USER",
+    "isActive": 0,
+    "registeredDate": "01/11/27 12:00 PM",
+    "imagePath": "/images/user/user-01.png"
+  },
+  {
+    "id": 25,
+    "name": "Sofia Andres",
+    "email": "SofiaAndres.taguig@up.edu.ph",
+    "role": "USER",
+    "isActive": 1,
+    "registeredDate": "02/20/27 03:15 PM",
+    "imagePath": "/images/user/user-02.png"
+  },
+  {
+    "id": 26,
+    "name": "Baron Geisler",
+    "email": "BaronGeisler.cebu@up.edu.ph",
+    "role": "USER",
+    "isActive": 0,
+    "registeredDate": "03/01/27 09:45 AM",
+    "imagePath": "/images/user/user-03.png"
+  },
+  {
+    "id": 27,
+    "name": "Angel Locsin",
+    "email": "AngelLocsin.davao@up.edu.ph",
+    "role": "USER",
+    "isActive": 1,
+    "registeredDate": "04/15/27 08:30 AM",
+    "imagePath": "/images/user/user-04.png"
+  },
+  {
+    "id": 28,
+    "name": "Angelica Panganiban",
+    "email": "AngelicaPanganiban.manila@up.edu.ph",
+    "role": "USER",
+    "isActive": 1,
+    "registeredDate": "05/12/27 02:45 PM",
+    "imagePath": "/images/user/user-05.png"
+  },
+  {
+    "id": 29,
+    "name": "Iza Calzado",
+    "email": "IzaCalzado.pampanga@up.edu.ph",
+    "role": "USER",
+    "isActive": 0,
+    "registeredDate": "06/20/27 10:00 AM",
+    "imagePath": "/images/user/user-06.png"
+  }
+]
