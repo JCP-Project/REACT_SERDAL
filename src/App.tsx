@@ -29,6 +29,7 @@ import CreateSurvey from './components/SERDAL/Survey/CreateSurvey';
 import Form from './components/SERDAL/Survey/Form';
 import AnswerSurvey from './components/SERDAL/Survey/AnswerSurvey';
 import GenerateChart from './components/SERDAL/Upload/DataSet/GenerateChart';
+import ResetPassword from './components/SERDAL/Login/Authentication/ResetPassword';
 
 
 
@@ -57,7 +58,7 @@ function App() {
   const validateRoute = (pathname: string) => {
     // List of valid base routes (without dynamic parameters)
     const validRoutes = [
-      '/profile', '/signin', '/signup', 
+      '/profile', '/auth/signin', '/signup', 
       '/users', '/admin/publicationrequest', '/calendar', 
       '/forms/form-elements', '/forms/form-layout', 
       '/tables', '/tableapproval', '/chart', 
@@ -65,6 +66,7 @@ function App() {
       '/publication', '/login', '/createpublication','/createpost','/auth/signup','/datasets','/','/survey','/admin/survey/create','/admin/survey/form',
       '/datasets/generatechart',
       '/admin/datasets',
+      '/auth/resetpassword',
     ];
 
 
@@ -129,11 +131,13 @@ function App() {
         <Route path="/generatechart" element={<> <PageTitle title="Survey" /> <GenerateChart /> </>} />
 
         <Route path="/login" element={<> <PageTitle title="Sign In" /> <Login /> </>} />
-        <Route path="/signin" element={<> <PageTitle title="Signin" /> <SignIn /> </>} />
+        <Route path="/auth/signin" element={<> <PageTitle title="Signin" /> <SignIn /> </>} />
         <Route path="/auth/signup" element={<> <PageTitle title="Signup" /> <SignUp /> </>} />
+        <Route path="/auth/resetpassword" element={<> <PageTitle title="Reset Password" /> <ResetPassword /> </>} />
+
         <Route path="/survey" element={<> <PageTitle title="Survey" /> <Survey /> </>} />
 
-
+        
         CreateSurvey
 
 

@@ -3,8 +3,9 @@ import { faCalendar } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import Select, { StylesConfig } from 'react-select';
+import Loader from '../../../common/Loader';
 
 
 
@@ -54,12 +55,17 @@ function Survey (){
 
 
         const apiUrl = import.meta.env.VITE_API_URL;
+        const navigate = useNavigate();
 
         const [activeTab, setActiveTab] = useState("all");
         const [formData, setformData] = useState<FormData[]>([]);
         const [isLoggedIn, setIsLoggedIn] = useState<boolean>(
             sessionStorage.getItem("isLoggedIn") === "true"
           );
+
+
+          const [errorMessage, seterrorMessage] = useState<string>("");       
+          const [loading, setLoading] = useState<boolean>(false);
     
     
         const [sort, setSort] = useState<any>(null);
@@ -70,6 +76,10 @@ function Survey (){
           },[]);
     
         const GetSurveyList = async() =>{
+
+          seterrorMessage("");
+          setLoading(true);
+
             try {
                 const response = await fetch(`${apiUrl}/api/Survey/AllSurvey`, {
                   method: 'GET',
@@ -84,14 +94,14 @@ function Survey (){
                 } else {
                   const errorResponse = await response.json();
                   console.error('Error fetching publications:', errorResponse.message || 'Unknown error');
-                 // setErrorMessage(errorResponse.message || 'Error fetching publications');
+                  seterrorMessage("No Survey Available");
                 }
               } catch (error) {
                 console.error('Error fetching publications:', error);
-               // setErrorMessage('Error fetching publications');
+                seterrorMessage("Failed to fetch dataset from the server.");
+
               } finally {
-               // loadPublication.current = false;
-              //  setLoading(false);
+                setLoading(false);
               }
         };
     
@@ -141,6 +151,17 @@ function Survey (){
           ];
 
 
+    const openSurvey = (id: string) => {
+      if (isLoggedIn) {
+        navigate( `/survey/answer/${id}`);
+      }
+
+      localStorage.setItem("surveyPath", `/survey/answer/${id}`);
+      console.log(localStorage.getItem("surveyPath"));
+      navigate("/auth/signin");
+    }
+
+
     return(
         <>
 
@@ -151,7 +172,7 @@ function Survey (){
                 animate={{ x: 0 }}
                 transition={{ type: 'spring', stiffness: 100 }}
                 >
-                        <h1 className="text-2xl font-bold text-left text-white lg:px-40">Survey</h1>
+                        <h1 className="text-2xl font-bold text-left text-white px-3 lg:px-40">Survey</h1>
                 </motion.div>
             </div>
 
@@ -179,15 +200,24 @@ function Survey (){
                 </div>               
 
                 <div className="flex flex-wrap items-center justify-center">
-                    {
+
+                {loading ? (
+                    <div><Loader /></div>
+                  ) : (
+                    errorMessage ? (
+                      <div className='w-[100%] text-center py-20 text-gray-400 font-bold text-lg'>
+                      {errorMessage}
+                    </div>
+                    ) : (
+                     <div>
+                                          {
                         sortedRows.map((data) => (
-                            <div key={`survey-${data.id}`} className={`text-sm relative w-full h-35 p-6 rounded-lg shadow-lg overflow-hidden group m-2 ${ data.isActive == 1 ? `bg-white` : `bg-gray-100`}`}>
-                                <div className={`absolute top-0 left-0 w-full h-1 ${ data.isActive == 1 ? `bg-primary` : `bg-secondary`}`}></div>
+                            <div key={`survey-${data.id}`} className={`text-sm relative lg:w-full lg:h-35 p-6 rounded-lg shadow-lg overflow-hidden group m-2 ${ data.isActive == 1 ? `bg-white` : `bg-gray-100`}`}>
+                                 <div className={`absolute top-0 left-0 w-1 h-full ${ data.isActive == 1 ? `bg-primary` : `bg-secondary`}`}></div>
                                 <div>
 
-                                    <Link to={isLoggedIn ? `/survey/answer/${data.id}` : "/signin"}>
-                                        <div><h1 className="font-bold text-primary text-lg">{data.title}</h1></div>
-                                    </Link> 
+                                  <div onClick={() => openSurvey(data.id)}><h1 className="font-bold text-primary text-lg">{data.title}</h1></div>
+
 
 
                                     <div>
@@ -199,7 +229,7 @@ function Survey (){
 
                                         <div className="text-xs"><span><FontAwesomeIcon icon={faCalendar} className="mr-1" /></span> 
                                         {
-                                            new Date(data.createdDate).toLocaleDateString('en-US', {
+                                            new Date(`${data.createdDate}Z`).toLocaleDateString('en-US', {
                                             year: 'numeric',
                                             month: 'long',
                                             day: 'numeric',
@@ -208,11 +238,9 @@ function Survey (){
                                         </div>
 
                                         <div>
-                                            <Link to={isLoggedIn ? `/survey/answer/${data.id}` : "/signin"}>
-                                                <button className="flex items-center gap-3 bg-[#17C0CC] text-white px-4 py-1 rounded-md hover:bg-[#139B99]">                                                                   
+                                                <button className="flex items-center gap-3 bg-[#17C0CC] text-white px-4 py-1 rounded-md hover:bg-[#139B99]" onClick={() => openSurvey(data.id)}>                                                                   
                                                     Answer
                                                 </button>   
-                                            </Link>   
                                         </div>
 
                                     </div>
@@ -222,6 +250,13 @@ function Survey (){
                             </div>
                         ))
                     }
+                     </div>
+                    )
+                  )}
+
+
+
+
                 </div>
 
 

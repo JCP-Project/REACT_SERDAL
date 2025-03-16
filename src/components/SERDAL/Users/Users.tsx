@@ -52,7 +52,6 @@ export default function Users() {
         }
         
         const rowsData = await response.json();
-        console.log(rowsData);
         setTableRows(rowsData);
       } catch (error) {
         console.error("Error fetching table rows:", error);
@@ -83,7 +82,9 @@ export default function Users() {
     // Then filter by the search query (title, author, or status)
     return (
       row.email.toLowerCase().includes(filter.toLowerCase()) ||
-      row.role.toLowerCase().includes(filter.toLowerCase())
+      row.role.toLowerCase().includes(filter.toLowerCase()) || 
+      row.firstName.toLowerCase().includes(filter.toLowerCase()) ||
+      row.lastName.toLowerCase().includes(filter.toLowerCase())
     );
   });
 
@@ -99,12 +100,12 @@ export default function Users() {
             animate={{ x: 0 }}
             transition={{ type: 'spring', stiffness: 100 }}
           >
-            <h1 className="text-2xl font-bold text-left text-white lg:px-40">Datasets</h1>
+            <h1 className="text-2xl font-bold text-left text-white px-3 lg:px-40">Users</h1>
           </motion.div>
       </div>
 
 
-    <Card className="h-full w-full px-20 rounded-lg">
+    <Card className="h-full w-full px-3 md:px-20 rounded-lg">
       <CardHeader floated={false} shadow={false} className="rounded-none">
         <div className="mb-2 flex items-center justify-between gap-8">
 
@@ -149,27 +150,27 @@ export default function Users() {
       <thead className="sticky top-0 bg-white z-50">
         <tr>
             <th key="title" className="border-y border-blue-gray-100 bg-blue-gray-50/50 p-2">
-              <Typography  variant="small" color="blue-gray"  className="text-md leading-none opacity-70">
+              <Typography   color="blue-gray"  className="text-md leading-none opacity-70">
                 NAME
               </Typography>
             </th>
             <th key="author" className="border-y border-blue-gray-100 bg-blue-gray-50/50 p-2 text-center">
-              <Typography  variant="small" color="blue-gray"  className="text-md leading-none opacity-70">
+              <Typography   color="blue-gray"  className="text-md leading-none opacity-70">
                 ROLE
               </Typography>
             </th>
             <th key="status" className="border-y border-blue-gray-100 bg-blue-gray-50/50 p-2 text-center">
-              <Typography  variant="small" color="blue-gray"  className="text-md leading-none opacity-70">
+              <Typography   color="blue-gray"  className="text-md leading-none opacity-70">
                 STATUS
               </Typography>
             </th>
             <th key="uploaddate" className="border-y border-blue-gray-100 bg-blue-gray-50/50 p-2 text-center">
-              <Typography  variant="small" color="blue-gray"  className="text-md leading-none opacity-70">
+              <Typography   color="blue-gray"  className="text-md leading-none opacity-70">
                 REGISTERED DATE
               </Typography>
             </th>
             {/* <th key="delete" className="border-y border-blue-gray-100 bg-blue-gray-50/50 p-2 text-center">
-              <Typography  variant="small" color="blue-gray"  className="text-md leading-none opacity-70">
+              <Typography   color="blue-gray"  className="text-md leading-none opacity-70">
                 DETAILS
               </Typography>
             </th> */}
@@ -193,10 +194,10 @@ export default function Users() {
               </div>
             </div>
             <div className="flex flex-col">
-              <Typography variant="small" color="blue-gray" className="text-md">
+              <Typography  color="blue-gray" className="text-md">
                 {firstName} {lastName}
               </Typography>
-              <Typography variant="small" color="blue-gray" className="text-md opacity-70">
+              <Typography  color="blue-gray" className="text-md opacity-70">
                 {email || "No Email Available"} {/* Fallback */}
               </Typography>
             </div>
@@ -204,7 +205,7 @@ export default function Users() {
         </td>
         <td className={classes}>
           <div className="block text-center">
-            <Typography variant="small" color="blue-gray" className="text-md">
+            <Typography  color="blue-gray" className="text-md">
             {role ? `${role.charAt(0).toUpperCase()}${role.slice(1).toLowerCase()}` : "No Role Available"}
             </Typography>
           </div>
@@ -223,7 +224,7 @@ export default function Users() {
           </div>
         </td>
         <td className={`${classes} text-center`}>
-          <Typography variant="small" color="blue-gray" className="text-md">
+          <Typography  color="blue-gray" className="text-md">
             {createDateTime
               ? new Intl.DateTimeFormat('en-US', {
                   month: '2-digit',

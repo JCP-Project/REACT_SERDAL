@@ -37,8 +37,8 @@ function Header2() {
 
   let user = (
     <div>
-      <Link to="/signin">
-        <button className="bg-white border-2 border-primary text-sm text-primary px-5 rounded-md hover:bg-white hover:border-primary">
+      <Link to="/auth/signin">
+        <button onClick={() => setMenuOpen(false)}  className="bg-white border-2 border-primary text-sm text-primary px-5 rounded-md hover:bg-white hover:border-primary">
           Sign in
         </button>
       </Link>
@@ -67,7 +67,7 @@ function Header2() {
             </div>
         </div>
 
-        <div className={`sm:block ${menuOpen ? 'block' : 'hidden'} text-black font-medium`}>
+        <div className={`sm:block ${menuOpen ? 'block' : 'hidden'} text-black font-medium z-50`}>
             {/* Mobile and Desktop Combined Navigation */}
             <nav className={`${ menuOpen ? "block" : "hidden" } absolute md:static top-0 left-0 w-full bg-white md:flex md:items-center md:w-auto z-50`}>
                 {/* Full-Screen Mobile Menu */}
@@ -77,13 +77,13 @@ function Header2() {
                   <ul className="flex flex-col items-center justify-center h-full gap-8">
                     <li><a className="hover:text-gray-500" href="http://localhost/SERDAL/">Home</a></li>
                     <li className="flex flex-col items-center justify-center">
-                      <Link to="/" className="text-black text-sm"> Publications </Link>
+                      <Link to="/" className="text-black text-sm" onClick={() => setMenuOpen(false)}> Publications </Link>
                     </li>
                     <li className="flex flex-col items-center justify-center">
-                      <Link to="/datasets" className="text-black text-sm"> Dataset </Link>
+                      <Link to="/datasets" className="text-black text-sm" onClick={() => setMenuOpen(false)}> Dataset </Link>
                     </li>
                     <li className="flex flex-col items-center justify-center">
-                      <Link to="/profile" className="text-black text-sm"> Survey </Link>
+                      <Link to="/survey" className="text-black text-sm" onClick={() => setMenuOpen(false)}> Survey </Link>
                     </li>
                     <li className="flex flex-col items-center justify-center">
                       <a className="text-black hover:text-gray-500 text-sm" href="http://localhost/SERDAL/contact/">Contact</a>

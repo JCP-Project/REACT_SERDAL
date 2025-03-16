@@ -55,7 +55,7 @@ function Datasets() {
       const response = await fetch(`${apiUrl}/api/Dataset/GetAllDataSets`);
 
       if (!response.ok) {
-        seterrorMessage("Failed to fetch dataset from the server.");
+        seterrorMessage("No Dataset found");
         return;
       }
 
@@ -71,7 +71,6 @@ function Datasets() {
   };
 
   useEffect(() => {
-    console.log("Updated dataset:", dataSet);
   }, [dataSet]);
 
   const handleSort = (selected: any) => {
@@ -99,10 +98,69 @@ function Datasets() {
     if (event.target.files && event.target.files[0]) {
       const selectedFile = event.target.files[0];
       setFile(selectedFile);
-      handleFileUpload(selectedFile);
+
+      isExist(selectedFile);
       event.target.value = '';
     }
   };
+
+
+  const isExist = async (file: File) => {
+        const formData = new FormData();
+    formData.append('file', file);
+    try {
+      const response = await fetch(`${apiUrl}/api/Dataset/isExist`, {
+        method: 'POST',
+        body: formData,
+      });
+
+      if (response.ok) {
+        handleFileUpload(file);
+      } else {
+        const jsonresult = await response.json();
+        if (jsonresult.code === 400) {
+                const swalWithTailwindButtons = Swal.mixin({
+                  customClass: {
+                    confirmButton: "bg-primary text-white py-2 px-4 rounded-md focus:outline-none m-2", 
+                    cancelButton: "bg-gray-500 text-white py-2 px-4 rounded-md focus:outline-none m-2",
+                  },
+                  buttonsStyling: false,
+                });
+              
+                swalWithTailwindButtons
+                  .fire({
+                    title: "The dataset already exists",
+                    text: jsonresult.message.toString(),
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonText: "Yes",
+                    cancelButtonText: "No",
+                    reverseButtons: true,
+                  })
+                  .then((result) => {
+                    if (result.isConfirmed) {
+                      handleFileUpload(file);
+                    }
+                  });
+        }
+      }
+
+
+    } catch (error) {
+      console.error('Upload error:', error);
+      Swal.fire({
+        title: 'Dataset Upload Failed',
+        text: 'Error uploading file.',
+        icon: 'error',
+        confirmButtonColor: '#17C0CC',
+      });
+    } finally {
+     // swalLoading.close();
+    }
+  };
+
+
+
 
   const handleFileUpload = async (file: File) => {
     const swalLoading = Swal.fire({
@@ -131,14 +189,18 @@ function Datasets() {
 
       if (response.ok) {
         const data = await response.json();
-        console.log(data);
 
         Swal.fire({
           title: 'Success!',
           text: 'File uploaded successfully.',
           icon: 'success',
           confirmButtonColor: '#17C0CC',
+          timer: 3000,
+          willClose: () => {
+            fetchDataSets();
+          }
         });
+
       } else {
         Swal.fire({
           title: 'Dataset Upload Failed',
@@ -168,7 +230,7 @@ function Datasets() {
           animate={{ x: 0 }}
           transition={{ type: 'spring', stiffness: 100 }}
         >
-          <h1 className="text-2xl font-bold text-left text-white lg:px-40">Datasets</h1>
+          <h1 className="text-2xl font-bold text-left text-white px-3 lg:px-40">Datasets</h1>
         </motion.div>
       </div>
 
@@ -183,25 +245,25 @@ function Datasets() {
               options={sortOptions}
               styles={customStyles}
               isClearable={true}
-              className="text-sm w-full md:w-auto z-50"
+              className="text-sm w-full md:w-auto z-10"
             />
           </div>
-          <div className={`${adminStatus ? 'block' : 'hidden'}`}>
-            <button
-              className="flex items-center gap-3 bg-[#17C0CC] text-white px-4 py-2 rounded-md hover:bg-[#139B99]"
-              onClick={() => document.getElementById('fileInput')?.click()}
-            >
-              <FontAwesomeIcon icon={faAdd} className="cursor-pointer" />
-              Upload Dataset
-            </button>
+          <div className={`${adminStatus ? 'block' : 'hidden'} flex justify-end my-3 mx-1`}>
+              <button
+                className="flex items-center gap-3 bg-[#17C0CC] text-white px-4 py-2 rounded-md hover:bg-[#139B99]"
+                onClick={() => document.getElementById('fileInput')?.click()}
+              >
+                <FontAwesomeIcon icon={faAdd} className="cursor-pointer" />
+                Upload Dataset
+              </button>
 
-            <input
-              id="fileInput"
-              type="file"
-              accept=".xlsx, .xls"
-              className="hidden"
-              onChange={handleFileChange}
-            />
+              <input
+                id="fileInput"
+                type="file"
+                accept=".xlsx, .xls"
+                className="hidden"
+                onChange={handleFileChange}
+              />
           </div>
         </div>
 

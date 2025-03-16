@@ -261,12 +261,12 @@ const AnswerSurvey = () => {
                 animate={{ x: 0 }}
                 transition={{ type: 'spring', stiffness: 100 }}
                 >
-                        <h1 className="text-2xl font-bold text-left text-white lg:px-40">Survey</h1>
+                        <h1 className="text-2xl font-bold text-left text-white px-3 lg:px-40">Survey</h1>
                 </motion.div>
             </div>
         <div>
 
-        <div className="lg:px-40 bg-white">
+        <div className="px-3 lg:px-40 bg-white">
             <div className="relative max-w-3xl mx-auto p-8 bg-white rounded-lg shadow-lg my-2  overflow-hidden">
                 <div className="absolute top-0 left-0 w-full h-3 bg-secondary"></div>
                 <label className="block text-2xl font-medium text-gray-800 py-5">{formSurvey?.title}</label>
@@ -275,7 +275,7 @@ const AnswerSurvey = () => {
             
             {form.length > 0 ? (
                     form.map((field) => (
-                    <div className="relative max-w-3xl mx-auto p-8 bg-white rounded-lg shadow-lg my-2  overflow-hidden">
+                    <div  key={field.index} className="relative max-w-3xl mx-auto p-8 bg-white rounded-lg shadow-lg my-2  overflow-hidden">
                         <div key={field.index} className="py-3">
                         
                             {renderField(field)}

@@ -32,7 +32,7 @@ function CreatePublication() {
     CreatedBy: 0, 
     keywords: "",
     pdfLink: "",
-    publicationDate: new Date().toISOString().split("T")[0],
+    publicationDate: Date.now.toString(),
     Img: null as File | null,
     file: null as File | null,
   });
@@ -90,7 +90,7 @@ function CreatePublication() {
       data.append("publicationDate", formData.publicationDate);
 
 
-     
+     console.log("good", new Date().toLocaleString('en-CA'));
 
     const id = sessionStorage.getItem('id');
       if (id) {
@@ -139,7 +139,7 @@ function CreatePublication() {
             CreatedBy: 0,
             keywords: "",
             pdfLink: "",
-            publicationDate: new Date().toISOString().split("T")[0],
+            publicationDate: Date.now.toString(),
             Img: null,
             file: null,
           });
@@ -234,7 +234,16 @@ function CreatePublication() {
     });
   };
 
-  const todayDate = new Date().toISOString().split("T")[0];
+  const todayDate = new Date().toLocaleDateString('en-CA');
+
+  const getLocalDateTime = (): string => {
+    const date = new Date();
+    
+    const localDate = date.toLocaleDateString('en-CA'); // Format: YYYY-MM-DD
+    const localTime = date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' }); // Format: HH:mm:ss
+    
+    return `${localDate} ${localTime}`;
+  };
 
   return (
     <>

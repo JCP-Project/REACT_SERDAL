@@ -48,22 +48,17 @@ interface User {
 
 
 
-interface OTP {
-  Id: number;
-  UserId: OTP
-}
-
-
-interface University {
-  id: number;
-  value: string;
-  label: string;
-  isDeleted: number;
+interface userOTP {
+  otp: string;
+  userEmail: string
+  password:string;
+  repassword: string;
 }
 
 
 
-const SignUp: React.FC = () => {
+
+const ResetPassword: React.FC = () => {
 
   const apiUrl = import.meta.env.VITE_API_URL;
 
@@ -77,56 +72,13 @@ const SignUp: React.FC = () => {
 
     const [OTP, setOTP] = useState("");
     const navigate = useNavigate();
-      const [formData, setFormData] = useState<UserForm>({
-        Id: 0,
-        firstname: "",
-        lastname: "",
-        email: "",
+      const [formData, setFormData] = useState<userOTP>({
+        otp: "",
+        userEmail:"",
         password: "",
         repassword: "",
-        university: 0,
+
       });
-
-
-          const [university, setUniversity] = useState<University[]>([]);
-      
-          const [selectedOption, setSelectedOption] = useState<any>(null);
-      
-          const handleChange = (selectedOption1: any) => {
-            setSelectedOption(selectedOption1);
-            setFormData((prevFormData) => ({
-              ...prevFormData,
-              university: selectedOption1 ? selectedOption1.value : "",
-            }));
-          };
-
-            useEffect(() => {
-              const fetchData = async () => {
-                try {
-                  const response = await fetch(`${apiUrl}/api/Publication/University`, {
-                    method: "GET",
-                  });
-                  if (response.ok) {
-                    const jsonData: University[] = await response.json();
-                    setUniversity(jsonData);
-                  } else {
-                    const errorResponse = await response.json();
-                    console.error("Error message", errorResponse.message || "Unknown error");
-                    setErrorMessage(errorResponse.message);
-                  }
-                } catch (error) {
-                      console.error("Error fetching publication data:", error);
-                      setErrorMessage("Error fetching publication data");
-                } finally {
-    
-                }
-              };
-          
-              fetchData();
-            }, []);
-
-
-
 
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -145,81 +97,49 @@ const SignUp: React.FC = () => {
         {
           console.log("disabled", isSubmitting);
           return;
-        } 
+        }
 
         if (formData.password.toLowerCase() != formData.repassword.toLowerCase()) {
           setErrorMessage("Password not match");
           setIsmatchpass(false);
           return;
         }
-
-        if (!isChecked) {
-          setErrorMessage("You must accept the terms and conditions before registering.");
-          return;
-        }
+        
+        const resetidotp = sessionStorage.getItem('otp');
+        const useremail = sessionStorage.getItem('userEmail');
+        console.log(resetidotp);
+        console.log(useremail);
 
         setIsSubmitting(true);
 
-        const data = {
-          ID: 0,
-          FirstName: formData.firstname,
-          LastName: formData.lastname,
-          Email: formData.email,
-          Password: formData.password,
-        };
-        
-        console.log(data);
 
-
-        const otpData ={
-          OTPtypeId: 1,
-          Email: formData.email
-        }
-
+        const encodedEmail = encodeURIComponent(formData.userEmail)
 
         try {
-          const response = await fetch(`${apiUrl}/api/Users/sendOTP`, {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json", 
-            },
-            body: JSON.stringify(otpData),
-          });
+          const response = await fetch(`${apiUrl}/api/Users/ResetPasswordOTP/${encodedEmail}`);
+
+          const responseData = await response.json();
   
           if (response.ok) {
             console.log("Form data submitted successfully!");
-            const otp = await response.json();
               setIsSubmitting(false);
-              setOTP(otp);
-              OTPVerify(otp);
+              setOTP(responseData);
+              OTPVerify(responseData);
   
             } else {
-
-              if (response.status === 400) {
-                const errorResponse = await response.json();
-                return Swal.fire({
-                  icon: 'error',
-                  title: 'Registration Failed',
-                  text: errorResponse.message || "User already exists. Please login.",
-                  confirmButtonColor: '#17C0CC',
-                });
-              }else{
-                console.error("Registration Failed");
-                Swal.fire({
-                  icon: 'error',
-                  title: 'Registration Failed',
-                  text: 'Something went wrong while creating your account. Please try again.',
-                  confirmButtonColor: '#17C0CC',
-                });
-              }
-
+              return Swal.fire({
+                icon: 'error',
+                title: 'Reset password failed',
+                text: responseData.message || "Unexpected Error",
+                confirmButtonColor: '#17C0CC',
+              });
           }
         } catch (error) {
-          console.error("Error submitting registration:", error);
+          console.error("Error submitting OTP:", error);
           Swal.fire({
             icon: 'error',
-            title: 'Registration Failed',
-            text: 'Something went wrong while creating your account. Please try again.',
+            title: 'Unexpected Error',
+            text: 'Something went wrong while creating OTP. Please try again.',
             confirmButtonColor: '#17C0CC',
           });
         } finally {
@@ -233,7 +153,7 @@ const SignUp: React.FC = () => {
       
       Swal.fire({
         title: "Enter your OTP",
-        text: `To complete your registration, an OTP will be sent to ${formData.email}. Please check our email at your inbox, spam folder or junk mail`, // The additional message
+        text: `To complete your password reset request, an OTP will be sent to ${formData.userEmail}. Please check our email at your inbox, spam folder or junk mail`, // The additional message
         input: "text",
         confirmButtonColor: '#17C0CC',
         inputAttributes: {
@@ -254,15 +174,11 @@ const SignUp: React.FC = () => {
           if (normalizedOtp === normalizedInputOTP) {
             try {
               const data = {
-                ID: 0,
-                FirstName: formData.firstname,
-                LastName: formData.lastname,
-                Email: formData.email,
-                Password: formData.password,
-                university: selectedOption ? selectedOption.value : 0,
+                email: formData.userEmail,
+                password: formData.password,
               };
     
-              const response = await fetch(`${apiUrl}/api/Users/Create`, {
+              const response = await fetch(`${apiUrl}/api/Users/ResetPassword`, {
                 method: "POST",
                 headers: {"Content-Type": "application/json", },
                 body: JSON.stringify(data),
@@ -275,48 +191,24 @@ const SignUp: React.FC = () => {
                   return Swal.fire({
                     icon: 'error',
                     title: 'Registration Failed',
-                    text: errorResponse.message || "User already exists. Please login.",
+                    text: errorResponse.message || "Unexpected Error",
                     confirmButtonColor: '#17C0CC',
                   });
                 }
               }
-    
+              
               const responseData: UserInfo = await response.json();  
+              console.log(responseData);
               // Show success message for 2 seconds
               Swal.fire({
                 icon: 'success',
-                title: 'Registration Successful!',
-                text: 'Your account has been created successfully.',
+                title: 'Reset Password Successful!',
+                text: 'Your password has been successfully reset.',
                 timer: 3000, // Auto-close after 2 seconds
                 showConfirmButton: false, // Hide the confirm button
               }).then(() =>{
 
-
-                sessionStorage.setItem('id', responseData.id.toString());
-                sessionStorage.setItem('firstname', responseData.firstName);
-                sessionStorage.setItem('lastname', responseData.lastName);
-                sessionStorage.setItem('email', responseData.email);
-                sessionStorage.setItem('img', responseData.img);
-                sessionStorage.setItem('role', responseData.role);
-                sessionStorage.setItem('university', responseData.university.toString());
-                sessionStorage.setItem('isLoggedIn', 'true');
-
-                if (responseData.role.toLowerCase() == "admin") {
-                  sessionStorage.setItem('isAdmin', 'true');
-                  navigate('/');
-                 window.location.reload();
-                  
-                }
-                else
-                {
-                  sessionStorage.setItem('isAdmin', 'false');
-                  navigate('/');
-                  
-                }
-        
-               window.location.reload();
-
-
+                navigate('/auth/signin');
               });
     
             } catch (error) {
@@ -371,17 +263,6 @@ const SignUp: React.FC = () => {
   document.head.appendChild(style);
 };
     
-
-const universityOptions = university.map((uni) => ({
-  value: uni.id,
-  label: uni.label,
-}));
-
-
-const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-  setIsChecked(event.target.checked);
-  setErrorMessage("");
-};
 
 
   return (
@@ -529,113 +410,10 @@ const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
           <div className="w-full border-stroke dark:border-strokedark xl:w-1/2 xl:border-l-2">
             <div className="w-full p-4 sm:p-12.5 xl:p-17.5">
               <h2 className="mb-9 text-2xl font-bold text-black dark:text-white sm:text-title-xl2">
-                Sign Up to SERDAL
+                Reset Password
               </h2>
 
               <form onSubmit={handleSubmit}>
-
-
-
-              <div className="mb-4">
-                  <label className="mb-2.5 block font-medium text-black dark:text-white">
-                    Institution
-                  </label>
-                  <div className="relative">
-                  <Select
-                          id="university"
-                          placeholder = "Select Institution"                                      
-                          value={selectedOption}
-                          onChange={handleChange}
-                          options={universityOptions}
-                          styles={customStyles}
-                          name="university"
-                          className="!text-lg"
-                          required
-                    />
-                  </div>
-                </div>
-
-
-
-                <div className="mb-4">
-                  <label className="mb-2.5 block text-sm text-black dark:text-white">
-                    First Name
-                  </label>
-                  <div className="relative">
-                    <input
-                      id="firstname"
-                      name="firstname"
-                      onChange={handleInputChange}
-                      value={formData.firstname}
-                      type="text"
-                      placeholder="Enter your first name"
-                      className="w-full rounded-lg border border-stroke bg-transparent py-2 pl-6 pr-10 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
-                      required
-                    />
-
-                    <span className="absolute right-4 top-2">
-                      <svg
-                        className="fill-current"
-                        width="22"
-                        height="22"
-                        viewBox="0 0 22 22"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <g opacity="0.5">
-                          <path
-                            d="M11.0008 9.52185C13.5445 9.52185 15.607 7.5281 15.607 5.0531C15.607 2.5781 13.5445 0.584351 11.0008 0.584351C8.45703 0.584351 6.39453 2.5781 6.39453 5.0531C6.39453 7.5281 8.45703 9.52185 11.0008 9.52185ZM11.0008 2.1656C12.6852 2.1656 14.0602 3.47185 14.0602 5.08748C14.0602 6.7031 12.6852 8.00935 11.0008 8.00935C9.31641 8.00935 7.94141 6.7031 7.94141 5.08748C7.94141 3.47185 9.31641 2.1656 11.0008 2.1656Z"
-                            fill=""
-                          />
-                          <path
-                            d="M13.2352 11.0687H8.76641C5.08828 11.0687 2.09766 14.0937 2.09766 17.7719V20.625C2.09766 21.0375 2.44141 21.4156 2.88828 21.4156C3.33516 21.4156 3.67891 21.0719 3.67891 20.625V17.7719C3.67891 14.9531 5.98203 12.6156 8.83516 12.6156H13.2695C16.0883 12.6156 18.4258 14.9187 18.4258 17.7719V20.625C18.4258 21.0375 18.7695 21.4156 19.2164 21.4156C19.6633 21.4156 20.007 21.0719 20.007 20.625V17.7719C19.9039 14.0937 16.9133 11.0687 13.2352 11.0687Z"
-                            fill=""
-                          />
-                        </g>
-                      </svg>
-                    </span>
-                  </div>
-                </div>
-
-                <div className="mb-4">
-                  <label className="mb-2.5 block text-sm text-black dark:text-white">
-                    Last Name
-                  </label>
-                  <div className="relative">
-                    <input
-                      id="lastname"
-                      name="lastname"
-                      onChange={handleInputChange}
-                      value={formData.lastname}
-                      type="text"
-                      placeholder="Enter your last name"
-                      className="w-full rounded-lg border border-stroke bg-transparent py-2 pl-6 pr-10 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
-                      required
-                    />
-
-                    <span className="absolute right-4 top-2">
-                      <svg
-                        className="fill-current"
-                        width="22"
-                        height="22"
-                        viewBox="0 0 22 22"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <g opacity="0.5">
-                          <path
-                            d="M11.0008 9.52185C13.5445 9.52185 15.607 7.5281 15.607 5.0531C15.607 2.5781 13.5445 0.584351 11.0008 0.584351C8.45703 0.584351 6.39453 2.5781 6.39453 5.0531C6.39453 7.5281 8.45703 9.52185 11.0008 9.52185ZM11.0008 2.1656C12.6852 2.1656 14.0602 3.47185 14.0602 5.08748C14.0602 6.7031 12.6852 8.00935 11.0008 8.00935C9.31641 8.00935 7.94141 6.7031 7.94141 5.08748C7.94141 3.47185 9.31641 2.1656 11.0008 2.1656Z"
-                            fill=""
-                          />
-                          <path
-                            d="M13.2352 11.0687H8.76641C5.08828 11.0687 2.09766 14.0937 2.09766 17.7719V20.625C2.09766 21.0375 2.44141 21.4156 2.88828 21.4156C3.33516 21.4156 3.67891 21.0719 3.67891 20.625V17.7719C3.67891 14.9531 5.98203 12.6156 8.83516 12.6156H13.2695C16.0883 12.6156 18.4258 14.9187 18.4258 17.7719V20.625C18.4258 21.0375 18.7695 21.4156 19.2164 21.4156C19.6633 21.4156 20.007 21.0719 20.007 20.625V17.7719C19.9039 14.0937 16.9133 11.0687 13.2352 11.0687Z"
-                            fill=""
-                          />
-                        </g>
-                      </svg>
-                    </span>
-                  </div>
-                </div>
 
                 <div className="mb-4">
                   <label className="mb-2.5 block text-sm text-black dark:text-white">
@@ -643,10 +421,10 @@ const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
                   </label>
                   <div className="relative">
                     <input
-                      id="email"
-                      name="email"
+                      id="userEmail"
+                      name="userEmail"
                       onChange={handleInputChange}
-                      value={formData.email}
+                      value={formData.userEmail}
                       type="email"
                       placeholder="Enter your email"
                       className="w-full rounded-lg border border-stroke bg-transparent py-2 pl-6 pr-10 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
@@ -672,6 +450,9 @@ const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
                     </span>
                   </div>
                 </div>
+
+
+
 
                 <div className="mb-4">
                   <label className="mb-2.5 block text-sm text-black dark:text-white">
@@ -755,48 +536,6 @@ const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 
 
 
-
-                <div className="my-5">
-                  <div className="relative">
-                  <div className="flex items-center">
-                      <input
-                        type="checkbox"
-                        id="terms"
-                        checked={isChecked}
-                        onChange={handleCheckboxChange}
-                        className="h-4 w-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500"
-                      />
-                        <label htmlFor="terms" className="ml-2 text-sm text-gray-600">
-                          I agree to the{" "}
-                          <a
-                            href="#"
-                            onClick={(e) => {
-                              e.preventDefault();
-                              setIsModalOpen(true);
-                            }}
-                            className="text-indigo-600 hover:underline"
-                          >
-                            Terms and Conditions
-                          </a>{" "}
-                          and{" "}
-                          <a
-                            href="#"
-                            onClick={(e) => {
-                              e.preventDefault();
-                              setIsPolicyOpen(true);
-                            }}
-                            className="text-indigo-600 hover:underline"
-                          >
-                            Privacy Policy
-                          </a>
-                        </label>
-                    </div>
-                  </div>
-                </div>
-
-
-
-
                 {
                   ErrorMessage && (<div className="text-red text-xs mb-3 ml-3 mt-3">{ErrorMessage}</div>)
                 }
@@ -806,7 +545,7 @@ const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
                   <input
                     // disabled={isSubmitting}
                     type="submit"
-                    value="Create account"
+                    value="Reset Password"
                     className="w-full cursor-pointer rounded-lg border border-primary bg-primary p-4 text-white transition hover:bg-opacity-90"
                   />
                 </div>
@@ -832,107 +571,10 @@ const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
       </div>
 
 
-      {isModalOpen && (
-        <div className="fixed inset-0 text-sm flex justify-center items-center z-50 bg-gray-600 bg-opacity-50">
-          <div className="bg-white p-6 rounded-lg max-w-lg w-full mx-5">
-            <h2 className="text-xl font-bold mb-4">Terms and Conditions</h2>
-            <section>
-        <p>
-          By accessing or using this website provided by <b>SERDAL</b>, you agree to comply with and be bound by these Terms and
-          Conditions. Please read these Terms carefully before registering, using, or accessing our Services. If you do not agree to
-          these Terms, you should not use our Services.
-        </p>
-      </section>
-
-      <section className="mt-3">
-        <p>
-          You are responsible for maintaining the confidentiality of your account
-          and for all activities that occur under your account. You agree to use the
-          Services only for lawful purposes.
-        </p>
-      </section>
-
-      <section className="mt-3">
-            <p>
-              Please review our <b>Privacy Policy</b> to
-              understand how we collect, use, and protect your personal information.
-            </p>
-        </section>
-
-
-      <section>
-        <h5 className="text-md font-semibold mt-5">Contact Information</h5>
-        <p>
-          If you have any questions about these Terms, please contact us at: 
-          <br />
-          Email: SERDAL@uplb.edu.ph
-        </p>
-      </section>
-            <button
-              onClick={() => setIsModalOpen(false)}
-              className="mt-4 w-full py-2 bg-primary text-white rounded-lg"
-            >
-              Close
-            </button>
-          </div>
-        </div>
-      )}
 
 
 
-{isPolicyOpen && (
-        <div className="fixed inset-0 text-sm flex justify-center items-center z-50 bg-gray-600 bg-opacity-50 ">
-          <div className="bg-white p-6 rounded-lg max-w-lg w-full mx-5">
-            <h2 className="text-xl font-bold mb-4">Privacy Policy</h2>
-            <section>
-            <p>
-              We collect personal information when you use our website or services, such
-              as your name, email address and any other details you provide
-              to us.
-            </p>
-      </section>
 
-      <section className="mt-3">
-        <p>
-          The information we collect is used to improve our services, provide customer
-          support, and send you updates or promotions related to our offerings. We do not
-          sell or share your personal information with third parties without your consent.
-        </p>
-      </section>
-
-      <section className="mt-3">
-            <p>
-            We take appropriate measures to secure your personal information, including encryption
-            and firewalls. However, please note that no data transmission method is completely secure.
-            </p>
-        </section>
-
-        <section className="mt-3">
-            <p>
-            Our website may contain links to third-party websites. We are not responsible for the content
-            or privacy practices of these sites. We encourage you to read their privacy policies before
-            submitting any personal information.
-            </p>
-        </section>  
-
-
-      <section>
-        <h5 className="text-md font-semibold mt-5">Contact Information</h5>
-        <p>
-        If you have any questions or concerns about our Privacy Policy, please contact us at: 
-          <br />
-          Email: Serdal@uplb.edu.ph
-        </p>
-      </section>
-            <button
-              onClick={() => setIsPolicyOpen(false)}
-              className="mt-4 w-full py-2 bg-primary text-white rounded-lg"
-            >
-              Close
-            </button>
-          </div>
-        </div>
-      )}
 
     </>
   );
@@ -965,4 +607,4 @@ const customStyles: StylesConfig = {
 };
 
 
-export default SignUp;
+export default ResetPassword;

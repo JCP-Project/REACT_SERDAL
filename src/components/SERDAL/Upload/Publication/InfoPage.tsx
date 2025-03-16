@@ -4,8 +4,8 @@ import SelectGroupOrderBy from "../../../Template/Forms/SelectGroup/SelectGroupO
 import PublicationList from "./PublicationList";
 import { useEffect, useState } from "react";
 import { Link, useParams } from 'react-router-dom';
-
-
+import { FaAngleLeft } from "react-icons/fa";
+import Swal from 'sweetalert2';
 
 interface APIData {
   id: number;
@@ -52,6 +52,13 @@ interface University {
   isDeleted: number;
 }
 
+interface UpdateStatus{
+  Id: number;
+  status: number;
+  ModifiedBy: number;
+  isDeleted: number;
+}
+
 
 function Info() {
   const apiUrl = import.meta.env.VITE_API_URL;
@@ -62,8 +69,17 @@ function Info() {
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
+    window.scrollTo(0, 0);  // Scroll to the top on every route change
+    fetchData(Number(infopage));  // Fetch the data for the specific page
+  }, [infopage]);  // Depend on `infopage` so it runs when it changes
+
+  useEffect(() => {
    fetchData(Number(infopage));
   }, []); 
+
+
+
+  
 
   const fetchData = async (id:number) => {
 
@@ -95,7 +111,7 @@ function Info() {
      const jsonData: Publication[] = await response.json();
      setrelatedArticle(jsonData);
    } else {
-     console.error("Error fetching publication data");
+     console.log("No related article found");
    }
  } catch (error) {
    console.error("Error fetching publication data:", error);
@@ -154,6 +170,124 @@ const getUniversity =  (id:number) =>{
   };
 
 
+
+
+    const handleStatus = (status: number, isDelete: number) => {
+      const userId = Number(sessionStorage.getItem('id'));
+      const actionText = status === 1 ? "approve" : "decline";
+      const updateStatus: UpdateStatus = {
+        Id: Number(data?.id),
+        status: status,
+        ModifiedBy: userId,
+        isDeleted: isDelete,
+      };
+    
+      //setStatus(updateStatus);
+    
+      const swalWithTailwindButtons = Swal.mixin({
+        customClass: {
+          confirmButton: "bg-primary text-white py-2 px-4 rounded-md focus:outline-none m-2", 
+          cancelButton: "bg-gray-500 text-white py-2 px-4 rounded-md focus:outline-none m-2",
+        },
+        buttonsStyling: false,
+      });
+    
+      swalWithTailwindButtons
+        .fire({
+          title: "Are you sure?",
+          text: `You want to ${actionText} this publication`,
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonText: "Yes",
+          cancelButtonText: "No",
+          reverseButtons: true,
+        })
+        .then((result) => {
+          if (result.isConfirmed) {
+            // Trigger the API call
+            ApproveRequest(updateStatus, actionText);
+          } else if (result.dismiss === Swal.DismissReason.cancel) {
+            swalWithTailwindButtons.fire({
+              title: "Cancelled",
+              text: "Change status cancelled",
+              icon: "error",
+            });
+          }
+        });
+    };
+
+
+
+  //update status
+  const ApproveRequest = async (bodyData: UpdateStatus, actionText:string) => {
+    try {
+      const response = await fetch(`${apiUrl}/api/Publication/UpdateStatus`, {
+        method: "POST",  // Correct method spelling
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(bodyData),
+      });
+  
+      if (response.ok) {
+        // Success Alert with Tailwind CSS classes
+        const swalWithTailwindButtons = Swal.mixin({
+          customClass: {
+            confirmButton: "bg-primary text-white py-2 px-4 rounded-md focus:outline-none",
+            cancelButton: "bg-gray-500 text-white py-2 px-4 rounded-md  focus:outline-none",
+          },
+          buttonsStyling: false,
+        });
+  
+        swalWithTailwindButtons.fire({
+          title: "Change status",
+          text: `Publication ${actionText} successfully`,
+          icon: "success",
+        });
+
+        fetchData(Number(infopage));
+
+      } else {
+        const errorResponse = await response.json();
+        console.error("Error message", errorResponse.message || "Unknown error");
+  
+        const swalWithTailwindButtons = Swal.mixin({
+          customClass: {
+            confirmButton: "bg-green-500 text-white py-2 px-4 rounded-md focus:outline-none",
+            cancelButton: "bg-gray-500 text-white py-2 px-4 rounded-md focus:outline-none", 
+          },
+          buttonsStyling: false,
+        });
+  
+        swalWithTailwindButtons.fire({
+          title: "Failed to Update!",
+          text: errorResponse.message || "An error occurred while updating.",
+          icon: "error",
+        });
+      }
+    } catch (error) {
+      console.error("Error fetching publication data:", error);
+  
+      const swalWithTailwindButtons = Swal.mixin({
+        customClass: {
+          confirmButton: "bg-green-500 text-white py-2 px-4 rounded-md focus:outline-none",
+          cancelButton: "bg-gray-500 text-white py-2 px-4 rounded-md focus:outline-none",
+        },
+        buttonsStyling: false,
+      });
+  
+      swalWithTailwindButtons.fire({
+        title: "Network Error!",
+        text: "There was an issue connecting to the server.",
+        icon: "error",
+      });
+    } finally {
+      // You can stop loading spinner here if you have one
+      // setLoading(false);
+    }
+  };
+
+
   
 
 
@@ -167,15 +301,16 @@ const getUniversity =  (id:number) =>{
               className="bg-primary text-white py-8 px-1 text-lg font-semibold rounded-lg shadow-md hover:bg-secondary focus:outline-none focus:ring-2 focus:ring-primary-400
                         hover:scale-110 transition-transform duration-200 ease-in-out"
             >
-              <FontAwesomeIcon icon={faArrowLeft} className="font-bold" />
+              <FaAngleLeft />
             </button>
           </div>        
       )
     }
 
 
-    
-      <div className="bg-white min-h-screen px-4 md:px-[15%] pt-1 md:pt-10 ">
+
+
+      <div className="bg-white min-h-screen px-4 md:px-[15%] pt-5 md:pt-10">
 
 
 
@@ -183,7 +318,7 @@ const getUniversity =  (id:number) =>{
                <p className="text-black-980 text-black-800 text-xs md:text-sm mt-auto mb-3">
                   <FontAwesomeIcon icon={faCalendarAlt} className="mr-1" />
                     <span>
-                    {new Date(data?.createdDate).toLocaleDateString('en-US', {
+                    {new Date(`${data?.createdDate}Z`).toLocaleDateString('en-US', {
                       year: 'numeric',
                       month: 'long',
                       day: 'numeric',
@@ -231,14 +366,6 @@ const getUniversity =  (id:number) =>{
             }
             
           </div>
-          {/* <div>
-            <div className="py-5">Note:</div>
-            <div className="text-left pb-5">
-              <p>
-                  This policy brief is an output of the participants of the Development Innovations and Policy Laboratory (DIP Lab) Policy Hackathon, Polisiya, Pasya, Syensya: Sta Cruz Watershed, and is intended to promote policy-relevant ideas among key decision makers. This publication has been internally reviewed but not peer-reviewed. Published by the Center for Strategic Planning and Policy Studies, and the Development Innovations and Policy Laboratory, in celebration of the 25th Founding Anniversary of the College of Public Affairs and Development, University of the Philippines Los Baños.
-              </p>
-            </div>
-          </div> */}
 
           {
             relatedArticle.length > 0 && (
@@ -270,7 +397,7 @@ const getUniversity =  (id:number) =>{
                                     <p className="text-black-980 text-black-800 text-xs md:text-xs mt-auto mb-3">
                                   <FontAwesomeIcon icon={faCalendarAlt} className="mr-1" />
                                     <span>
-                                    {new Date(createdDate).toLocaleDateString('en-US', {
+                                    {new Date(`${createdDate}Z`).toLocaleDateString('en-US', {
                                       year: 'numeric',
                                       month: 'long',
                                       day: 'numeric',
@@ -328,16 +455,20 @@ const getUniversity =  (id:number) =>{
           }
 
 
-
           {
-            adminStatus &&( 
+            data && (
+              <div>
+          {
+            adminStatus && data.status == 0 &&( 
           <div className="fixed bottom-5 right-5">
             <div className="flex w-80 h-10 justify-end">
                   <div>
                     <span>
                     <button className="bg-primary text-white font-medium mx-2 px-6 py-2 rounded-lg shadow-md 
                       hover:bg-primary-dark transition duration-300 ease-in-out 
-                      active:scale-95 focus:outline-none" disabled = {data?.status == 0 ? true : false}>
+                      active:scale-95 focus:outline-none" 
+                      onClick={() => handleStatus(1, 0)}
+                      >
                         Approve
                     </button>
                     </span>
@@ -347,7 +478,9 @@ const getUniversity =  (id:number) =>{
                     <span>
                     <button className="bg-red-500 text-white font-medium mx-2 px-6 py-2 rounded-lg shadow-md 
                       hover:bg-primary-dark transition duration-300 ease-in-out 
-                      active:scale-95 focus:outline-none" disabled = {data?.status == 0 ? true : false}>
+                      active:scale-95 focus:outline-none"
+                      onClick={() => handleStatus(2, 0)}
+                      >
                         Decline
                     </button>
 
@@ -358,6 +491,11 @@ const getUniversity =  (id:number) =>{
           </div>
           )
         }
+              </div>
+            )
+          }
+
+
       </div>
 
 

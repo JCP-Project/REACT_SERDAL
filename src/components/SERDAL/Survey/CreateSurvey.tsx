@@ -275,8 +275,8 @@ const CreateSurvey = async () => {
         
         Swal.fire({
             icon: 'success',
-            title: 'Registration Successful!',
-            text: 'Your account has been created successfully.',
+            title: 'Survey Creation Successful!',
+            text: 'Survey been created successfully.',
             timer: 3000, // Auto-close after 2 seconds
             showConfirmButton: false, // Hide the confirm button
         }).then(() =>{
@@ -295,7 +295,7 @@ const CreateSurvey = async () => {
       }
 
     } catch (error) {
-      console.error('Error fetching publications:', error);
+      console.error('Error fetching Survey:', error);
       //setErrorMessage('Error fetching publications');
     } finally {
       //loadPublication.current = false;
@@ -511,7 +511,7 @@ const handleMoveDown = (ID: number) => {
 
   return (
     <>
-      <div className="relative max-w-3xl mx-auto p-8 bg-white rounded-lg shadow-lg my-2 z-50 overflow-hidden">
+      <div className="relative max-w-3xl mx-3 lg:mx-auto p-8 bg-white rounded-lg shadow-lg my-2 z-50 overflow-hidden">
         <div className="absolute top-0 left-0 w-full h-3 bg-primary"></div>
         <div>
             <label className="block text-lg font-medium text-gray-800">Survey Title:</label>
@@ -542,7 +542,7 @@ const handleMoveDown = (ID: number) => {
         <div
           ref={(el) => (fieldRefs.current[field.ID] = el!)}
           key={field.ID}
-          className="relative max-w-3xl mx-auto px-6 py-1 bg-white rounded-lg shadow-lg my-2 z-50 overflow-hidden group"
+          className="relative max-w-3xl mx-3 lg:mx-auto px-6 py-1 bg-white rounded-lg shadow-lg my-2 z-50 overflow-hidden group"
         >
         
         <div className="flex flex-col items-center my-2"> 
@@ -683,7 +683,7 @@ const handleMoveDown = (ID: number) => {
         </div>
       ))}
 
-      <div className='flex justify-end fixed bottom-2 right-10 z-999'>
+      <div className='flex justify-end fixed bottom-2 right-1 lg:right-10 z-999'>
         <div>
           <button
            onClick={() => handleSave()}

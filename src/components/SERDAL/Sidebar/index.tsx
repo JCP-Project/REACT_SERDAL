@@ -118,6 +118,7 @@ const Sidebar2 = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                   className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 text-[14px] text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
                     pathname.includes('Dashboard') && 'bg-graydark dark:bg-meta-4'
                   }`}
+                  onClick={() => setSidebarOpen(!sidebarOpen)}
                 >
                   <FontAwesomeIcon icon={faTh}/>
                   Dashboard
@@ -133,6 +134,7 @@ const Sidebar2 = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                   className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 text-[14px] text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
                     pathname.includes('PublicationRequest') && 'bg-graydark dark:bg-meta-4'
                   }`}
+                  onClick={() => setSidebarOpen(!sidebarOpen)}
                 >
                   <FontAwesomeIcon icon={faFilePdf}/>
                   
@@ -150,6 +152,7 @@ const Sidebar2 = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                   className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 text-[14px] text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
                     pathname.includes('Dataset') && 'bg-graydark dark:bg-meta-4'
                   }`}
+                  onClick={() => setSidebarOpen(!sidebarOpen)}
                 >
                   <FontAwesomeIcon icon={faChartLine}/>
                   
@@ -166,6 +169,7 @@ const Sidebar2 = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                   className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 text-[14px] text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
                     pathname.includes('Survey') && 'bg-graydark dark:bg-meta-4'
                   }`}
+                  onClick={() => setSidebarOpen(!sidebarOpen)}
                 >
                   <FontAwesomeIcon icon={faChartBar}/>                 
                   Survey
@@ -181,6 +185,7 @@ const Sidebar2 = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                   className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 text-[14px] text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
                     pathname.includes('Users') && 'bg-graydark dark:bg-meta-4'
                   }`}
+                  onClick={() => setSidebarOpen(!sidebarOpen)}
                 >
                   <FontAwesomeIcon icon={faUserAlt}/>
                   

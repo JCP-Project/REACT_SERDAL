@@ -170,7 +170,7 @@ function Form () {
                 animate={{ x: 0 }}
                 transition={{ type: 'spring', stiffness: 100 }}
                 >
-                        <h1 className="text-2xl font-bold text-left text-white lg:px-40">Survey</h1>
+                        <h1 className="text-2xl font-bold text-left text-white px-3 lg:px-40">Survey</h1>
                 </motion.div>
             </div>
 
@@ -179,21 +179,22 @@ function Form () {
 
 
 
-                <div className="block md:flex md:items-center md:justify-between sm:flex-wrap border-b border-gray-300">  
+                <div className="block md:flex md:items-center md:justify-between border-b border-gray-300">  
 
                         <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
                                 <Tabs value={activeTab} className="w-full md:w-max">
                                     <TabsHeader>
                                     {TABS.map(({ label, value }) => (
                                         <Tab key={`Tab${value}`} value={value}>
-                                        <button className="text-[12px]" key={value} onClick={() => handleTabChange(value)}>&nbsp;&nbsp;{label}&nbsp;&nbsp;</button>                
+                                        <button className="text-lg" key={value} onClick={() => handleTabChange(value)}>&nbsp;&nbsp;{label}&nbsp;&nbsp;</button>                
                                         </Tab>
                                     ))}
                                     </TabsHeader>
                                 </Tabs>
                         </div>
 
-                        <div className="flex items-center justify-center py-1 mx-1">
+                        <div className=" md:flex md:items-center md:justify-center py-1 mx-1">
+                          <div>
                           <Select
                               id="SortID"
                               placeholder="Sort By"
@@ -204,8 +205,9 @@ function Form () {
                               isClearable ={true}
                               className="text-sm w-full md:w-auto"
                           />
+                          </div>
 
-                          <div className="flex justify center  lg:justify-end lg:ml-1">
+                          <div className="flex justify-end  lg:justify-end lg:ml-1 py-3">
                                               
                             <Link to="/admin/survey/create">
                               <button className="flex items-center gap-3 bg-[#17C0CC] text-white px-4 py-2 rounded-md hover:bg-[#139B99]">
@@ -224,9 +226,9 @@ function Form () {
                         {
                             sortedRows.map((data) => (
                                 <div key={`survey-${data.id}`} className={`text-sm relative  w-full p-6 rounded-lg shadow-lg overflow-hidden group m-2 ${ data.isActive == 1 ? `bg-white` : `bg-gray-100`}`}>
-                                    <div className={`absolute top-0 left-0 w-full h-1 ${ data.isActive == 1 ? `bg-primary` : `bg-secondary`}`}></div>
+                                    <div className={`absolute top-0 left-0 w-1 h-full ${ data.isActive == 1 ? `bg-primary` : `bg-secondary`}`}></div>
                                     <div>
-                                        <Link to="/">
+                                        <Link to="/" className="hover:underline  hover:decoration-primary">
                                         <div><h1 className="font-bold text-primary text-lg">{data.title}</h1></div>
                                         </Link>
                                         <div>
@@ -249,7 +251,7 @@ function Form () {
 
                                             <div className="text-xs"><span><FontAwesomeIcon icon={faCalendar} className="mr-1" /></span> 
                                             {
-                                                new Date(data.createdDate).toLocaleDateString('en-US', {
+                                                new Date(`${data.createdDate}Z`).toLocaleDateString('en-US', {
                                                 year: 'numeric',
                                                 month: 'long',
                                                 day: 'numeric',

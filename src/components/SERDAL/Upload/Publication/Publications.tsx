@@ -6,6 +6,7 @@ import { useEffect, useRef, useState } from "react";
 import Loader from "../../../../common/Loader/Loader2";
 import Select, { StylesConfig } from 'react-select';
 import { motion } from 'framer-motion';
+import { FaAngleDown, FaAngleUp } from "react-icons/fa";
 
 interface ApiData {
   publication: Publication[]; // Array of publications
@@ -207,9 +208,11 @@ function Publications()
   };
   //#endregion
 
-   const options1 = [
-    { label: 'Title (A-Z)', value: 'ASC' },
-    { label: 'Title (Z-A)', value: 'DESC' },
+   const optionSort = [
+    { label: 'Title (A-Z)', value: 'Title_ASC' },
+    { label: 'Title (Z-A)', value: 'Title_DESC' },
+    { label: 'Publication Date Most Recent', value: 'PublicationDate_MostRecent' },
+    { label: 'Publication Date Oldest First', value: 'PublicationDate_OldestFirst' },
   ];
 
 
@@ -369,7 +372,7 @@ function Publications()
           animate={{ x: 0 }}
           transition={{ type: 'spring', stiffness: 100 }}
         >
-                  <h1 className="text-2xl font-bold text-left text-white lg:px-40">Publications</h1>
+                  <h1 className="text-2xl font-bold text-left text-white px-3 lg:px-40">Publications</h1>
         </motion.div>
       </div>
 
@@ -404,32 +407,6 @@ function Publications()
                             <button>Search</button>
                           </div>
                         </div>
-{/* 
-                        <ul className="absolute top-full left-0 w-full mt-1 bg-white border border-gray-300 rounded-sm shadow-lg max-h-60 overflow-y-auto z-50">
-                              <li 
-                                className="p-2 cursor-pointer text-xs text-gray-500 hover:bg-primary hover:text-white"
-                              >
-                                <div>
-                                  <p className="">test</p>
-                                </div>
-                              </li>
-
-                              <li 
-                                className="p-2 cursor-pointer text-xs text-gray-500 hover:bg-primary hover:text-white"
-                              >
-                                <div>
-                                  <p className="">test</p>
-                                </div>
-                              </li>
-
-                              <li 
-                                className="p-2 cursor-pointer text-xs text-gray-500 hover:bg-primary hover:text-white"
-                              >
-                                <div>
-                                  <p className="">test</p>
-                                </div>
-                              </li>
-                        </ul> */}
 
                         {suggestions.length > 0 && (
                           <ul className="absolute top-full left-0 w-full mt-2 bg-white border border-gray-300 rounded-lg shadow-lg max-h-60 overflow-y-auto z-50">
@@ -459,7 +436,7 @@ function Publications()
                           placeholder="Sort By"
                           value={selectedOption1}
                           onChange={handleChange1}
-                          options={options1}
+                          options={optionSort}
                           styles={customStyles}
                           isClearable ={true}
                           className="text-sm w-full md:w-auto"  // Full width on mobile, 200px on larger screens, auto on desktop
@@ -467,10 +444,15 @@ function Publications()
                       </div>
 
                       <div className="mx-1 md:ml-3 my-1 flex justify-end">
-                        <button onClick={() => sethideFilter(prev => !prev)} className="bg-primary text-white px-2 py-1 rounded-sm flex items-center space-x-2">
-                          <FontAwesomeIcon icon={faFilter} />
-                          <span>Filter</span>
-                        </button>
+                      <button
+                        onClick={() => sethideFilter(prev => !prev)}
+                        className="bg-primary text-white px-5 py-3 rounded-sm flex items-center space-x-2"
+                        title={hideFilter ? "Show Advance Filters" : "Hide Advance Filters"} // Tooltip text
+                      >
+                        <FontAwesomeIcon icon={faFilter} className="mr-2" />
+                        <span>{hideFilter ? <FaAngleDown /> : <FaAngleUp />}</span>
+                      </button>
+
                       </div>
 
                       {

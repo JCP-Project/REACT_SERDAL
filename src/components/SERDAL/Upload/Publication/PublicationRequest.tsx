@@ -163,7 +163,6 @@ const ApproveRequest = async (bodyData: UpdateStatus, actionText:string) => {
   //#endregion
 
   useEffect(() => {
-    console.log("Fetched publication:", data);
     fetchData();
   }, []); 
 
@@ -254,7 +253,7 @@ const ApproveRequest = async (bodyData: UpdateStatus, actionText:string) => {
           animate={{ x: 0 }}
           transition={{ type: 'spring', stiffness: 100 }}
         >
-                  <h1 className="text-2xl font-bold text-left text-white lg:px-40">Publications</h1>
+                  <h1 className="text-2xl font-bold text-left text-white px-3 lg:px-40">Publications</h1>
         </motion.div>
       </div>
     <Card className="h-full w-full px-2 rounded-lg px-1 md:px-20">
@@ -302,27 +301,27 @@ const ApproveRequest = async (bodyData: UpdateStatus, actionText:string) => {
       <thead className="sticky top-0 bg-white z-50">
         <tr>
             <th key="title" className="border-y border-blue-gray-100 bg-blue-gray-50/50 p-2">
-              <Typography  variant="small" color="blue-gray"  className="text-md leading-none opacity-70">
+              <Typography   color="blue-gray"  className="text-md leading-none opacity-70">
                 TITLE
               </Typography>
             </th>
             <th key="author" className="border-y border-blue-gray-100 bg-blue-gray-50/50 p-2">
-              <Typography  variant="small" color="blue-gray"  className="text-md leading-none opacity-70">
+              <Typography   color="blue-gray"  className="text-md leading-none opacity-70">
                 UPLOADER
               </Typography>
             </th>
             <th key="status" className="border-y border-blue-gray-100 bg-blue-gray-50/50 p-2 text-center">
-              <Typography  variant="small" color="blue-gray"  className="text-md leading-none opacity-70">
+              <Typography   color="blue-gray"  className="text-md leading-none opacity-70">
                 STATUS
               </Typography>
             </th>
             <th key="uploaddate" className="border-y border-blue-gray-100 bg-blue-gray-50/50 p-2 text-center">
-              <Typography  variant="small" color="blue-gray"  className="text-md leading-none opacity-70">
+              <Typography   color="blue-gray"  className="text-md leading-none opacity-70">
                 UPLOAD DATE
               </Typography>
             </th>
             <th key="delete" className="border-y border-blue-gray-100 bg-blue-gray-50/50 p-2 text-center">
-              <Typography  variant="small" color="blue-gray"  className="text-md leading-none opacity-70">
+              <Typography   color="blue-gray"  className="text-md leading-none opacity-70">
                 ACTION
               </Typography>
             </th>
@@ -340,10 +339,12 @@ const ApproveRequest = async (bodyData: UpdateStatus, actionText:string) => {
                 <td className={classes}>
                   <div className="flex items-center gap-3">
                     <div className="flex flex-col">
-                      <Typography variant="small" color="blue-gray" className="text-md" >
+                    <Link to={`/Publication/Info/${id}`}>
+                      <Typography  color="blue-gray" className="text-md" >
                       {truncateTitle(title)}
                       </Typography>
-                      <Typography variant="small" color="blue-gray" className="text-md opacity-70">
+                    </Link>
+                      <Typography  color="blue-gray" className="text-md opacity-70">
                         {truncateTitle(author)}
                       </Typography>
                     </div>
@@ -351,10 +352,10 @@ const ApproveRequest = async (bodyData: UpdateStatus, actionText:string) => {
                 </td>
                 <td className={classes}>
                   <div className="block">
-                    <Typography  variant="small" color="blue-gray" className="text-md">
+                    <Typography   color="blue-gray" className="text-md">
                     {`${firstname} ${lastname}`}
                     </Typography>
-                    <Typography  variant="small" color="blue-gray" className="text-md opacity-70">
+                    <Typography   color="blue-gray" className="text-md opacity-70">
                       {email}
                     </Typography>
                   </div>
@@ -375,12 +376,12 @@ const ApproveRequest = async (bodyData: UpdateStatus, actionText:string) => {
                           </div>
                 </td>
                 <td className={`${classes} text-center`}>
-                  <Typography variant="small" color="blue-gray" className="text-md" >
+                  <Typography  color="blue-gray" className="text-md" >
                   {new Intl.DateTimeFormat('en-US', {
                           month: '2-digit',
                           day: '2-digit',
                           year: 'numeric',
-                        }).format(new Date(createdDate))}
+                        }).format(new Date(`${createdDate}Z`))}
                   </Typography>
                 </td>
                 <td className={`${classes} text-center z-40`}>

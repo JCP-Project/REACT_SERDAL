@@ -39,20 +39,20 @@ const DefaultLayout: React.FC<{ children: ReactNode }> = ({ children }) => {
           {/* <!-- ===== Sidebar End ===== --> */}
 
           {/* <!-- ===== Content Area Start ===== --> */}
-          <div className="relative flex flex-1 flex-col overflow-y-auto overflow-x-hidden bg-[#EDFEFF] min-h-screen bg-[#EDFEFF]">
+          <div className="relative flex flex-1 flex-col overflow-y-auto overflow-x-hidden bg-white min-h-screen bg-white">
             {/* <!-- ===== Header Start ===== --> */}
             {header}         
             {/* <!-- ===== Header End ===== --> */}
 
             {/* <!-- ===== Main Content Start ===== --> */}
-            <main  className="">
+            <main  className="bg-white">
               <div className="mx-auto  max-w-[100%]">
                 {children}
               </div>
             </main>
             {/* <!-- ===== Main Content End ===== --> */}
 
-          <div className="bg-[#032c54] z-50">
+          <div className="bg-[#032c54] z-10">
             <div className="px-2 md:px-[15%] text-white">
               {tempfooter}
             </div>

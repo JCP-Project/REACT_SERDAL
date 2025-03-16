@@ -52,6 +52,7 @@ interface UpdateStatus{
   status: number;
   ModifiedBy: number;
   isDeleted: number;
+  CreatedDate: string;
 }
 
 
@@ -234,6 +235,8 @@ export default function UploadPublication() {
           status: status,
           ModifiedBy: userId,
           isDeleted: isDelete,
+          CreatedDate: new Date().toISOString(),
+
         };
       
         setStatus(updateStatus);
@@ -277,6 +280,7 @@ export default function UploadPublication() {
         }
         return title;
       };
+      
 
   return (
     <>
@@ -409,11 +413,11 @@ export default function UploadPublication() {
 
                         <td className={`${classes} text-center`}>
                             <Typography variant="small" color="blue-gray" className="text-sm">
-                              {new Intl.DateTimeFormat('en-US', {
-                                month: '2-digit',
-                                day: '2-digit',
-                                year: 'numeric',
-                              }).format(new Date(createdDate))}
+                            {new Date(`${createdDate}Z`).toLocaleDateString('en-US', {
+                              month: '2-digit',
+                              day: '2-digit',
+                              year: 'numeric',
+                            })}
                             </Typography>
                           </td>
 

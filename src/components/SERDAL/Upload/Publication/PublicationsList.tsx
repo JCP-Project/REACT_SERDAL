@@ -23,6 +23,7 @@ interface ApiData {
     university:number;
     download: number;
     isDeleted: number;
+    publicationDate: string;
   }
   
 
@@ -82,6 +83,11 @@ const PublicationsList: React.FC<datas> = ({data, university}) =>{
   }
 
   const formatDateTime = (date: string) => {
+    
+    if (!date.endsWith('Z')) {
+      date = date + 'Z';
+    }
+    
     const d = new Date(date);
     
     // Create the options object with the correct format
@@ -107,12 +113,18 @@ const PublicationsList: React.FC<datas> = ({data, university}) =>{
 
                         <div className=" flex items-center justify-between text-sm my-3">
                             <div><h5 className="font-bold">{getUniversity(post.university)}</h5></div>
-                            <div><h5>{formatDateTime(post.createdDate)}</h5></div>
+                            <div><h5>{formatDateTime(post.publicationDate)}</h5></div>
                             
                         </div>
 
                         <h5 className="text-lg font-bold uppercase text-primary py-2 text-left">
-                            <Link  to={`/Publication/Info/${post.id}`}>
+                            <Link      to={`/Publication/Info/${post.id}`} // Ensure this is the correct route
+                                onClick={(e) => {
+                                  e.preventDefault(); // Prevent React Router's default navigation behavior
+                                  window.location.href = `/Publication/Info/${post.id}`; // Force a full page reload
+                                }}
+                                className="hover:underline"
+                              >
                                 {
                                     post.title
                                 }
@@ -128,7 +140,7 @@ const PublicationsList: React.FC<datas> = ({data, university}) =>{
                             post.pdfFile &&(
                               <div className="">
                                 <a href={post.pdfFile} target="_blank" onClick={() =>DownloadClick(post.id)}>
-                                  <button className="md:m-0 flex items-center bg-red-600 text-white rounded-lg hover:bg-red-700 text-[10px] px-2 lg:px-2">
+                                  <button className="md:m-0 flex items-center bg-red-600 text-white rounded-sm hover:bg-red-700 text-sm px-2 lg:px-2 py-1">
                                     <FontAwesomeIcon icon={faFilePdf} />
                                     <span className="pl-2">PDF</span>
                                   </button> 
@@ -150,7 +162,7 @@ const PublicationsList: React.FC<datas> = ({data, university}) =>{
                             )
                           }
 
-                          <div className="flex items-center text-xs mx-2">
+                          <div className="flex items-center text-sm mx-2">
                             <label><FontAwesomeIcon icon={faDownload} className="" /> <span className="">{post.download}</span></label>
                           </div>
 

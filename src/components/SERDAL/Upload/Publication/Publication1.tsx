@@ -9,7 +9,7 @@ function Publication1()
 
     return(
             <div>
-                 <div className="bg-white py-4 mx-auto max-w-[100%]  lg:py-7 xl:max-w-[60%] md:max-w-[90%] " >
+                 <div className="bg-white py-4 mx-3 md:mx-auto max-w-[100%]  lg:py-7 xl:max-w-[60%] md:max-w-[90%] " >
                     <div className="flex items-center justify-center">
                         <h1 className="text-sm font-bold uppercase text-[#17C0CC]">Publication</h1>
                     </div>

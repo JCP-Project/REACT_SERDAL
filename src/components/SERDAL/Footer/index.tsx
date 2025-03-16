@@ -1,5 +1,7 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHouse, faMessage, faPhone } from "@fortawesome/free-solid-svg-icons";
+import { FaFacebook } from "react-icons/fa6";
+import { Link } from "react-router-dom";
 
 
 function footer() {
@@ -10,24 +12,35 @@ function footer() {
         <>
             <div className="flex items-center justify-center md:justify-between flex-wrap text-sm py-15">
 
-                <div className="max-w-100 max:h-40 text-justify">
-                    <div><img src="/AllLogo.png" className="w-auto"></img></div>
-                    <div className="p-5">Capacity Building Toward Innovative and Inclusive Policymaking for the Development in the Agriculture, Aquatic, and Natural Resources (AANR) Sector</div>
+                <div className="max-w-100 max:h-50 text-justify">
+                    <div className="w-auto h-50 flex items-center justify-center"><img src="/logo.png" className="w-auto h-50"></img></div>
+                    <div className="py-2">Advancing Socio-Economics Research through Data Analytics</div>
                 </div>
 
                 <div className="max-w-100">
                     <h2 className="text-primary text-2xl">Contact Us</h2>
                     <div className="flex items-center text-white text-sm py-2">
                         <FontAwesomeIcon icon={faHouse}  className="text-xl pr-3"/>
-                        Domingo M. Lantican Ave University of the Philippines Los Baños, College, Batong Malake, Los Baños, 4031 Laguna, Philippines
+                        Institute of Cooperatives and Bio-Enterprise Development (ICOPED) Fabian A. Tiongson Avenue, University of the Philippines Los Baños, College, Laguna, 4031 Philippines
                     </div>
                     <div className="flex items-center text-white text-sm py-2">
                         <FontAwesomeIcon icon={faPhone}  className="text-xl pr-3"/>
-                        (049) 536-3637
+                        +63 961-057-5841 (also available in viber)
+                    </div>
+                    <div className="flex items-center text-white text-sm py-2">
+                        <FontAwesomeIcon icon={faPhone}  className="text-xl pr-3"/>
+                        +63 927-963-4704
                     </div>
                     <div className="flex items-center text-white text-sm py-2">
                         <FontAwesomeIcon icon={faMessage}  className="text-xl pr-3"/>               
-                        diplab.uplb@up.edu.ph
+                        Serdal.uplb@up.edu.ph
+                    </div>
+                    <div className="flex items-center text-white text-sm py-3">
+                        <Link to={"https://www.facebook.com/UPLB.SERDAL"} target="_">
+                            <div className="bg-[#1877F2] h-9 w-9 flex items-center justify-center  rounded-full">
+                            <FaFacebook className="h-5 w-5" />
+                            </div>     
+                        </Link>          
                     </div>
 
 

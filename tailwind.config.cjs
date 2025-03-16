@@ -10,6 +10,7 @@ module.exports = {
   theme: {
     fontFamily: {
       // satoshi: ['Satoshi', 'sans-serif'],
+     // avenir: ['Avenir', 'sans-serif'], 
       plusjakarta: ['Plus Jakarta Sans', 'sans-serif'],
     },
     screens: {

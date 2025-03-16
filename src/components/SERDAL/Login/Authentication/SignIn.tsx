@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, Navigate, useNavigate } from 'react-router-dom';
 import LogoDark from '../../../../images/logo/logo.png';
 import Logo from '../../../../images/logo/logo.png';
 import Login from '../login';
@@ -35,8 +35,17 @@ interface User {
 interface UserForm {
   email: string;
   password:string;
-
 }
+
+interface data {
+  id: number;
+  otpCode: string;
+}
+
+
+
+
+
 
 
 const SignIn: React.FC = () => {
@@ -46,6 +55,8 @@ const SignIn: React.FC = () => {
     const [ErrorMessage, setErrorMessage] = useState<string>("");
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [Loading, setIsLoading] = useState(false);
+
+    const [otp, setOTP] = useState<data>();
 
 
     const [formData, setFormData] = useState<UserForm>({
@@ -116,7 +127,7 @@ const handleSubmit = async (e: React.FormEvent) => {
 
             setIsLoading(true);
             setTimeout(() => {
-                setIsLoading(false);
+            setIsLoading(false);
 
                 if (returnedUser.role.toLowerCase() == "admin") {
                   sessionStorage.setItem('isAdmin', 'true');
@@ -127,7 +138,18 @@ const handleSubmit = async (e: React.FormEvent) => {
                 else
                 {
                   sessionStorage.setItem('isAdmin', 'false');
-                  navigate('/');
+                  const redirectSurvey = localStorage.getItem("surveyPath");
+                  
+                  if (redirectSurvey) {
+                    localStorage.removeItem('surveyPath');
+                    navigate(redirectSurvey);
+                  }
+                  else{
+                    navigate('/');
+                    console.log("2");
+                  }
+
+
                   
                 }
         
@@ -171,11 +193,7 @@ const handleSubmit = async (e: React.FormEvent) => {
         }
     };
 
-  const Login = async () =>{
-
-  }
-
-
+ 
 
   return (
     <>
@@ -408,6 +426,11 @@ const handleSubmit = async (e: React.FormEvent) => {
                       </svg>
                     </span>
                   </div>
+                </div>
+
+                <div className='mb-6 font-bold flex justify-end'>
+                  
+                  <button  onClick={() => navigate('/auth/resetpassword')}>Forgot Password</button>
                 </div>
 
                 <div className="mb-5">
