@@ -87,7 +87,7 @@ const PublicationsList: React.FC<datas> = ({data, university}) =>{
     if (!date.endsWith('Z')) {
       date = date + 'Z';
     }
-    
+
     const d = new Date(date);
     
     // Create the options object with the correct format
@@ -95,9 +95,9 @@ const PublicationsList: React.FC<datas> = ({data, university}) =>{
       month: '2-digit',
       day: '2-digit',
       year: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit',
-      second: '2-digit',
+      //hour: '2-digit',
+      //minute: '2-digit',
+      //second: '2-digit',
       hour12: true, // AM/PM format
     };
   

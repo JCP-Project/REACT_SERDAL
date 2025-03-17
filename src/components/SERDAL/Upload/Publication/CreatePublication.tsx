@@ -325,7 +325,7 @@ function CreatePublication() {
 
             <div className="my-10">
               <textarea
-                rows={2}
+                rows={5}
                 placeholder="Abstract"
                 id="abstract"
                 name="abstract"

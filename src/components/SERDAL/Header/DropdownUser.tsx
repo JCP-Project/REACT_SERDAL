@@ -46,7 +46,7 @@ const DropdownUser = () => {
             img && img !== "" ? (
               <img className="h-full w-full object-cover" src={img} alt="User" />
             ):(
-              <div className="bg-secondary h-full w-full flex items-center justify-center text-white text-xs">
+              <div className="bg-secondary h-full w-full flex items-center justify-center text-white text-lg lg:text-xs">
                   {firstname?.charAt(0).toUpperCase()}{lastName?.charAt(0).toUpperCase()}
               </div>
             )
@@ -77,7 +77,7 @@ const DropdownUser = () => {
               <Link
                 to="/UploadPublication"
                 onClick={() => setDropdownOpen(false)}
-                className="flex items-center gap-3.5 text-sm font-medium duration-300 ease-in-out hover:text-primary lg:text-base"
+                className="flex items-center gap-3.5 text-lg lg:text-sm font-medium duration-300 ease-in-out hover:text-primary lg:text-base"
               >
                 <FontAwesomeIcon icon={faUpload}></FontAwesomeIcon>
                 Upload Publication
@@ -94,7 +94,7 @@ const DropdownUser = () => {
               </Link>
             </li> */}
           </ul>
-          <button onClick={logout} className="flex items-center gap-3.5 px-6 py-4 text-sm font-medium duration-300 ease-in-out hover:text-primary lg:text-base">
+          <button onClick={logout} className="flex items-center gap-3.5 px-6 py-4 text-lg lg:text-sm font-medium duration-300 ease-in-out hover:text-primary lg:text-base">
             <FontAwesomeIcon icon={faLeftLong}></FontAwesomeIcon>
             Log Out
           </button>

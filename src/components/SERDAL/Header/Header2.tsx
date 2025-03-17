@@ -38,7 +38,7 @@ function Header2() {
   let user = (
     <div>
       <Link to="/auth/signin">
-        <button onClick={() => setMenuOpen(false)}  className="bg-white border-2 border-primary text-sm text-primary px-5 rounded-md hover:bg-white hover:border-primary">
+        <button onClick={() => setMenuOpen(false)}  className="bg-white border-2 border-primary text-primary py-3 md:py-1 px-10 md:px-5 rounded-sm hover:bg-white hover:border-primary text-xl md:text-sm">
           Sign in
         </button>
       </Link>
@@ -75,24 +75,27 @@ function Header2() {
                   <FontAwesomeIcon icon={menuOpen ? faTimes : faBars} onClick={toggleMenu} className="absolute top-4 right-4 cursor-pointer text-3xl" />
 
                   <ul className="flex flex-col items-center justify-center h-full gap-8">
-                    <li><a className="hover:text-gray-500" href="http://localhost/SERDAL/">Home</a></li>
+                    <li><a className="hover:text-gray-500 text-3xl" href="http://localhost/SERDAL/">Home</a></li>
                     <li className="flex flex-col items-center justify-center">
-                      <Link to="/" className="text-black text-sm" onClick={() => setMenuOpen(false)}> Publications </Link>
+                      <Link to="/" className="text-black text-3xl" onClick={() => setMenuOpen(false)}> Publications </Link>
                     </li>
                     <li className="flex flex-col items-center justify-center">
-                      <Link to="/datasets" className="text-black text-sm" onClick={() => setMenuOpen(false)}> Dataset </Link>
+                      <Link to="/datasets" className="text-black text-3xl" onClick={() => setMenuOpen(false)}> Dataset </Link>
                     </li>
                     <li className="flex flex-col items-center justify-center">
-                      <Link to="/survey" className="text-black text-sm" onClick={() => setMenuOpen(false)}> Survey </Link>
+                      <Link to="/survey" className="text-black text-3xl" onClick={() => setMenuOpen(false)}> Survey </Link>
                     </li>
                     <li className="flex flex-col items-center justify-center">
-                      <a className="text-black hover:text-gray-500 text-sm" href="http://localhost/SERDAL/contact/">Contact</a>
+                      <a className="text-black hover:text-gray-500 text-3xl" href="http://localhost/SERDAL/contact/">Contact</a>
                     </li>
                     <li className="flex flex-col items-center justify-center">
-                      <a className="text-black hover:text-gray-500 text-sm" href="http://localhost/SERDAL/services/">Services</a>
+                      <a className="text-black hover:text-gray-500 text-3xl" href="http://localhost/SERDAL/services/">Services</a>
                     </li>
                     <li className="flex flex-col items-center justify-center">
-                      <a className="text-black hover:text-gray-500 text-sm" href="http://localhost/SERDAL/training/">Trainings</a>
+                      <a className="text-black hover:text-gray-500 text-3xl" href="http://localhost/SERDAL/training/">Trainings</a>
+                    </li>
+                    <li className="flex flex-col items-center justify-center">
+                      <a className="text-black hover:text-gray-500 text-3xl" href="http://localhost/SERDAL/training/">Events & Highlights</a>
                     </li>
                     <li>{user}</li>
                   </ul>        
@@ -102,28 +105,31 @@ function Header2() {
                 <div className="hidden md:flex w-full justify-center">
                   <ul className="flex md:flex-row gap-8">
                     <li className="flex flex-col items-center justify-center">
-                      <a className="text-black hover:text-gray-500 text-sm" href="http://localhost/SERDAL/">Home</a>
+                      <a className="text-black hover:text-gray-500 text-md" href="http://localhost/SERDAL/">Home</a>
                     </li>
                     <li className="flex flex-col items-center justify-center">
-                      <a className="text-black hover:text-gray-500 text-sm" href="http://localhost/SERDAL/aboutus/">About</a>
+                      <a className="text-black hover:text-gray-500 text-md" href="http://localhost/SERDAL/aboutus/">About</a>
                     </li>
                     <li className="flex flex-col items-center justify-center">
-                      <Link to="/" className="text-black text-sm"> Publications </Link>
+                      <Link to="/" className="text-black text-md"> Publications </Link>
                     </li>
                     <li className="flex flex-col items-center justify-center">
-                      <Link to="/datasets" className="text-black text-sm"> Dataset </Link>
+                      <Link to="/datasets" className="text-black text-md"> Dataset </Link>
                     </li>
                     <li className="flex flex-col items-center justify-center">
-                      <Link to="/survey" className="text-black text-sm"> Survey </Link>
+                      <Link to="/survey" className="text-black text-md"> Survey </Link>
                     </li>
                     <li className="flex flex-col items-center justify-center">
-                      <a className="text-black hover:text-gray-500 text-sm" href="http://localhost/SERDAL/contact/">Contact</a>
+                      <a className="text-black hover:text-gray-500 text-md" href="http://localhost/SERDAL/contact/">Contact</a>
                     </li>
                     <li className="flex flex-col items-center justify-center">
-                      <a className="text-black hover:text-gray-500 text-sm" href="http://localhost/SERDAL/services/">Services</a>
+                      <a className="text-black hover:text-gray-500 text-md" href="http://localhost/SERDAL/services/">Services</a>
                     </li>
                     <li className="flex flex-col items-center justify-center">
-                      <a className="text-black hover:text-gray-500 text-sm" href="http://localhost/SERDAL/training/">Trainings</a>
+                      <a className="text-black hover:text-gray-500 text-md" href="http://localhost/SERDAL/training/">Trainings</a>
+                    </li>
+                    <li className="flex flex-col items-center justify-center">
+                      <a className="text-black hover:text-gray-500 text-md" href="http://localhost/SERDAL/training/">Events & Highlights</a>
                     </li>
                     <li>{user}</li>
                   </ul>

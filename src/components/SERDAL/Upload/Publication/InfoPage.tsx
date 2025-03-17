@@ -23,7 +23,7 @@ interface APIData {
   pdfFile: string;
   keywords: string;
   isDeleted: number;
-
+  publicationDate:string;
   universityList: University[];
 }
 
@@ -43,6 +43,7 @@ interface Publication {
   pdfFile: string;
   keywords: string;
   isDeleted: number;
+  publicationDate:string;
 }
 
 interface University {
@@ -318,7 +319,7 @@ const getUniversity =  (id:number) =>{
                <p className="text-black-980 text-black-800 text-xs md:text-sm mt-auto mb-3">
                   <FontAwesomeIcon icon={faCalendarAlt} className="mr-1" />
                     <span>
-                    {new Date(`${data?.createdDate}Z`).toLocaleDateString('en-US', {
+                    {new Date(`${data?.publicationDate}Z`).toLocaleDateString('en-US', {
                       year: 'numeric',
                       month: 'long',
                       day: 'numeric',

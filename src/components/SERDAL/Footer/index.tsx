@@ -25,7 +25,7 @@ function footer() {
                     </div>
                     <div className="flex items-center text-white text-sm py-2">
                         <FontAwesomeIcon icon={faPhone}  className="text-xl pr-3"/>
-                        +63 961-057-5841 (also available in viber)
+                        +63 961-057-5841 (Viber)
                     </div>
                     <div className="flex items-center text-white text-sm py-2">
                         <FontAwesomeIcon icon={faPhone}  className="text-xl pr-3"/>
