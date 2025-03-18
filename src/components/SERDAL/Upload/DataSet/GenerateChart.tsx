@@ -70,18 +70,6 @@ function hexToRgb(hex) {
   return `rgb(${r}, ${g}, ${b})`;
 }
 
-// Convert first 10 colors to RGB
-const mainChartColors = chartColors.slice(0, 10).map(hexToRgb);
-
-// Output the RGB colors
-console.log(mainChartColors);
-
-
-
-
-
-
-
 
 function GenerateChart() {
   const apiUrl = import.meta.env.VITE_API_URL;
@@ -456,7 +444,7 @@ const handleToggleSelectAllVariables = () => {
       )
     }
 
-      <div className="bg-white lg:px-40">
+      <div className={`bg-white ${adminStatus ? 'lg:px-5' : 'lg:px-40'}`}>
 
 
       <div className="w-full mx-auto bg-white">
@@ -466,14 +454,14 @@ const handleToggleSelectAllVariables = () => {
             onClick={() => setActiveTab(1)}
             className={`${
               activeTab === 1 ? "bg-primary" : "bg-gray-200"
-            } flex-1 py-1`}
+            } flex-1 py-0.5`}
           >
           </div>
           <div
             onClick={() => setActiveTab(2)}
             className={`${
               activeTab === 2 ? "bg-primary" : "bg-gray-200"
-            } flex-1 py-1`}
+            } flex-1 py-0.5`}
           >
           </div>
         </div>

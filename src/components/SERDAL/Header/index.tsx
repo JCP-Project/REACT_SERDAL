@@ -1,6 +1,5 @@
 import { Link } from 'react-router-dom';
 import DropdownUser from './DropdownUser';
-import LogoIcon from '../../../images/logo/logo.png';
 
 
 const Header = (props: {
@@ -55,7 +54,7 @@ const Header = (props: {
           {/* <!-- Hamburger Toggle BTN --> */}
 
           <Link className="block flex-shrink-0 h-10 w-10 lg:hidden" to="/">
-            <img src={LogoIcon} alt="Logo" />
+            <img src="/logo.png" alt="Logo" />
           </Link>
         </div>
 

@@ -1,6 +1,6 @@
 import { faFilter, faSearch } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import SelectGroupOrderBy from "../../../Template/Forms/SelectGroup/SelectGroupOrderBy";
+
 import PublicationList from "./PublicationsList";
 import { useEffect, useRef, useState } from "react";
 import Loader from "../../../../common/Loader/Loader2";

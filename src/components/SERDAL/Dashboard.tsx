@@ -3,9 +3,6 @@ import React, { useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBook, faChartBar, faChartColumn, faChartDiagram, faUpload, faUser } from '@fortawesome/free-solid-svg-icons';
 
-import PublicationChart from './Upload/Publication/PublicationChart';
-import PieChart from './Upload/Publication/PieChart';
-import Publication from './Upload/Publication/Publication1';
 import CardDataStats from './CardDataStats';
 import RecentUpload from './Upload/Publication/RecentUpload';
 

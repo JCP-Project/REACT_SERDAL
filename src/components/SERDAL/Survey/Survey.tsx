@@ -63,20 +63,17 @@ function Survey (){
             sessionStorage.getItem("isLoggedIn") === "true"
           );
 
-
-          const [errorMessage, seterrorMessage] = useState<string>("");       
-          const [loading, setLoading] = useState<boolean>(false);
-    
-    
+        const [errorMessage, seterrorMessage] = useState<string>("");       
+        const [loading, setLoading] = useState<boolean>(false);
+        const adminStatus = sessionStorage.getItem('isAdmin') === 'true';
         const [sort, setSort] = useState<any>(null);
-    
+        
         useEffect(() =>{
-            GetSurveyList();
-            console.log(isLoggedIn);
+            GetSurveyList();        
           },[]);
+
     
         const GetSurveyList = async() =>{
-
           seterrorMessage("");
           setLoading(true);
 
@@ -86,10 +83,8 @@ function Survey (){
                 });
         
                 if (response.ok) {
-                  const jsonData:  FormData[] = await response.json();
-                  //console.log(jsonData);  
+                  const jsonData:  FormData[] = await response.json();  
                   setformData(jsonData); 
-                  //console.log("Success",formData); 
         
                 } else {
                   const errorResponse = await response.json();
@@ -151,13 +146,14 @@ function Survey (){
           ];
 
 
-    const openSurvey = (id: string) => {
-      if (isLoggedIn) {
-        navigate( `/survey/answer/${id}`);
-      }
+          
 
+    const openSurvey = (id: number) => {
+
+      if (isLoggedIn) {
+        return navigate( `/survey/answer/${id}`);    
+      }
       localStorage.setItem("surveyPath", `/survey/answer/${id}`);
-      console.log(localStorage.getItem("surveyPath"));
       navigate("/auth/signin");
     }
 
@@ -177,7 +173,7 @@ function Survey (){
             </div>
 
             <div>
-              <div className="lg:px-40 bg-white">
+              <div className={`bg-white ${adminStatus ? 'lg:px-5' : 'lg:px-40'}`}>
 
                 <div className="block md:flex md:items-center md:justify-end sm:flex-wrap border-b border-gray-300">  
 
@@ -216,7 +212,7 @@ function Survey (){
                                  <div className={`absolute top-0 left-0 w-1 h-full ${ data.isActive == 1 ? `bg-primary` : `bg-secondary`}`}></div>
                                 <div>
 
-                                  <div onClick={() => openSurvey(data.id)}><h1 className="font-bold text-primary text-lg">{data.title}</h1></div>
+                                  <div onClick={() => openSurvey(data.id)}><h1 className="font-bold text-primary text-lg cursor-pointer">{data.title}</h1></div>
 
 
 

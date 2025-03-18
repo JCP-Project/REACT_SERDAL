@@ -2,7 +2,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Card, CardHeader, Typography, CardBody, Chip, CardFooter, Tabs, TabsHeader, Tab } from "@material-tailwind/react";
 import { faCheck, faClose, faEye, faFilePdf, faL, faSearch, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { useEffect, useState } from "react";
-import ModalRequest from "./ModalRequestUpload";
 import Loader from '../../../../common/Loader/Loader2';
 import { Link } from 'react-router-dom';
 import Swal from 'sweetalert2';
@@ -286,7 +285,7 @@ export default function UploadPublication() {
     <>
 
 
-    <div className="bg-primary text-left py-5 pl-3 md:px-40">
+    <div className="bg-primary text-left py-5 pl-3 md:px-5">
 
         <motion.div
           initial={{ x: -300 }} // Start from the left (off-screen)
@@ -301,7 +300,7 @@ export default function UploadPublication() {
     </div>
 
     <div className="">
-      <Card className="h-full w-full bg-white lg:px-50 lg:mt-5">
+      <Card className="h-full w-full bg-white lg:px-5 lg:mt-5">
         <CardHeader floated={false} shadow={false} className="rounded-none">
           <div className="flex items-center justify-between gap-8 m-2">
 

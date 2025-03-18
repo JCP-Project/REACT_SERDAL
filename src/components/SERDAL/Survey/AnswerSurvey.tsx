@@ -32,6 +32,8 @@ const AnswerSurvey = () => {
   const [form, setForm] = useState<FormField[]>([]);
   const [errorMessages, setErrorMessages] = useState<string[]>([]);
 
+  const adminStatus = sessionStorage.getItem('isAdmin') === 'true';
+
   useEffect(() => {
     console.log("TEST");
   
@@ -261,7 +263,7 @@ const AnswerSurvey = () => {
                 animate={{ x: 0 }}
                 transition={{ type: 'spring', stiffness: 100 }}
                 >
-                        <h1 className="text-2xl font-bold text-left text-white px-3 lg:px-40">Survey</h1>
+                        <h1 className={`text-2xl font-bold text-left text-white px-3 ${adminStatus ? 'lg:px-5' : 'lg:px-40'}`}>Survey</h1>
                 </motion.div>
             </div>
         <div>

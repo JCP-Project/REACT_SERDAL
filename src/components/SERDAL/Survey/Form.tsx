@@ -7,6 +7,7 @@ import { Progress } from "@material-tailwind/react";
 import Select, { StylesConfig } from 'react-select';
 import {Tabs,TabsHeader,Tab} from "@material-tailwind/react";
 import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 type AnswerType = 'Short Text' | 'Long Text' | 'Radio' | 'Checkbox' | 'Number';
 
@@ -56,14 +57,18 @@ function Form () {
 
     const [activeTab, setActiveTab] = useState("all");
     const [formData, setformData] = useState<FormData[]>([]);
-
-
     const [sort, setSort] = useState<any>(null);
+
+    const adminStatus = sessionStorage.getItem('isAdmin') === 'true';
+    const [isLoggedIn, setIsLoggedIn] = useState<boolean>(
+      sessionStorage.getItem("isLoggedIn") === "true"
+    );
+    const navigate = useNavigate();
 
     useEffect(() =>{
         GetSurveyList();
       },[]);
-
+    
     const GetSurveyList = async() =>{
         try {
             const response = await fetch(`${apiUrl}/api/Survey/AllSurvey`, {
@@ -72,9 +77,7 @@ function Form () {
     
             if (response.ok) {
               const jsonData:  FormData[] = await response.json();
-              //console.log(jsonData);  
               setformData(jsonData); 
-              //console.log("Success",formData); 
     
             } else {
               const errorResponse = await response.json();
@@ -129,7 +132,6 @@ function Form () {
     });
 
     const handleRequiredToggle = (ID: number) => {
-        console.log(ID);
         setformData((prev) =>
           prev.map((field) =>
             field.id === ID ? { ...field, isActive: field.isActive === 1 ? 0 : 1 } : field
@@ -159,6 +161,13 @@ function Form () {
       ];
       
 
+      const openSurvey = (id: number) => {
+        if (isLoggedIn) {
+          return navigate( `/survey/answer/${id}`);    
+        }
+        localStorage.setItem("surveyPath", `/survey/answer/${id}`);
+        navigate("/auth/signin");
+      }
 
     return(
         <>
@@ -170,12 +179,12 @@ function Form () {
                 animate={{ x: 0 }}
                 transition={{ type: 'spring', stiffness: 100 }}
                 >
-                        <h1 className="text-2xl font-bold text-left text-white px-3 lg:px-40">Survey</h1>
+                        <h1 className={`text-2xl font-bold text-left text-white px-3 ${adminStatus ? 'lg:px-5' : 'lg:px-40'}`}>Survey</h1>
                 </motion.div>
             </div>
 
             <div>
-                <div className="lg:px-40 bg-white mt-5">
+                <div className={`lg:px-40 bg-white mt-5 ${adminStatus ? 'lg:px-5' : 'lg:px-40'}`}>
 
 
 
@@ -228,21 +237,18 @@ function Form () {
                                 <div key={`survey-${data.id}`} className={`text-sm relative  w-full p-6 rounded-lg shadow-lg overflow-hidden group m-2 ${ data.isActive == 1 ? `bg-white` : `bg-gray-100`}`}>
                                     <div className={`absolute top-0 left-0 w-1 h-full ${ data.isActive == 1 ? `bg-primary` : `bg-secondary`}`}></div>
                                     <div>
-                                        <Link to="/" className="hover:underline  hover:decoration-primary">
-                                        <div><h1 className="font-bold text-primary text-lg">{data.title}</h1></div>
-                                        </Link>
+
+                                        <div onClick={() => openSurvey(data.id)}><h1 className="font-bold text-primary text-lg cursor-pointer">{data.title}</h1></div>
                                         <div>
                                            {truncate("This is a sample description for survey")} 
                                         </div>
                                         <div>
-                                            <div>
-                                                <div className="w-full mt-5">
-                                                    <div className="mb-2 flex items-center justify-between">
-                                                        <p>Answered</p>
-                                                        <p>50%</p>
-                                                    </div>
-                                                    <Progress value={50} className="bg-gray-200 m-0 [&>div]:bg-[#17C0CC]" />
-                                                </div>
+                                        <div className="w-full mt-5">
+                                            <div className="mb-2 flex items-center justify-between">
+                                                <p>Answered</p>
+                                                <p>50%</p>
+                                            </div>
+                                              {/* <Progress value={50} className="bg-gray-200 m-0 [&>div]:bg-[#17C0CC]" /> */}
                                             </div>
                                         </div>
 

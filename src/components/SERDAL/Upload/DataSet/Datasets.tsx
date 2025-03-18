@@ -230,11 +230,11 @@ function Datasets() {
           animate={{ x: 0 }}
           transition={{ type: 'spring', stiffness: 100 }}
         >
-          <h1 className="text-2xl font-bold text-left text-white px-3 lg:px-40">Datasets</h1>
+          <h1 className={`text-2xl font-bold text-left text-white px-3 ${adminStatus ? 'lg:px-5' : 'lg:px-40'}  `}>Datasets</h1>
         </motion.div>
       </div>
 
-      <div className="px-0 lg:px-40 mt-5">
+      <div className={`px-0 mt-5 ${adminStatus ? 'lg:px-10' : 'lg:px-40'}`}>
         <div className="block md:flex md:items-center md:justify-end sm:flex-wrap border-b border-gray-300">
           <div className="flex items-center justify-center py-1 mx-1">
             <Select

@@ -253,10 +253,10 @@ const ApproveRequest = async (bodyData: UpdateStatus, actionText:string) => {
           animate={{ x: 0 }}
           transition={{ type: 'spring', stiffness: 100 }}
         >
-                  <h1 className="text-2xl font-bold text-left text-white px-3 lg:px-40">Publications</h1>
+                  <h1 className="text-2xl font-bold text-left text-white px-3 lg:px-5">Publications</h1>
         </motion.div>
       </div>
-    <Card className="h-full w-full px-2 rounded-lg px-1 md:px-20">
+    <Card className="h-full w-full px-2 rounded-lg px-1 md:px-5">
       <CardHeader floated={false} shadow={false} className="rounded-none">
 
 
@@ -362,18 +362,26 @@ const ApproveRequest = async (bodyData: UpdateStatus, actionText:string) => {
                 </td>
                 <td className={`${classes}`}>
                 <div className="flex items-center justify-center">
-                          <Chip className="text-white px-2 py-1 m-0 text-sm text-center w-25"
-                              value={   status === 0 ? "pending" :
-                                        status === 1 ? "approved" :
-                                        status === 2 ? "declined" : "unknown"
-                                      }
-                              style={{
-                                backgroundColor: status === 0 ? "#fbbf24" :  // yellow-400
-                                                  status === 1 ? "#16a34a" :  // green-700
-                                                  status === 2 ? "#b91c1c" :  // red-700
-                                                  "#ffffff",  // white for default
-                              }}/>
-                          </div>
+                    <div
+                      className={`text-white px-2 py-1 m-0 text-sm text-center w-25 rounded-sm font-bold ${
+                        status === 0
+                          ? "bg-yellow-400"  // yellow-400 for pending
+                          : status === 1
+                          ? "bg-green-700"   // green-700 for approved
+                          : status === 2
+                          ? "bg-red-700"     // red-700 for declined
+                          : "bg-white"       // white for unknown
+                      }`}
+                    >
+                      {status === 0
+                        ? "Pending"
+                        : status === 1
+                        ? "Approved"
+                        : status === 2
+                        ? "Declined"
+                        : "unknown"}
+                    </div>
+                  </div>
                 </td>
                 <td className={`${classes} text-center`}>
                   <Typography  color="blue-gray" className="text-md" >

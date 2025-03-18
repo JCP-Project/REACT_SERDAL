@@ -55,41 +55,6 @@ const DatasetList: React.FC<{dataSets:DataSets[]}> = ({dataSets}) => { // Remove
                               </li>
                             ))}
                           </ul>
-
-
-                        {/* <div className="mt-4 flex">
-                        {
-                            post.pdfFile &&(
-                              <div className="">
-                                <a href={post.pdfFile} target="_blank" onClick={() =>DownloadClick(post.id)}>
-                                  <button className="md:m-0 flex items-center bg-red-600 text-white rounded-lg hover:bg-red-700 text-[10px] px-2 lg:px-2">
-                                    <FontAwesomeIcon icon={faFilePdf} />
-                                    <span className="pl-2">PDF</span>
-                                  </button> 
-                                </a> 
-                            </div>
-                            )
-                          }
-
-                          {
-                            post.pdfLink &&(
-                              <div className="mx-2">
-                                <a href={post.pdfLink} target="_blank">
-                                  <button className="md:m-0 flex items-center bg-red-600 text-white rounded-lg hover:bg-red-700 text-[10px] px-2 lg:px-2">
-                                    <FontAwesomeIcon icon={faFilePdf} />
-                                    <span className="pl-2">PDF</span>
-                                  </button> 
-                                </a> 
-                            </div>
-                            )
-                          }
-
-                          <div className="flex items-center text-xs mx-2">
-                            <label><FontAwesomeIcon icon={faDownload} className="" /> <span className="">{post.download}</span></label>
-                          </div>
-
-
-                        </div> */}
  
                     </div>
                 ))}

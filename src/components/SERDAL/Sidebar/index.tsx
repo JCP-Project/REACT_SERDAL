@@ -145,7 +145,7 @@ const Sidebar2 = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
 
 
 
-                            {/* <!-- Dataset --> */}
+                {/* <!-- Dataset --> */}
                <li>
                 <NavLink
                   to="/admin/datasets"
@@ -181,7 +181,7 @@ const Sidebar2 = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
               {/* <!-- User Table --> */}
                <li>
                 <NavLink
-                  to="/Users"
+                  to="/admin/Users"
                   className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 text-[14px] text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
                     pathname.includes('Users') && 'bg-graydark dark:bg-meta-4'
                   }`}

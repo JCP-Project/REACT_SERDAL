@@ -48,24 +48,28 @@ export default function Users() {
 
   const [tableRows, setTableRows] = useState<User[]>([]);
 
+  const adminStatus = sessionStorage.getItem('isAdmin') === 'true';
+
   useEffect(() => {
-    const fetchTableRows = async () => {
-      try {
-        const response = await fetch(`${apiUrl}/api/Users/users`);
-        if (!response.ok) {
-          console.log("Network response was not ok", response);
-          throw new Error("Network response was not ok");
-        }
-        
-        const rowsData = await response.json();
-        setTableRows(rowsData);
-      } catch (error) {
-        console.error("Error fetching table rows:", error);
-      }
-    };
 
     fetchTableRows();
   }, []);
+
+  const fetchTableRows = async () => {
+    try {
+      const response = await fetch(`${apiUrl}/api/Users/users`);
+      if (!response.ok) {
+        console.log("Network response was not ok", response);
+        throw new Error("Network response was not ok");
+      }
+      
+      const rowsData = await response.json();
+      setTableRows(rowsData);
+    } catch (error) {
+      console.error("Error fetching table rows:", error);
+    }
+  };
+
 
 
   // Handle tab changes and reset to the first page when changing the tab
@@ -108,8 +112,6 @@ export default function Users() {
       modifiedBy: userId,
     }
 
-    console.log(JSON.stringify(userUpdate));
-
     try {
       const response = await fetch(`${apiUrl}/api/Users/UpdateUserInfo`, {
         method: 'PUT', // or 'PATCH' depending on the API design
@@ -124,15 +126,15 @@ export default function Users() {
         throw new Error("Network response was not ok");
       }
   
-      const rowsData = await response.json();
+      //const rowsData = await response.json();
                 Swal.fire({
                   title: 'Success!',
-                  text: 'Your publication was created successfully.',
+                  text: 'Saved successfully.',
                   icon: 'success',
                   confirmButtonText: 'Okay',
                   confirmButtonColor: '#17C0CC',
                 }).then(() => {
-                  window.location.reload();
+                  fetchTableRows();
                 });;
 
       setmodal(false); // Close the modal after saving
@@ -145,7 +147,6 @@ export default function Users() {
   const UserInfo = async (Id: number) => {
     setmodal(true);
     const filterUser = tableRows.find(x => x.id === Id);
-    console.log(filterUser);
   
     if (filterUser) {
       setSelected(filterUser);
@@ -211,12 +212,12 @@ export default function Users() {
             animate={{ x: 0 }}
             transition={{ type: 'spring', stiffness: 100 }}
           >
-            <h1 className="text-2xl font-bold text-left text-white px-3 lg:px-40">Users</h1>
+            <h1 className={`text-2xl font-bold text-left text-white px-3 ${adminStatus ? 'lg:px-5' : 'lg:px-40'}`}>Users</h1>
           </motion.div>
       </div>
 
 
-    <Card className="h-full w-full px-3 md:px-20 rounded-lg">
+    <Card className="h-full w-full px-3 md:px-10 rounded-lg">
       <CardHeader floated={false} shadow={false} className="rounded-none">
         <div className="mb-2 flex items-center justify-between gap-8">
 
@@ -324,7 +325,7 @@ export default function Users() {
         <td className={classes}>
           <div className='flex items-center justify-center'>
           <div
-              className={`text-white py-2 m-0 text-sm text-center inline-block px-8
+              className={`text-white py-2 m-0 text-sm text-center inline-block px-8 font-bold
                 ${isActive === 1 ? "bg-green-600" : isActive === 0 ? "bg-red-600" : "bg-gray-300"}`}
             >
               {isActive === 1 ? "Active" : isActive === 0 ? "Inactive" : "Unknown"}

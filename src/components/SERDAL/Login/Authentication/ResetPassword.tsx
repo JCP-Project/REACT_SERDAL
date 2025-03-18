@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import LogoDark from '../../../../images/logo/logo.png';
-import Logo from '../../../../images/logo/logo.png';
 import Swal from 'sweetalert2';
 import { useNavigate } from 'react-router-dom';
 import Select, { StylesConfig } from 'react-select';
@@ -275,8 +273,7 @@ const ResetPassword: React.FC = () => {
           <div className="hidden w-full xl:block xl:w-1/2">
             <div className="text-center">
               <Link className="mb-5.5 inline-block mt-10" to="/">
-              <img className="hidden dark:block" height={10} width={10} src={Logo} alt="Logo" />
-              <img className="dark:hidden" height={80} width={80} src={LogoDark} alt="Logo" />
+              <img className="hidden dark:block" height={10} width={10} src="/logo.png" alt="Logo" />
               </Link>
               <p className="2xl:px-20 font-bold text-primary">
               SOCIO-ECONOMICS RESEARCH AND DATA ANALYTICS LABORATORY

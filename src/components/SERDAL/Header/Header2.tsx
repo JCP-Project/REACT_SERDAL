@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import DropdownUser from './DropdownUser';
-import LogoIcon from '../../../images/logo/logo.png';
+
 import { useState, useEffect  } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars, faTimes } from '@fortawesome/free-solid-svg-icons';
@@ -55,7 +55,7 @@ function Header2() {
       <div className="flex flex-grow items-center justify-center py-5 shadow-2 md:px-6 2xl:px-11">
         <div className="flex items-center gap-2 sm:gap-4">
           <Link className="block flex-shrink-0" to="http://localhost/SERDAL/">
-            <img src={LogoIcon} alt="Logo" height={55} width={55}/>
+            <img src="/logo.png" alt="Logo" height={55} width={55}/>
           </Link>
 
           <div className="flex items-center gap-6">
