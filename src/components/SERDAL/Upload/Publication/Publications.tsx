@@ -480,7 +480,7 @@ function Publications()
                               {/* <label htmlFor="University" className="text-sm"><span className="lg:block hidden">University:</span></label> */}
                               <Select
                                 id="University"
-                                placeholder="Select University"
+                                placeholder="Select Institution"
                                 options={universityOptions}
                                 value={selectedUniversity}
                                 onChange={handleChangeUniversity}
@@ -583,7 +583,7 @@ const customStyles: StylesConfig = {
   }),
   option: (provided, state) => ({
     ...provided,
-    fontSize: '0.7rem',
+    fontSize: '.8rem',
     backgroundColor: state.isSelected ? "#17C0CC" : 'transparent', // Background color when selected
     color: state.isSelected ? '#fff' : '#000', // Text color when selected
     cursor: 'pointer',

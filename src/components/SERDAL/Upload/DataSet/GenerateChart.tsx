@@ -173,7 +173,7 @@ function GenerateChart() {
           fontWeight: "bold",
         },
       },
-      tickAmount: 10, // ✅ Ensure proper scaling (adjust if needed)
+      tickAmount: 15, // ✅ Ensure proper scaling (adjust if needed)
       forceNiceScale: true, // ✅ Helps keep axis labels evenly spaced
     };
 
@@ -485,7 +485,7 @@ const handleToggleSelectAllVariables = () => {
         <div className="p-4 bg-white rounded-b-lg">
           {activeTab === 1 && (
             <div>
-            <h2 className="text-xl font-bold">{dataSet?.title}</h2>
+            <h2 className="text-2xl font-bold">{dataSet?.title}</h2>
 
             <div className="flex items-center justify-end py-1 mx-1">
               <div className="flex items-center justify-end py-1 mx-1 border-gray-300 w-full md:w-[400px]">
@@ -632,7 +632,7 @@ const handleToggleSelectAllVariables = () => {
           
           {activeTab === 2 && (
             <div>
-                <h2 className="text-xl font-bold">Chart: {dataSet?.title}</h2>
+                <h2 className="text-2xl font-bold">{dataSet?.title}</h2>
 
                 <div className="flex items-center justify-end py-1 mx-1 border-b border-gray-300">
                 <div className="flex items-center justify-end py-1 mx-1 border-gray-300">

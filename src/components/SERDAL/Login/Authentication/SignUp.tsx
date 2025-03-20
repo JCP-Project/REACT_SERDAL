@@ -566,6 +566,7 @@ const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
                       value={formData.firstname}
                       type="text"
                       placeholder="Enter your first name"
+                      autoComplete="given-name"
                       className="w-full rounded-lg border border-stroke bg-transparent py-2 pl-6 pr-10 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                       required
                     />
@@ -606,6 +607,7 @@ const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
                       value={formData.lastname}
                       type="text"
                       placeholder="Enter your last name"
+                      autoComplete="family-name"
                       className="w-full rounded-lg border border-stroke bg-transparent py-2 pl-6 pr-10 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                       required
                     />
@@ -646,6 +648,7 @@ const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
                       value={formData.email}
                       type="email"
                       placeholder="Enter your email"
+                      autoComplete="email" 
                       className="w-full rounded-lg border border-stroke bg-transparent py-2 pl-6 pr-10 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                       required
                     />
@@ -682,6 +685,7 @@ const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
                       value={formData.password}
                       type="password"
                       placeholder="Enter your password"
+                      autoComplete="new-password"
                       className="w-full rounded-lg border border-stroke bg-transparent py-2 pl-6 pr-10 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                       required
                     />
@@ -722,6 +726,7 @@ const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
                      value={formData.repassword}
                       type="password"
                       placeholder="Re-enter your password"
+                      autoComplete="new-password"
                       className={`w-full rounded-lg border bg-transparent py-2 pl-6 pr-10 text-black outline-none focus:border-primary focus-visible:shadow-none dark:bg-form-input dark:text-white dark:focus:border-primary ${ismatchpass ? 'border-stroke' : 'border-red-500' }`}
                       required
                       />

@@ -262,15 +262,17 @@ const ApproveRequest = async (bodyData: UpdateStatus, actionText:string) => {
 
         {/* Tabs */}
         <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
-          <Tabs value={activeTab} className="w-full md:w-max">
-            <TabsHeader>
-              {TABS.map(({ label, value }) => (
-                <Tab key={`Tab${value}`} value={value}>
-                  <button className="text-md" key={value} onClick={() => handleTabChange(value)}>&nbsp;&nbsp;{label}&nbsp;&nbsp;</button>                
-                </Tab>
-              ))}
-            </TabsHeader>
-          </Tabs>
+        <div className="flex">
+            {TABS.map((tab, index) => (
+              <button
+                key={index}
+                onClick={() => handleTabChange(tab.value)}
+                className={`px-6 py-2 text-md font-medium rounded-2xl transition-all ${activeTab === tab.value ? 'text-white bg-primary' : 'text-gray-500 hover:text-primary'}`}
+              >
+                {tab.label}
+              </button>
+            ))}
+          </div>
 
         <div className="w-full md:w-72">
             <div className="relative h-8 w-full min-w-[200px]">

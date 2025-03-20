@@ -275,7 +275,7 @@ function Datasets() {
             {errorMessage}
           </div>
           ) : (
-            <DatasetList dataSets={dataSet} /> // Display dataset list if no error
+            <DatasetList dataSets={dataSet} fetchDataSets={fetchDataSets} /> // Display dataset list if no error
           )
         )}
 
