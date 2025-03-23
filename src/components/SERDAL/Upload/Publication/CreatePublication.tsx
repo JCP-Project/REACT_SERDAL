@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import Select, { StylesConfig } from 'react-select';
 import { motion } from 'framer-motion';
 
-interface University {
+interface Institution {
   id: number;
   value: string;
   label: string;
@@ -15,7 +15,7 @@ interface University {
 
 function CreatePublication() {
   const apiUrl = import.meta.env.VITE_API_URL;
-  const [university, setUniversity] = useState<University[]>([]);
+  const [institution, setInstitution] = useState<Institution[]>([]);
 
   const navigate = useNavigate();
   const [imgError, setImgError] = useState("");
@@ -23,9 +23,13 @@ function CreatePublication() {
   const [ErrorMessage, setErrorMessage] = useState<string>("");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
+  const [selectedOption, setSelectedOption] = useState<any>(null);
+
   const [fileName, setFileName] = useState<string | null>(null);
 
   const [formData, setFormData] = useState({
+    citation: "",
+    journal: "",
     title: "",
     author: "",
     abstract: "",
@@ -38,30 +42,46 @@ function CreatePublication() {
   });
 
 
-        useEffect(() => {
-          // const fetchData = async () => {
-          //   try {
-          //     const response = await fetch(`${apiUrl}/api/Publication/University`, {
-          //       method: "GET",
-          //     });
-          //     if (response.ok) {
-          //       const jsonData: University[] = await response.json();
-          //       setUniversity(jsonData);
-          //     } else {
-          //       const errorResponse = await response.json();
-          //       console.error("Error message", errorResponse.message || "Unknown error");
-          //       setErrorMessage(errorResponse.message);
-          //     }
-          //   } catch (error) {
-          //         console.error("Error fetching publication data:", error);
-          //         setErrorMessage("Error fetching publication data");
-          //   } finally {
+  useEffect(() => {    
+    fetchInstitution();
+  }, []);
 
-          //   }
-          // };
-      
-          // fetchData();
-        }, []);
+
+  const handleChangeInstitution = (selectedOption: any) => {
+    setSelectedOption(selectedOption);
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      institution: selectedOption ? selectedOption.value : "",
+    }));
+  };
+
+  const fetchInstitution = async () => {
+
+    try {
+         const response = await fetch(`${apiUrl}/api/Institution/GetAllInstitution`, {
+            method: "GET",
+            });
+
+          if (response.ok) {
+              const jsonData: Institution[] = await response.json();
+              setInstitution(jsonData);
+          } else {
+              const errorResponse = await response.json();
+              console.error("Error message", errorResponse.message || "Unknown error");
+              setErrorMessage(errorResponse.message);
+          }
+          } catch (error) {
+              console.error("Error fetching publication data:", error);
+              setErrorMessage("Error fetching publication data");
+          } finally {
+
+            }
+  };
+
+  const InstitutionOptions = institution.map((ins) => ({
+    value: ins.id,
+    label: ins.label,
+  }));
 
 
 
@@ -82,13 +102,15 @@ function CreatePublication() {
       setIsSubmitting(true);
 
       const data = new FormData();
+      data.append("citation", formData.citation);
+      data.append("journal", formData.journal);
       data.append("title", formData.title);
       data.append("author", formData.author);
       data.append("summary", formData.abstract);
       data.append("pdflink", formData.pdfLink);
       data.append("keywords", formData.keywords);
       data.append("publicationDate", formData.publicationDate);
-
+      data.append("publication_Institutions", selectedOption.map(option => option.value));
 
      console.log("good", new Date().toLocaleString('en-CA'));
 
@@ -133,6 +155,8 @@ function CreatePublication() {
       if (response.ok) {
         console.log("Form data submitted successfully!");
           setFormData({
+            citation: "",
+            journal: "",
             title: "",
             author: "",
             abstract: "",
@@ -266,6 +290,31 @@ function CreatePublication() {
         <form className="max-w-3xl mx-3 lg:mx-auto my-2 text-lg" onSubmit={handleSubmit}>
           <div>
 
+          <div className="my-5">
+              <input
+                required
+                type="text"
+                id="citation"
+                name="citation"
+                placeholder="Citation"
+                value={formData.citation}
+                onChange={handleInputChange}
+                className="mt-4 w-full border-b-2 border-gray-300 bg-transparent focus:border-primary focus:outline-none"
+              />
+          </div>
+
+          <div className="my-5">
+              <input
+                required
+                type="text"
+                id="journal"
+                name="journal"
+                placeholder="Journal"
+                value={formData.journal}
+                onChange={handleInputChange}
+                className="mt-4 w-full border-b-2 border-gray-300 bg-transparent focus:border-primary focus:outline-none"
+              />
+          </div>
 
             <div className="my-5">
                 <input
@@ -295,19 +344,6 @@ function CreatePublication() {
 
             <div className="my-5">
               <input
-                required
-                type="text"
-                id="keywords"
-                name="keywords"
-                placeholder="Keywords"
-                value={formData.keywords}
-                onChange={handleInputChange}
-                className="mt-4 w-full border-b-2 border-gray-300 bg-transparent focus:border-primary focus:outline-none"
-              />
-            </div>
-
-            <div className="my-5">
-              <input
                 type="date"
                 id="publicationDate"
                 name="publicationDate"
@@ -318,10 +354,35 @@ function CreatePublication() {
               />
             </div>
 
-            {/* <div>
-              <label className="block text-lgml-2">Abstract</label>
-                <ReactQuill value={editorValue} onChange={handleChange} modules={modules} placeholder="Abstract"  className="rounded-lg border-[1px] border-stroke bg-transparent"/>
-            </div>     */}
+          <div className="mt-10">
+            <div className="relative">
+                <Select
+                    id="Institution"
+                    placeholder = "Select Institution"                                      
+                    value={selectedOption}
+                    onChange={(e) => setSelectedOption(e)}
+                    options={InstitutionOptions}
+                    styles={customStyles}
+                    name="Institution"
+                    className="!text-lg"
+                    isMulti
+                    required
+                    />
+            </div>
+          </div>
+
+          <div className="my-5">
+              <input
+                required
+                type="text"
+                id="keywords"
+                name="keywords"
+                placeholder="Keywords"
+                value={formData.keywords}
+                onChange={handleInputChange}
+                className="mt-4 w-full border-b-2 border-gray-300 bg-transparent focus:border-primary focus:outline-none"
+              />
+          </div>
 
             <div className="my-10">
               <textarea
@@ -332,6 +393,7 @@ function CreatePublication() {
                 value={formData.abstract}
                 onChange={handleInputChange}
                 className="w-full rounded-md border-2 border-gray-300 bg-transparent py-1 px-2 focus:border-primary focus:outline-none focus:ring-0 "
+                required
               ></textarea>
             </div>
           </div>
@@ -431,17 +493,17 @@ function CreatePublication() {
 const customStyles: StylesConfig = {
   control: (provided, state) => ({
     ...provided,
-    fontSize: '.8rem',
+    fontSize: '1rem',
     borderWidth: '2px',
-    borderColor: "6B7280", // Keep the border color consistent
-    boxShadow: state.isFocused ? '0 0 0 0px #17C0CC' : 'none', // Remove default blue focus outline
+    borderColor: "6B7280",
+    boxShadow: state.isFocused ? '0 0 0 0px #17C0CC' : 'none',
     '&:hover': {
-      borderColor: "6B7280", // Ensure hover border stays the same
+      borderColor: "6B7280",
     },
   }),
   option: (provided, state) => ({
     ...provided,
-    fontSize: '0.7rem',
+    fontSize: '1rem',
     backgroundColor: state.isSelected ? "#17C0CC" : 'transparent',
     color: state.isSelected ? '#fff' : '#000',
     cursor: 'pointer',

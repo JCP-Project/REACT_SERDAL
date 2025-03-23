@@ -23,6 +23,7 @@ import Form from './components/SERDAL/Survey/Form';
 import AnswerSurvey from './components/SERDAL/Survey/AnswerSurvey';
 import GenerateChart from './components/SERDAL/Upload/DataSet/GenerateChart';
 import ResetPassword from './components/SERDAL/Login/Authentication/ResetPassword';
+import Institution from './components/SERDAL/Management/Institution/Institution';
 
 
 
@@ -58,7 +59,7 @@ function App() {
       '/ui/alerts', '/ui/buttons', '/uploadpublication', 
       '/publication', '/login', '/createpublication','/createpost','/auth/signup','/datasets','/','/survey','/admin/survey/create','/admin/survey/form',
       '/datasets/generatechart',
-      '/admin/datasets',
+      '/admin/datasets','/admin/Management/Institution',
       '/auth/resetpassword',
     ];
 
@@ -140,6 +141,7 @@ function App() {
             <Route path="/admin/PublicationRequest" element={<> <PageTitle title="Publication Request" /> <PublicationRequest /> </>} />
             <Route path="/admin/datasets" element={<> <PageTitle title="Datasets" /> <Datasets /> </>} />
 
+            <Route path="/admin/Management/Institution" element={<> <PageTitle title="Institution" /> <Institution /> </>} />
              
             <Route path="/Auth/signup" element={<> <PageTitle title="Signup" /> <SignUp /> </>} />
           </>

@@ -20,7 +20,8 @@ interface ApiData {
     pdfLink: string;
     pdfFile: string;
     category: string;
-    university:number;
+    institution:number;
+    publication_Institutions: string;
     download: number;
     isDeleted: number;
     publicationDate: string;
@@ -112,7 +113,7 @@ const PublicationsList: React.FC<datas> = ({data, university}) =>{
                     <div key={post.id} id={`publication-${post}`} className="flex flex-col px-4 py-5   border-b border-gray-300"> 
 
                         <div className=" flex items-center justify-between text-sm my-3">
-                            <div><h5 className="font-bold">{getUniversity(post.university)}</h5></div>
+                            <div><h5 className="font-bold">{post.publication_Institutions}</h5></div>
                             <div><h5>{formatDateTime(post.publicationDate)}</h5></div>
                             
                         </div>

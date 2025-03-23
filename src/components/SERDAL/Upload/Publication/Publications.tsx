@@ -16,6 +16,8 @@ interface ApiData {
 
 interface Publication {
   id: number;
+  citation: string;
+  journal: string;
   title: string;
   author: string;
   summary: string;
@@ -28,9 +30,11 @@ interface Publication {
   pdfLink: string;
   pdfFile: string;
   category: string;
-  university: number;
+  institution: number;
+  publication_Institutions: string;
   download: number;
   isDeleted: number;
+  publicationDate: string;
 }
 
 interface University {
@@ -113,11 +117,13 @@ function Publications()
       const loadpage = {
         page: currentPage,
         pagesize: pageSize,
-        universities: selectedUniversity ? selectedUniversity.value.toString() : "", 
+        institutions: selectedUniversity && selectedUniversity.length > 0  ? selectedUniversity.map((item: { value: string }) => item.value).join(",") : "", 
         keywords: selectedKeywords ? selectedKeywords.value : "",
         order: selectedOption1 ? selectedOption1.value : "",
         search: searchTerm,
       };
+
+      console.log(loadpage);
       
       try {
         const response = await fetch(`${apiUrl}/api/Publication/PublicationPerPage`, {
@@ -131,7 +137,7 @@ function Publications()
         if (response.ok) {
           const jsonData = await response.json();
           
-
+          console.log(jsonData.publications)
           setPublications(jsonData.publications);  // Update publications
           setTotalCount(jsonData.totalCount); // Update total count
 
@@ -487,6 +493,7 @@ function Publications()
                                 className="text-sm w-full sm:w-[200px] md:flex md:flex-grow"  // Full width on mobile, 200px on larger screens, auto on desktop
                                 styles={customStyles}
                                 isClearable ={true}
+                                isMulti
                               />
                             </div>
                         </motion.div>

@@ -292,7 +292,7 @@ export default function UploadPublication() {
           animate={{ x: 0 }}     // End at position x = 0 (default position)
           transition={{ type: 'spring', stiffness: 100 }} // Smooth transition
         >
-                  <h1 className="text-2xl font-bold text-left text-white">Publication</h1>
+        <h1 className="text-2xl font-bold text-left text-white">Publication</h1>
         </motion.div>
 
         <h1 className="text-sm font-bold text-left text-white">Request</h1>

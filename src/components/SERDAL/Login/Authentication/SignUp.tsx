@@ -955,7 +955,7 @@ const customStyles: StylesConfig = {
   }),
   option: (provided, state) => ({
     ...provided,
-    fontSize: '0.7rem',
+    fontSize: '0.9rem',
     backgroundColor: state.isSelected ? "#17C0CC" : 'transparent',
     color: state.isSelected ? '#fff' : '#000',
     cursor: 'pointer',

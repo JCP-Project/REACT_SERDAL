@@ -3,7 +3,7 @@ import { NavLink, useLocation } from 'react-router-dom';
 import SidebarLinkGroup from './SidebarLinkGroup';
 import Logo from '/logo.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBook, faBookAtlas, faCalendar, faChartBar, faChartColumn, faChartDiagram, faChartLine, faDashboard, faFileArchive, faFilePdf, faTh, faUserAlt } from '@fortawesome/free-solid-svg-icons';
+import { faBook, faBookAtlas, faBuilding, faCalendar, faChartBar, faChartColumn, faChartDiagram, faChartLine, faDashboard, faFileArchive, faFilePdf, faTh, faUserAlt } from '@fortawesome/free-solid-svg-icons';
 
 interface SidebarProps {
   sidebarOpen: boolean;
@@ -195,9 +195,22 @@ const Sidebar2 = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
               {/* <!-- User Table --> */}
 
 
+              
 
-
-
+              {/* <!-- User Table --> */}
+              <li>
+                <NavLink
+                  to="/admin/Management/Institution"
+                  className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 text-[14px] text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
+                    pathname.includes('Institution') && 'bg-graydark dark:bg-meta-4'
+                  }`}
+                  onClick={() => setSidebarOpen(!sidebarOpen)}
+                >
+                  <FontAwesomeIcon icon={faBuilding}/>               
+                  Institution
+                </NavLink>
+               </li>
+              {/* <!-- User Table --> */}
 
 
 

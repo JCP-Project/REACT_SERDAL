@@ -1,11 +1,9 @@
 
-import { faAd, faAdd, faCalendar } from '@fortawesome/free-solid-svg-icons';
+import { faAdd, faCalendar } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
-import { Progress } from "@material-tailwind/react";
 import Select, { StylesConfig } from 'react-select';
-import {Tabs,TabsHeader,Tab} from "@material-tailwind/react";
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 
@@ -223,7 +221,7 @@ function Form () {
                             <Link to="/admin/survey/create">
                               <button className="flex items-center gap-3 bg-[#17C0CC] text-white px-4 py-2 rounded-md hover:bg-[#139B99]">
                                 <FontAwesomeIcon icon={faAdd} className="cursor-pointer" />
-                                  Create Survey
+                                  Create
                               </button>   
                             </Link>              
                           </div>

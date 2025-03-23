@@ -24,6 +24,9 @@ interface APIData {
   keywords: string;
   isDeleted: number;
   publicationDate:string;
+  journal: string;
+  citation: string;
+  publication_Institutions: string;
   universityList: University[];
 }
 
@@ -32,7 +35,7 @@ interface Publication {
   title: string;
   author: string;
   summary: string;
-  university: number; 
+  institution: number; 
   createdDate: string;
   createdBy: number;
   status: number;
@@ -43,6 +46,9 @@ interface Publication {
   pdfFile: string;
   keywords: string;
   isDeleted: number;
+  journal: string;
+  citation: string;
+  publication_Institutions: string;
   publicationDate:string;
 }
 
@@ -328,10 +334,22 @@ const getUniversity =  (id:number) =>{
                 </p>            
           </div>
 
+          <div className="py-1 text-xs lg:text-lg text-primary leading-relaxed flex justify-center items-center">
+            <div><h5><span className="font-bold"></span>{data?.citation}</h5></div>
+          </div>
+
+          <div className="py-2 text-xs lg:text-4xl font-bold leading-relaxed flex justify-center items-center">
+            <div><h5><span className="font-bold"></span>{data?.journal}</h5></div>
+          </div>
+
           <div className="text-left py-2 md:py-10"><h1 className="text-sm lg:text-3xl md:text-4xl leading-relaxed text-primary">  {data?.title} </h1></div>
 
-          <div className="py-5 text-xs lg:text-lg leading-relaxed">
+          <div className="py-2 text-xs lg:text-lg leading-relaxed">
             <div><h5><span className="font-bold">Authors: </span>{data?.author}</h5></div>
+          </div>
+
+          <div className="py-2 text-xs lg:text-lg leading-relaxed">
+            <div><h5><span className="font-bold">Institutions: </span>{data?.publication_Institutions}</h5></div>
           </div>
 
           {
@@ -341,11 +359,8 @@ const getUniversity =  (id:number) =>{
                 </div>
               ) : null
             }
-
-
-
-          <div className="yp-2 lg:py-10 text-xs md:text-lg leading-relaxed">
-            <div className="py-1 lg:py-5"><h5><span className="font-bold">Abstract:</span></h5></div>
+          <div className="yp-2 lg:py-5 text-xs md:text-lg leading-relaxed">
+            <div className="py-1"><h5><span className="font-bold">Abstract:</span></h5></div>
             <div><p className="text-left lg:text-justify ">{data?.summary}</p></div>
           </div>
 
@@ -380,7 +395,7 @@ const getUniversity =  (id:number) =>{
   
                   <div className="w-full lg:py-5"
                     >
-                    {relatedArticle.map(({id, title, summary, pdfFile, pdfLink, createdDate, university}) => (
+                    {relatedArticle.map(({id, title, summary, pdfFile, pdfLink, createdDate, institution}) => (
   
                         <div key={id} id={`relatedArticleId-${id}`} className="flex flex-col px-4 py-2 border-b">
                           <Link
@@ -392,7 +407,7 @@ const getUniversity =  (id:number) =>{
                               }}
                             >
                           <div className=" flex items-center justify-between text-xs my-3">
-                          <div><h5 className="font-bold">{getUniversity(university)}</h5></div>
+                          {/* <div><h5 className="font-bold">{getUniversity(institution)}</h5></div> */}
   
                               <div>
                                     <p className="text-black-980 text-black-800 text-xs md:text-xs mt-auto mb-3">
