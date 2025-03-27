@@ -7,13 +7,14 @@ import { useParams } from "react-router-dom";
 import { MdOutlineCheckBox, MdOutlineIndeterminateCheckBox } from "react-icons/md";
 import { FaAngleLeft,FaAngleRight  } from "react-icons/fa";
 
+
 interface DataSets {
   title: string;
   dataGroup: DataGroup[];
 }
 
 interface DataGroup {
-  production: string;  // ✅ Correct key
+  production: string;
   description: string;
   dataYear: string[];
   series: Series[];
@@ -96,6 +97,83 @@ function GenerateChart() {
     { label: "Radar Chart", value: "radar" },
     { label: "Bubble Chart", value: "bubble" },
   ];
+
+//#region regression
+const calculateRegression = (data: { x: string, y: number }[]) => {
+  const n = data.length;
+
+  // Calculate sums
+  const sumX = data.reduce((acc, point) => acc + parseFloat(point.x), 0);
+  const sumY = data.reduce((acc, point) => acc + point.y, 0);
+  const sumXY = data.reduce((acc, point) => acc + parseFloat(point.x) * point.y, 0);
+  const sumX2 = data.reduce((acc, point) => acc + Math.pow(parseFloat(point.x), 2), 0);
+
+  // Calculate slope (m) and intercept (b)
+  const m = (n * sumXY - sumX * sumY) / (n * sumX2 - Math.pow(sumX, 2));
+  const b = (sumY - m * sumX) / n;
+
+  // Calculate regression line
+  return data.map(point => ({
+    x: point.x,
+    y: m * parseFloat(point.x) + b,
+  }));
+};
+
+
+const formattedSeries1 = () => {
+  if (!dataSet || !dataSet?.dataGroup[selectedProd]?.series) {
+    return [{ name: "No Data", data: [] }];
+  }
+
+  // Filter and sort years based on selectedYears
+  const filterYears =
+    selectedYears.length > 0
+      ? dataSet?.dataGroup[selectedProd].dataYear
+          .map((year, index) => (selectedYears.includes(year) ? index : null))
+          .filter((index) => index !== null)
+      : [...Array(dataSet?.dataGroup[selectedProd].dataYear.length).keys()];
+
+  // Sort the data points based on the years (ensure chronological order)
+  const sortedDataPoints = filterYears
+    .map((index) => ({
+      x: dataSet?.dataGroup[selectedProd].dataYear[index],
+      y: dataSet?.dataGroup[selectedProd].series[0]?.data[index], // Adjust according to your series data
+    }))
+    .sort((a, b) => a.x - b.x); // Sorting by year (x value)
+
+  console.log("Sorted Data Points:", sortedDataPoints);
+
+  // Calculate the regression line
+  const regressionLine = calculateRegression(
+    sortedDataPoints.map(point => ({ x: point.x, y: point.y }))
+  );
+
+  // Now, we return the series including the regression line
+  return [
+    {
+      name: dataSet?.dataGroup[selectedProd].series[0]?.name || "Data",
+      data: sortedDataPoints,
+    },
+    {
+      name: "Regression Line",
+      data: regressionLine,  // Use the calculated regression line data
+      color: "#FF0000", // Red color for the regression line
+      type: "line", // Ensure this is a line chart for regression
+      stroke: {
+        width: 3, // Set the line width to make it visible
+        curve: "linear", // Ensure the regression line is straight (no curve)
+      },
+      marker: {
+        size: 0, // Remove markers (bubbles)
+      },
+      zIndex: 10, // Make sure the regression line is on top of other series
+    },
+  ];
+};
+
+
+
+//#endregion
 
   useEffect(() => {
     fetchDataset(Number(dataset));
@@ -236,11 +314,11 @@ function GenerateChart() {
       const lineBarChart = {
         ...baseChartOptions,
         stroke: {
-          curve: "smooth", // ✅ Keep smooth lines for better appearance
+          curve: "smooth", // smooth lines for better appearance
           width: 5,
         },
         markers: {
-          size: 4, // ✅ Keep visible markers for clarity
+         // size: 4, //visible markers for clarity
         },
       };
     
@@ -248,7 +326,7 @@ function GenerateChart() {
         ...baseChartOptions,
       // title: { text:  dataSet?.title },
         xaxis: {
-          categories: dataSet?.dataGroup[selectedProd]?.dataYear || [], // ✅ Ensure x-axis uses years
+          categories: dataSet?.dataGroup[selectedProd]?.dataYear || [], // x-axis years
         },
       };
   

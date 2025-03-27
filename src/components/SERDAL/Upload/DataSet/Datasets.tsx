@@ -8,16 +8,29 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAdd } from "@fortawesome/free-solid-svg-icons";
 import Swal from 'sweetalert2';
 
-interface DataSets {
-  title: string;
-  dataGroup: DataGroup[]; 
+interface DatasetGroup {
+  id: number;
+  categoryName: string;
+  dataset : DataSets[]
 }
 
-interface DataGroup {
-  production: string;
-  description: string;
-  dataYear: string[];
-  series: Series[];
+interface DataSets {
+  id: number;
+  title: string;
+  //dataGroup: DataGroup[]; 
+}
+
+// interface DataGroup {
+//   production: string;
+//   description: string;
+//   dataYear: string[];
+//   series: Series[];
+// }
+
+
+interface DatasetCategory {
+  id: number;
+  categoryName: string;
 }
 
 interface Series {
@@ -30,8 +43,16 @@ function Datasets() {
   const { dataset } = useParams();
 
   const [sort, setSort] = useState<any>(null);
+
+  const [dataSetGroup, setDataSetGroup] = useState<DatasetGroup[]>([]);
   const [dataSet, setDataSet] = useState<DataSets[]>([]);
+
+  const [datasetCategory, setDatasetCategory] = useState<DatasetCategory[]>([]);
+  const [selectedCategory, setSelectedCategory] = useState<any>(null);
+
   const [errorMessage, seterrorMessage] = useState<string>("");
+
+  const [modal, setmodal] = useState(false);
 
   const hasFetched = useRef(false);
 
@@ -44,6 +65,7 @@ function Datasets() {
   useEffect(() => {
     if (!hasFetched.current) {
       fetchDataSets();
+      fetchCategoryList();
       hasFetched.current = true;
     }
   }, []);
@@ -59,8 +81,11 @@ function Datasets() {
         return;
       }
 
-      const jsonresult: DataSets[] = await response.json();
-      setDataSet(jsonresult);
+      const jsonresult: DatasetGroup[] = await response.json();
+     console.log(jsonresult);
+      setDataSetGroup(jsonresult);
+      console.log(dataSetGroup);
+      console.log(dataSetGroup);
 
     } catch (error) {
       console.error(error);
@@ -76,6 +101,12 @@ function Datasets() {
   const handleSort = (selected: any) => {
     setSort(selected);
   };
+
+  
+  const categoryList = datasetCategory.map((category) => ({
+    value: category.id,
+    label: category.categoryName,
+  }));
 
   const sortOptions = [
     { label: 'Title (A-Z)', value: 'title_asc' },
@@ -98,16 +129,17 @@ function Datasets() {
     if (event.target.files && event.target.files[0]) {
       const selectedFile = event.target.files[0];
       setFile(selectedFile);
-
-      isExist(selectedFile);
-      event.target.value = '';
+      //event.target.value = '';
     }
   };
 
 
-  const isExist = async (file: File) => {
-        const formData = new FormData();
+  const isExist = async () => {
+    const formData = new FormData();
     formData.append('file', file);
+    formData.append('Id', selectedCategory.value);
+
+ 
     try {
       const response = await fetch(`${apiUrl}/api/Dataset/isExist`, {
         method: 'POST',
@@ -115,7 +147,7 @@ function Datasets() {
       });
 
       if (response.ok) {
-        handleFileUpload(file);
+        handleFileUpload();
       } else {
         const jsonresult = await response.json();
         if (jsonresult.code === 400) {
@@ -139,6 +171,7 @@ function Datasets() {
                   })
                   .then((result) => {
                     if (result.isConfirmed) {
+                      setmodal(false);
                       handleFileUpload(file);
                     }
                   });
@@ -156,13 +189,14 @@ function Datasets() {
       });
     } finally {
      // swalLoading.close();
+     setmodal(false);
     }
   };
 
 
 
 
-  const handleFileUpload = async (file: File) => {
+  const handleFileUpload = async () => {
     const swalLoading = Swal.fire({
       title: 'Uploading...',
       text: 'Please wait while the dataset is uploading.',
@@ -180,7 +214,7 @@ function Datasets() {
 
     const formData = new FormData();
     formData.append('file', file);
-
+    formData.append('Id', selectedCategory.value);
     try {
       const response = await fetch(`${apiUrl}/api/Dataset/UploadExcel`, {
         method: 'POST',
@@ -219,10 +253,38 @@ function Datasets() {
       });
     } finally {
       swalLoading.close();
+      setmodal(false);
     }
   };
+  
+  const fetchCategoryList = async () => {
+
+    try {
+      const response = await fetch(`${apiUrl}/api/Dataset/CategoryList`);
+
+      if (response.ok) {
+        const jsonresult: DatasetCategory[] = await response.json();
+        setDatasetCategory(jsonresult);
+      }
+  
+    } catch (error) {
+      console.error(error)
+    }
+
+  }
+
+  const save = async (e: React.FormEvent) =>{
+    e.preventDefault();
+
+    if (!selectedCategory || !file) {
+      return;
+    }
+
+    isExist();
+  }
 
   return (
+    <>
     <div className="bg-white lg:min-h-[90vh]">
       <div className="bg-primary text-left py-8">
         <motion.div
@@ -251,10 +313,10 @@ function Datasets() {
           <div className={`${adminStatus ? 'block' : 'hidden'} flex justify-end my-3 mx-1`}>
               <button
                 className="flex items-center gap-3 bg-[#17C0CC] text-white px-4 py-2 rounded-md hover:bg-[#139B99]"
-                onClick={() => document.getElementById('fileInput')?.click()}
+                //onClick={() => document.getElementById('fileInput')?.click()}
+                onClick={() => setmodal(true)}
               >
-                <FontAwesomeIcon icon={faAdd} className="cursor-pointer" />
-                Upload Dataset
+                Upload
               </button>
 
               <input
@@ -275,19 +337,76 @@ function Datasets() {
             {errorMessage}
           </div>
           ) : (
-            <DatasetList dataSets={dataSet} fetchDataSets={fetchDataSets} /> // Display dataset list if no error
+            <DatasetList dataSets={dataSetGroup} fetchDataSets={fetchDataSets} /> // Display dataset list if no error
           )
         )}
 
       </div>
     </div>
+
+
+        {modal && (
+      <div className="fixed inset-0 text-sm flex justify-center items-center z-50 bg-gray-600 bg-opacity-50 ">
+        <div className="bg-white p-6 rounded-lg max-w-2xl w-full mx-5 px-10 text-lg">
+          <h2 className="text-2xl font-bold mb-4">Upload Dataset</h2>
+          
+          <form onSubmit={save} className="w-full">
+
+            {/* Category Selection */}
+            <section className="mt-10 flex">
+              <Select
+                id="category"
+                placeholder="Category"
+                value={selectedCategory}
+                onChange={(e) => setSelectedCategory(e)}
+                options={categoryList}
+                styles={customStyles}
+                className="text-sm w-full md:w-full mx-1"
+                required
+              />
+            </section>
+
+            {/* File Upload */}
+            <section className="my-5 flex ml-1">
+              <input
+                id="fileInput"
+                type="file"
+                accept=".xlsx, .xls"
+                onChange={handleFileChange}
+                className="file-input"
+                required
+              />
+            </section>
+
+            <section className="mt-3 flex justify-end">
+              <button
+                type="submit"
+                className="mt-4 py-2 bg-primary text-white rounded-sm px-5 mx-1"
+              >
+                Submit
+              </button>
+              <button
+                type="button"
+                onClick={() => setmodal(false)}
+                className="mt-4 py-2 bg-gray-400 text-white rounded-sm px-5 mx-1"
+              >
+                Close
+              </button>
+            </section>
+
+          </form>
+        </div>
+      </div>
+    )}
+
+    </>
   );
 }
 
 const customStyles: StylesConfig = {
   control: (provided, state) => ({
     ...provided,
-    fontSize: '.8rem',
+    fontSize: '1rem',
     border: "2px solid #17C0CC",
     boxShadow: 'none',
     minWidth: '200px',
@@ -301,7 +420,7 @@ const customStyles: StylesConfig = {
   }),
   option: (provided, state) => ({
     ...provided,
-    fontSize: '0.7rem',
+    fontSize: '0.9rem',
     backgroundColor: state.isSelected ? "#17C0CC" : 'transparent',
     color: state.isSelected ? '#fff' : '#000',
     cursor: 'pointer',

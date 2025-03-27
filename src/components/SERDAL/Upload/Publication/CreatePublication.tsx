@@ -414,35 +414,35 @@ function CreatePublication() {
 
             <div>
             <div className="flex flex-col mb-6 mt-10">
-            <label className="block text-lg ml-2">PDF File</label>
-                <label
-                  htmlFor="file"
-                  className="w-full cursor-pointer rounded-lg border-2 border-gray-300 bg-transparent focus:border-primary focus:outline-none 
-                          flex justify-center items-center text-gray-700 bg-transparent border-2 border-gray-300 rounded-md text-lg font-medium hover:bg-primary hover:text-white"
-                >
-                  {/* Custom placeholder text */}
-                  {!fileName && (
-                    <span className="text-gray-500">Choose PDF file</span>
+              <label className="block text-lg ml-2">PDF File</label>
+                  <label
+                    htmlFor="file"
+                    className="w-full cursor-pointer rounded-lg border-2 border-gray-300 bg-transparent focus:border-primary focus:outline-none 
+                            flex justify-center items-center text-gray-700 bg-transparent border-2 border-gray-300 rounded-md text-lg font-medium hover:bg-primary hover:text-white"
+                  >
+                    {/* Custom placeholder text */}
+                    {!fileName && (
+                      <span className="text-gray-500">Choose PDF file</span>
+                    )}
+
+                    {/* Display file name after selection */}
+                    {fileName && (
+                      <span className="text-gray-600">{fileName}</span>
+                    )}
+
+                    {/* File input is hidden, triggered by the label */}
+                    <input
+                      id="file"
+                      type="file"
+                      onChange={handleFileChange}
+                      className="hidden" // Hide the default file input
+                    />
+                  </label>
+
+                  {/* Display error message */}
+                  {pdfError && (
+                    <p className="text-red-500 text-lg mt-[-10px]">{pdfError}</p>
                   )}
-
-                  {/* Display file name after selection */}
-                  {fileName && (
-                    <span className="text-gray-600">{fileName}</span>
-                  )}
-
-                  {/* File input is hidden, triggered by the label */}
-                  <input
-                    id="file"
-                    type="file"
-                    onChange={handleFileChange}
-                    className="hidden" // Hide the default file input
-                  />
-                </label>
-
-                {/* Display error message */}
-                {pdfError && (
-                  <p className="text-red-500 text-lg mt-[-10px]">{pdfError}</p>
-                )}
               </div>
 
             </div>

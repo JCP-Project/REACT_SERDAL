@@ -4,22 +4,29 @@ import Swal from 'sweetalert2';
 
 
 interface DatasetListProps {
-  dataSets: DataSets[];
+  dataSets: DatasetGroup[];
   fetchDataSets: () => void;  // Add fetchDataSets as a prop
 }
+
+interface DatasetGroup {
+  id: number;
+  categoryName: string;
+  dataset : DataSets[]
+}
+
 
 interface DataSets {
   id: number;
   title: string;
-  dataGroup: DataGroup[];
+ // dataGroup: DataGroup[];
 }
 
-interface DataGroup {
-  production: string;  // ✅ Correct key
-  description: string;
-  dataYear: string[];
-  series: Series[];
-}
+// interface DataGroup {
+//   production: string;  // ✅ Correct key
+//   description: string;
+//   dataYear: string[];
+//   series: Series[];
+// }
 
 interface Series {
   name: string;
@@ -144,17 +151,40 @@ const DatasetList: React.FC<DatasetListProps> = ({ dataSets, fetchDataSets }) =>
   return (
 <>
             <div className="w-full">
-                {dataSets.map((data) => (
-                    <div key={data.id} id={`publication-${data.id}`} className="relative flex flex-col px-4 py-5  border-b border-gray-300"> 
+                {dataSets.map((data, dataIndex) => (
+                    <div key={`dataKey${data.id}${dataIndex}`} id={`Dataset-${data.id}${dataIndex}`} className="mb-10">
+                      <div className="bg-primary p-2 text-white text-xl font-bold">
+                        {data.categoryName}
+                      </div>
 
-                        <h5 className="text-lg font-bold uppercase text-primary py-2 text-left">
-                            <Link  to={`/datasets/generatechart/${data.id}`}>
-                                {
-                                    data.title
-                                }
-                            </Link>
-                        </h5>
-                        <ul className="list-disc list-inside space-y-2 text-gray-800">
+                        {
+                          data.dataset.map((datarow,datarowIndex) =>(
+                            <div key={`$datarowKey${datarow.id}${datarowIndex}`} id={`$datarowID${datarow.id}${datarowIndex}`} 
+                                  className="relative flex items-center px-4 py-2  border-b border-gray-300">
+                              <div className="h-2 w-2 bg-primary rounded-full mr-3"></div>
+                              <h5 className="text-sm font-bold uppercase text-primary text-left">
+                                
+                              <Link  to={`/datasets/generatechart/${datarow.id}`}>
+                                  {
+                                      datarow.title
+                                  }
+                              </Link>
+
+                              <div className={`absolute bottom-5 right-2 ${adminStatus ? 'block' : 'hidden'}`}>
+                                <button onClick={() => handleDelete(datarow.id, datarow.title)}>
+                                  <FaTrashCan 
+                                        color="#D32F2F" 
+                                        className="hover:scale-110 hover:rotate-6 transition-transform duration-200" 
+                                  />
+                                </button>
+                              </div>
+                              
+                            </h5>
+                          </div>
+                          ))
+                        }
+
+                        {/* <ul className="list-disc list-inside space-y-2 text-gray-800">
                             {data.dataGroup.map((datagroup, index) => (
                               <li
                                 key={index}
@@ -165,16 +195,9 @@ const DatasetList: React.FC<DatasetListProps> = ({ dataSets, fetchDataSets }) =>
                                 </span>
                               </li>
                             ))}
-                          </ul>
+                        </ul> */}
 
-                      <div className={`absolute bottom-5 right-2 ${adminStatus ? 'block' : 'hidden'}`}>
-                        <button onClick={() => handleDelete(data.id, data.title)}>
-                          <FaTrashCan 
-                                color="#D32F2F" 
-                                className="hover:scale-110 hover:rotate-6 transition-transform duration-200" 
-                          />
-                         </button>
-                      </div>
+
 
                     </div>
                 ))}
