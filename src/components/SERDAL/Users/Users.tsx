@@ -7,6 +7,7 @@ import { FaEdit } from "react-icons/fa";
 import Select, { StylesConfig } from 'react-select';
 import Swal from 'sweetalert2';
 import { useNavigate } from 'react-router-dom';
+import Loader from '../../../common/Loader';
  
 const TABS = [
   {
@@ -38,6 +39,10 @@ interface User {
   
 export default function Users() {
   const apiUrl = import.meta.env.VITE_API_URL;
+  const token = localStorage.getItem("APIToken");
+
+  const [loading, setLoading] = useState<boolean>(false);
+  const [errorMessage, seterrorMessage] = useState<string>("");
 
    const [activeTab, setActiveTab] = useState("all"); // Active tab state
   const [filter, setFilter] = useState(""); // Filter state to hold the search query
@@ -56,20 +61,25 @@ export default function Users() {
   }, []);
 
   const fetchTableRows = async () => {
+    setLoading(true);
+    seterrorMessage("");
     try {
       const response = await fetch(`${apiUrl}/api/Users/users`);
       if (!response.ok) {
         console.log("Network response was not ok", response);
-        throw new Error("Network response was not ok");
+        seterrorMessage("Failed to fetch users from the server.");
       }
       
       const rowsData = await response.json();
       setTableRows(rowsData);
     } catch (error) {
       console.error("Error fetching table rows:", error);
+      seterrorMessage("Failed to fetch users from the server.");
+    }
+    finally{
+      setLoading(false);
     }
   };
-
 
 
   // Handle tab changes and reset to the first page when changing the tab
@@ -113,33 +123,53 @@ export default function Users() {
     }
 
     try {
+
+      if (!token) {
+        console.error("No token found, ");
+        return Swal.fire({
+          icon: 'error',
+          title: 'No token found',
+          text: 'User is not authenticated. Please try again.',
+          confirmButtonColor: '#17C0CC',
+        });
+      }
+
       const response = await fetch(`${apiUrl}/api/Users/UpdateUserInfo`, {
-        method: 'PUT', // or 'PATCH' depending on the API design
+        method: 'POST',
         headers: {
-          'Content-Type': 'application/json', // Set the request content type to JSON
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,
         },
-        body: JSON.stringify(userUpdate), // Convert selectedInfo to JSON
+        body: JSON.stringify(userUpdate),
       });
   
       if (!response.ok) {
-        console.log("Network response was not ok", response);
-        throw new Error("Network response was not ok");
+        return Swal.fire({
+                icon: 'error',
+                title: 'Failed',
+                text: 'Something went wrong. Please try again.',
+                confirmButtonColor: '#17C0CC',
+        });
       }
   
-      //const rowsData = await response.json();
-                Swal.fire({
-                  title: 'Success!',
-                  text: 'Saved successfully.',
-                  icon: 'success',
-                  confirmButtonText: 'Okay',
-                  confirmButtonColor: '#17C0CC',
-                }).then(() => {
-                  fetchTableRows();
-                });;
+        Swal.fire({
+            title: 'Success!',
+            text: 'Saved successfully.',
+            icon: 'success',
+            confirmButtonText: 'Okay',
+            confirmButtonColor: '#17C0CC',
+          }).then(() => {
+              fetchTableRows();
+          });
 
       setmodal(false); // Close the modal after saving
     } catch (error) {
-      console.error("Error saving user data:", error);
+       Swal.fire({
+        icon: 'error',
+        title: 'Failed',
+        text: 'Something went wrong. Please try again.',
+        confirmButtonColor: '#17C0CC',
+      });
     }
   };
 
@@ -217,7 +247,7 @@ export default function Users() {
       </div>
 
 
-    <Card className="h-full w-full px-3 md:px-10 rounded-lg">
+    <Card className="min-h-full w-full px-3 md:px-10 rounded-lg">
       <CardHeader floated={false} shadow={false} className="rounded-none">
         <div className="mb-2 flex items-center justify-between gap-8">
 
@@ -259,116 +289,132 @@ export default function Users() {
 
 <CardBody className="px-0">
   {/* Wrapper div for scrolling */}
-  <div className="max-h-[500px] min-h-[500px] overflow-y-auto scrollbar-thin scrollbar-thumb-gray-200 scrollbar-track-white">
-    <table className="mt-2 w-full min-w-max table-auto text-left">
+  
+    
       {/* Make the header sticky */}
-      <thead className="sticky top-0 bg-white z-50">
-        <tr>
-            <th key="title" className="border-y border-blue-gray-100 bg-blue-gray-50/50 p-2">
-              <Typography   color="blue-gray"  className="text-md leading-none opacity-70">
-                NAME
-              </Typography>
-            </th>
-            <th key="author" className="border-y border-blue-gray-100 bg-blue-gray-50/50 p-2 text-center">
-              <Typography   color="blue-gray"  className="text-md leading-none opacity-70">
-                ROLE
-              </Typography>
-            </th>
-            <th key="status" className="border-y border-blue-gray-100 bg-blue-gray-50/50 p-2 text-center">
-              <Typography   color="blue-gray"  className="text-md leading-none opacity-70">
-                STATUS
-              </Typography>
-            </th>
-            <th key="uploaddate" className="border-y border-blue-gray-100 bg-blue-gray-50/50 p-2 text-center">
-              <Typography   color="blue-gray"  className="text-md leading-none opacity-70">
-                REGISTERED DATE
-              </Typography>
-            </th>
-            <th key="delete" className="border-y border-blue-gray-100 bg-blue-gray-50/50 p-2 text-center">
-              <Typography   color="blue-gray"  className="text-md leading-none opacity-70">
-                Action
-              </Typography>
-            </th>
 
-            
-        </tr>
-      </thead>
-      <tbody>
-  {filteredRows.map(({ id, imagePath, firstName, lastName, email, role, isActive, createDateTime }) => {
-    const classes = "p-1 border-b border-blue-gray-50";
-
-    return (
-      <tr key={id}>
-        <td className={classes}>
-          <div className="flex items-center gap-3 lg:w-45">
-            <div>
-              <div className="flex items-center">
-                <div className="rounded-full bg-primary text-white w-8 h-8 flex items-center justify-center text-sm font-semibold">
-                  {firstName.charAt(0).toUpperCase()}{lastName.charAt(0).toUpperCase()}
-                </div>
-              </div>
-            </div>
-            <div className="flex flex-col">
-              <Typography  color="blue-gray" className="text-md">
-                {firstName} {lastName}
-              </Typography>
-              <Typography  color="blue-gray" className="text-md opacity-70">
-                {email || "No Email Available"} {/* Fallback */}
-              </Typography>
-            </div>
-          </div>
-        </td>
-        <td className={classes}>
-          <div className="block text-center">
-            <Typography  color="blue-gray" className="text-md">
-            {role ? `${role.charAt(0).toUpperCase()}${role.slice(1).toLowerCase()}` : "No Role Available"}
-            </Typography>
-          </div>
-        </td>
-        <td className={classes}>
-          <div className='flex items-center justify-center'>
-          <div
-              className={`text-white py-2 m-0 text-sm text-center inline-block px-8 font-bold
-                ${isActive === 1 ? "bg-green-600" : isActive === 0 ? "bg-red-600" : "bg-gray-300"}`}
-            >
-              {isActive === 1 ? "Active" : isActive === 0 ? "Inactive" : "Unknown"}
-            </div>
-          </div>
-        </td>
-        <td className={`${classes} text-center`}>
-          <Typography  color="blue-gray" className="text-md">
-            {createDateTime
-              ? new Intl.DateTimeFormat('en-US', {
-                  month: '2-digit',
-                  day: '2-digit',
-                  year: 'numeric',
-                }).format(new Date(createDateTime))
-              : "No Date Available"} {/* Fallback */}
-          </Typography>
-        </td>
-        <td className={`${classes} text-center`}>
+      
+      {loading ? (
+          <div className="w-full"><Loader /></div>
+      ): (
+       errorMessage ? (
+       <div className='h-full mb-50 w-[100%] text-center py-20 text-gray-400 font-bold text-lg'>
+          {errorMessage}
+       </div>
+        ) : (
           <div>
-            <button onClick={() => UserInfo(id)}>
-              <FaEdit />
-            </button>
+            <div className="max-h-[500px] min-h-[500px] overflow-y-auto scrollbar-thin scrollbar-thumb-gray-200 scrollbar-track-white">
+            <table className="mt-2 w-full min-w-max table-auto text-left">
+              <thead className="sticky top-0 bg-white z-50">
+                    <tr>
+                        <th key="title" className="border-y border-blue-gray-100 bg-blue-gray-50/50 p-2">
+                          <Typography   color="blue-gray"  className="text-md leading-none opacity-70">
+                            NAME
+                          </Typography>
+                        </th>
+                        <th key="author" className="border-y border-blue-gray-100 bg-blue-gray-50/50 p-2 text-center">
+                          <Typography   color="blue-gray"  className="text-md leading-none opacity-70">
+                            ROLE
+                          </Typography>
+                        </th>
+                        <th key="status" className="border-y border-blue-gray-100 bg-blue-gray-50/50 p-2 text-center">
+                          <Typography   color="blue-gray"  className="text-md leading-none opacity-70">
+                            STATUS
+                          </Typography>
+                        </th>
+                        <th key="uploaddate" className="border-y border-blue-gray-100 bg-blue-gray-50/50 p-2 text-center">
+                          <Typography   color="blue-gray"  className="text-md leading-none opacity-70">
+                            REGISTERED DATE
+                          </Typography>
+                        </th>
+                        <th key="delete" className="border-y border-blue-gray-100 bg-blue-gray-50/50 p-2 text-center">
+                          <Typography   color="blue-gray"  className="text-md leading-none opacity-70">
+                            Action
+                          </Typography>
+                        </th>
+
+                        
+                    </tr>
+              </thead>
+              <tbody>
+              {filteredRows.map(({ id, imagePath, firstName, lastName, email, role, isActive, createDateTime }) => {
+                const classes = "p-1 border-b border-blue-gray-50";
+            
+                return (
+                  <tr key={id}>
+                    <td className={classes}>
+                      <div className="flex items-center gap-3 lg:w-45">
+                        <div>
+                          <div className="flex items-center">
+                            <div className="rounded-full bg-primary text-white w-8 h-8 flex items-center justify-center text-sm font-semibold">
+                              {firstName.charAt(0).toUpperCase()}{lastName.charAt(0).toUpperCase()}
+                            </div>
+                          </div>
+                        </div>
+                        <div className="flex flex-col">
+                          <Typography  color="blue-gray" className="text-md">
+                            {firstName} {lastName}
+                          </Typography>
+                          <Typography  color="blue-gray" className="text-md opacity-70">
+                            {email || "No Email Available"} {/* Fallback */}
+                          </Typography>
+                        </div>
+                      </div>
+                    </td>
+                    <td className={classes}>
+                      <div className="block text-center">
+                        <Typography  color="blue-gray" className="text-md">
+                        {role ? `${role.charAt(0).toUpperCase()}${role.slice(1).toLowerCase()}` : "No Role Available"}
+                        </Typography>
+                      </div>
+                    </td>
+                    <td className={classes}>
+                      <div className='flex items-center justify-center'>
+                      <div
+                          className={`text-white py-2 m-0 text-sm text-center inline-block px-8 font-bold
+                            ${isActive === 1 ? "bg-green-600" : isActive === 0 ? "bg-red-600" : "bg-gray-300"}`}
+                        >
+                          {isActive === 1 ? "Active" : isActive === 0 ? "Inactive" : "Unknown"}
+                        </div>
+                      </div>
+                    </td>
+                    <td className={`${classes} text-center`}>
+                      <Typography  color="blue-gray" className="text-md">
+                        {createDateTime
+                          ? new Intl.DateTimeFormat('en-US', {
+                              month: '2-digit',
+                              day: '2-digit',
+                              year: 'numeric',
+                            }).format(new Date(createDateTime))
+                          : "No Date Available"} {/* Fallback */}
+                      </Typography>
+                    </td>
+                    <td className={`${classes} text-center`}>
+                      <div>
+                        <button onClick={() => UserInfo(id)}>
+                          <FaEdit />
+                        </button>
+                      </div>
+            
+                    </td>
+                  </tr>
+                );
+              })}
+              </tbody>
+            </table>
+            </div>
           </div>
 
-        </td>
-      </tr>
-    );
-  })}
-</tbody>
-
-    </table>
-  </div>
+            )
+        )}
 </CardBody>
 
 
 
-      <CardFooter className="flex items-center justify-between border-t border-blue-gray-50 p-3 z-50">
+      {/* <CardFooter className="flex items-center justify-between border-t border-blue-gray-50 p-3 z-50">
         <div className="flex gap-2">
         </div>
-      </CardFooter>
+      </CardFooter> */}
     </Card>
 
 

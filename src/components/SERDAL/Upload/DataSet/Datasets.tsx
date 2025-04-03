@@ -17,16 +17,7 @@ interface DatasetGroup {
 interface DataSets {
   id: number;
   title: string;
-  //dataGroup: DataGroup[]; 
 }
-
-// interface DataGroup {
-//   production: string;
-//   description: string;
-//   dataYear: string[];
-//   series: Series[];
-// }
-
 
 interface DatasetCategory {
   id: number;
@@ -40,6 +31,8 @@ interface Series {
 
 function Datasets() {
   const apiUrl = import.meta.env.VITE_API_URL;
+  const token = localStorage.getItem("APIToken");
+
   const { dataset } = useParams();
 
   const [sort, setSort] = useState<any>(null);
@@ -82,10 +75,7 @@ function Datasets() {
       }
 
       const jsonresult: DatasetGroup[] = await response.json();
-     console.log(jsonresult);
       setDataSetGroup(jsonresult);
-      console.log(dataSetGroup);
-      console.log(dataSetGroup);
 
     } catch (error) {
       console.error(error);
@@ -141,8 +131,23 @@ function Datasets() {
 
  
     try {
+
+      if (!token) {
+        console.error("No token found, ");
+        return Swal.fire({
+          icon: 'error',
+          title: 'No token found',
+          text: 'User is not authenticated. Please try again.',
+          confirmButtonColor: '#17C0CC',
+        });
+	    }
+
       const response = await fetch(`${apiUrl}/api/Dataset/isExist`, {
         method: 'POST',
+        headers: {
+          //'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,
+        },
         body: formData,
       });
 
@@ -215,9 +220,24 @@ function Datasets() {
     const formData = new FormData();
     formData.append('file', file);
     formData.append('Id', selectedCategory.value);
+
     try {
+
+      if (!token) {
+        console.error("No token found, ");
+        return Swal.fire({
+          icon: 'error',
+          title: 'No token found',
+          text: 'User is not authenticated. Please try again.',
+          confirmButtonColor: '#17C0CC',
+        });
+	    }
+
       const response = await fetch(`${apiUrl}/api/Dataset/UploadExcel`, {
         method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+        },
         body: formData,
       });
 
@@ -299,7 +319,7 @@ function Datasets() {
       <div className={`px-0 mt-5 ${adminStatus ? 'lg:px-10' : 'lg:px-40'}`}>
         <div className="block md:flex md:items-center md:justify-end sm:flex-wrap border-b border-gray-300">
           <div className="flex items-center justify-center py-1 mx-1">
-            <Select
+            {/* <Select
               id="SortID"
               placeholder="Sort By"
               value={sort}
@@ -308,7 +328,7 @@ function Datasets() {
               styles={customStyles}
               isClearable={true}
               className="text-sm w-full md:w-auto z-10"
-            />
+            /> */}
           </div>
           <div className={`${adminStatus ? 'block' : 'hidden'} flex justify-end my-3 mx-1`}>
               <button

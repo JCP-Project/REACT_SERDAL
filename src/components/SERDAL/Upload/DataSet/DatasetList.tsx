@@ -46,6 +46,7 @@ interface UpdateStatus{
 const DatasetList: React.FC<DatasetListProps> = ({ dataSets, fetchDataSets }) => {
   
   const apiUrl = import.meta.env.VITE_API_URL;
+  const token = localStorage.getItem("APIToken");
   const adminStatus = sessionStorage.getItem('isAdmin') === 'true';
 
   const handleDelete = (id: number, title: string) => {
@@ -87,6 +88,10 @@ const DatasetList: React.FC<DatasetListProps> = ({ dataSets, fetchDataSets }) =>
       try {
         const response = await fetch(`${apiUrl}/api/Dataset/Delete/${id}?ModifiedBy=${userId}`, {
           method: "POST",
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`,
+          },
         });
     
         if (response.ok) {   
@@ -153,24 +158,25 @@ const DatasetList: React.FC<DatasetListProps> = ({ dataSets, fetchDataSets }) =>
             <div className="w-full">
                 {dataSets.map((data, dataIndex) => (
                     <div key={`dataKey${data.id}${dataIndex}`} id={`Dataset-${data.id}${dataIndex}`} className="mb-10">
-                      <div className="bg-primary p-2 text-white text-xl font-bold">
-                        {data.categoryName}
+                      <div className="relative bg-secondary text-white text-xl font-bold flex">
+                        <div className="absolute bg-primary w-2 h-full"></div>
+                        <div className="mx-5 my-3">{data.categoryName}</div>
                       </div>
 
                         {
                           data.dataset.map((datarow,datarowIndex) =>(
                             <div key={`$datarowKey${datarow.id}${datarowIndex}`} id={`$datarowID${datarow.id}${datarowIndex}`} 
-                                  className="relative flex items-center px-4 py-2  border-b border-gray-300">
+                                  className="relative flex items-center px-4 py-2  border-b border-gray-300 hover:bg-[#daf1f8]">
                               <div className="h-2 w-2 bg-primary rounded-full mr-3"></div>
                               <h5 className="text-sm font-bold uppercase text-primary text-left">
                                 
-                              <Link  to={`/datasets/generatechart/${datarow.id}`}>
+                              <Link  to={`/datasets/generatechart/${datarow.id}-${encodeURIComponent(datarow.title)}`}>
                                   {
                                       datarow.title
                                   }
                               </Link>
 
-                              <div className={`absolute bottom-5 right-2 ${adminStatus ? 'block' : 'hidden'}`}>
+                              <div className={`absolute bottom-1 right-2 ${adminStatus ? 'block' : 'hidden'}`}>
                                 <button onClick={() => handleDelete(datarow.id, datarow.title)}>
                                   <FaTrashCan 
                                         color="#D32F2F" 

@@ -4,6 +4,7 @@ import Swal from 'sweetalert2';
 import { useNavigate } from 'react-router-dom';
 import Select, { StylesConfig } from 'react-select';
 import { motion } from 'framer-motion';
+import { IoIosArrowForward } from "react-icons/io";
 
 interface Institution {
   id: number;
@@ -275,7 +276,7 @@ function CreatePublication() {
       <div className="bg-primary text-left py-5 pl-3 lg:px-40">
               <h1 className="text-2xl font-bold text-white">Publication</h1>
               <div className="flex">
-                <div><Link to="/UploadPublication"><h1 className="text-lg font-bold text-white">Request &gt;</h1></Link></div>
+                <div><Link to="/UploadPublication"><h1 className="text-lg font-bold text-white flex items-center">Request <span className="ml-2"><IoIosArrowForward /></span></h1></Link></div>
                 <motion.div
                   initial={{ x: -400 }} // Start from the left (off-screen)
                   animate={{ x: 0 }}     // End at position x = 0 (default position)

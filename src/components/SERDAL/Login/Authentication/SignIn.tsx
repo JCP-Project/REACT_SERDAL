@@ -98,21 +98,23 @@ const handleSubmit = async (e: React.FormEvent) => {
           });
   
           if (response.ok) {
-            console.log("login successfully!");
+            
             const responseData = await response.json();
 
+            const userDetails = responseData.user;
+            const Token = responseData.apiToken;
+
             const returnedUser: User = {
-              id: responseData.id,
-              firstName: responseData.firstName,
-              lastName: responseData.lastName,
-              email: responseData.email,
-              IsActive: responseData.isActive,
-              role: responseData.role,
-              img: responseData.img,
-              createDateTime: responseData.createDateTime,
-              university: responseData.university,
+              id: userDetails.id,
+              firstName: userDetails.firstName,
+              lastName: userDetails.lastName,
+              email: userDetails.email,
+              IsActive: userDetails.isActive,
+              role: userDetails.role,
+              img: userDetails.img,
+              createDateTime: userDetails.createDateTime,
+              university: userDetails.university,
             };
-            console.log("user", returnedUser);
             sessionStorage.setItem('id', returnedUser.id.toString());
             sessionStorage.setItem('firstname', returnedUser.firstName);
             sessionStorage.setItem('lastname', returnedUser.lastName);
@@ -121,7 +123,7 @@ const handleSubmit = async (e: React.FormEvent) => {
             sessionStorage.setItem('role', returnedUser.role);
             sessionStorage.setItem('university', returnedUser.university.toString());
             sessionStorage.setItem('isLoggedIn', 'true');
-
+            localStorage.setItem('APIToken', Token.toString());
 
             setIsLoading(true);
             setTimeout(() => {
@@ -130,7 +132,7 @@ const handleSubmit = async (e: React.FormEvent) => {
                 if (returnedUser.role.toLowerCase() == "admin") {
                   sessionStorage.setItem('isAdmin', 'true');
                   navigate('/');
-                 window.location.reload();
+                  window.location.reload();
                   
                 }
                 else
@@ -144,7 +146,6 @@ const handleSubmit = async (e: React.FormEvent) => {
                   }
                   else{
                     navigate('/');
-                    console.log("2");
                   }
 
 

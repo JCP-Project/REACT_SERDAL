@@ -7,6 +7,7 @@ import { FaEdit } from "react-icons/fa";
 import Select, { StylesConfig } from 'react-select';
 import Swal from 'sweetalert2';
 import { FaTrashCan } from "react-icons/fa6";
+import Loader from '../../../../common/Loader';
  
 const TABS = [
   {
@@ -41,6 +42,10 @@ interface Institution {
   
 export default function Institution() {
   const apiUrl = import.meta.env.VITE_API_URL;
+  const token = localStorage.getItem("APIToken");
+
+  const [loading, setLoading] = useState<boolean>(false);
+  const [errorMessage, seterrorMessage] = useState<string>("");
 
    const [activeTab, setActiveTab] = useState("all");
   const [filter, setFilter] = useState("");
@@ -69,10 +74,13 @@ export default function Institution() {
   }, []);
 
   const fetchTableRows = async () => {
+    setLoading(true);
+    seterrorMessage("");
     try {
       const response = await fetch(`${apiUrl}/api/Institution/GetAllInstitution`);
       if (!response.ok) {
         console.log("Network response was not ok", response);
+        seterrorMessage("Failed to fetch Institution from the server.");
         throw new Error("Network response was not ok");
       }
       
@@ -80,6 +88,10 @@ export default function Institution() {
       setTableRows(rowsData);
     } catch (error) {
       console.error("Error fetching table rows:", error);
+      seterrorMessage("Failed to fetch Institution from the server.");
+    }
+    finally{
+      setLoading(false);
     }
   };
 
@@ -121,10 +133,22 @@ export default function Institution() {
     }
 
     try {
+
+      if (!token) {
+        console.error("No token found, ");
+        return Swal.fire({
+          icon: 'error',
+          title: 'No token found',
+          text: 'User is not authenticated. Please try again.',
+          confirmButtonColor: '#17C0CC',
+        });
+      }
+
         const response = await fetch(`${apiUrl}/api/Institution/CreateInstitution`, {
-            method: 'POST',
+            method: 'PUT',
             headers: {
               'Content-Type': 'application/json',
+              'Authorization': `Bearer ${token}`,
             },
             body: JSON.stringify(data),
           });
@@ -179,17 +203,36 @@ export default function Institution() {
     }
 
     try {
+
+      
+
+      if (!token) {
+        console.error("No token found, ");
+        return Swal.fire({
+          icon: 'error',
+          title: 'No token found',
+          text: 'User is not authenticated. Please try again.',
+          confirmButtonColor: '#17C0CC',
+        });
+	    }
+
       const response = await fetch(`${apiUrl}/api/Institution/UpdateInstitution`, {
-        method: 'PUT',
+        method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,
         },
         body: JSON.stringify(data),
       });
   
       if (!response.ok) {
-        console.log("Network response was not ok", response);
-        throw new Error("Network response was not ok");
+
+        return Swal.fire({
+          icon: 'error',
+          title: 'Failed',
+          text: 'Something went wrong. Please try again.',
+          confirmButtonColor: '#17C0CC',
+        });
       }
                 Swal.fire({
                   title: 'Success!',
@@ -253,17 +296,34 @@ export default function Institution() {
     }
 
     try {
+
+      if (!token) {
+        console.error("No token found, ");
+        return Swal.fire({
+          icon: 'error',
+          title: 'No token found',
+          text: 'User is not authenticated. Please try again.',
+          confirmButtonColor: '#17C0CC',
+        });
+	    }
+
         const response = await fetch(`${apiUrl}/api/Institution/DeleteInstitution`, {
           method: 'DELETE',
           headers: {
             'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`,
           },
           body: JSON.stringify(data),
         });
     
         if (!response.ok) {
           console.log("Network response was not ok", response);
-          throw new Error("Network response was not ok");
+          return Swal.fire({
+            icon: 'error',
+            title: 'Failed',
+            text: 'Something went wrong. Please try again.',
+            confirmButtonColor: '#17C0CC',
+          });
         }
             Swal.fire({
                     title: 'Success!',
@@ -409,108 +469,117 @@ export default function Institution() {
       </CardHeader>
 
     <CardBody className="px-0">
-    {/* Wrapper div for scrolling */}
-    <div className="max-h-[500px] min-h-[500px] overflow-y-auto scrollbar-thin scrollbar-thumb-gray-200 scrollbar-track-white">
-        <table className="mt-2 w-full min-w-max table-auto text-left">
-        {/* Make the header sticky */}
-        <thead className="sticky top-0 bg-white z-50">
-            <tr>
-                <th key="title" className="border-y border-blue-gray-100 bg-blue-gray-50/50 p-2">
-                <Typography   color="blue-gray"  className="text-md leading-none opacity-70">
-                    Label
-                </Typography>
-                </th>
-                <th key="author" className="border-y border-blue-gray-100 bg-blue-gray-50/50 p-2 text-center">
-                <Typography   color="blue-gray"  className="text-md leading-none opacity-70">
-                    Value
-                </Typography>
-                </th>
-                <th key="status" className="border-y border-blue-gray-100 bg-blue-gray-50/50 p-2 text-center">
-                <Typography   color="blue-gray"  className="text-md leading-none opacity-70">
-                    Status
-                </Typography>
-                </th>
-                <th key="uploaddate" className="border-y border-blue-gray-100 bg-blue-gray-50/50 p-2 text-center">
-                <Typography   color="blue-gray"  className="text-md leading-none opacity-70">
-                    Created Date
-                </Typography>
-                </th>
-                <th key="delete" className="border-y border-blue-gray-100 bg-blue-gray-50/50 p-2 text-center">
-                <Typography   color="blue-gray"  className="text-md leading-none opacity-70">
-                    Action
-                </Typography>
-                </th>
+    {loading ? (
+          <div className="w-full"><Loader /></div>
+      ): (
+       errorMessage ? (
+       <div className='h-full mb-50 w-[100%] text-center py-20 text-gray-400 font-bold text-lg'>
+          {errorMessage}
+       </div>
+        ) : (
+    <div>
+      <div className="max-h-[500px] min-h-[500px] overflow-y-auto scrollbar-thin scrollbar-thumb-gray-200 scrollbar-track-white">
+          <table className="mt-2 w-full min-w-max table-auto text-left">
+          {/* Make the header sticky */}
+          <thead className="sticky top-0 bg-white z-50">
+              <tr>
+                  <th key="title" className="border-y border-blue-gray-100 bg-blue-gray-50/50 p-2">
+                  <Typography   color="blue-gray"  className="text-md leading-none opacity-70">
+                      Label
+                  </Typography>
+                  </th>
+                  <th key="author" className="border-y border-blue-gray-100 bg-blue-gray-50/50 p-2 text-center">
+                  <Typography   color="blue-gray"  className="text-md leading-none opacity-70">
+                      Value
+                  </Typography>
+                  </th>
+                  <th key="status" className="border-y border-blue-gray-100 bg-blue-gray-50/50 p-2 text-center">
+                  <Typography   color="blue-gray"  className="text-md leading-none opacity-70">
+                      Status
+                  </Typography>
+                  </th>
+                  <th key="uploaddate" className="border-y border-blue-gray-100 bg-blue-gray-50/50 p-2 text-center">
+                  <Typography   color="blue-gray"  className="text-md leading-none opacity-70">
+                      Created Date
+                  </Typography>
+                  </th>
+                  <th key="delete" className="border-y border-blue-gray-100 bg-blue-gray-50/50 p-2 text-center">
+                  <Typography   color="blue-gray"  className="text-md leading-none opacity-70">
+                      Action
+                  </Typography>
+                  </th>
 
-                
-            </tr>
-        </thead>
-        <tbody>
-    {filteredRows.map(({ id, isActive, label, value, createDateTime }) => {
-        const classes = "p-1 border-b border-blue-gray-50";
+                  
+              </tr>
+          </thead>
+          <tbody>
+      {filteredRows.map(({ id, isActive, label, value, createDateTime }) => {
+          const classes = "p-1 border-b border-blue-gray-50";
 
-        return (
-        <tr key={id}>
-            <td className={classes}>
-            <div className="block text-left">
-                    <Typography  color="blue-gray" className="text-md">
-                        {label}
-                    </Typography>
-            </div>
-            </td>
-            <td className={classes}>
-            <div className="block text-center">
-                    <Typography  color="blue-gray" className="text-md">
-                        {value}
-                    </Typography>
-            </div>
-            </td>
-            <td className={classes}>
-            <div className='flex items-center justify-center'>
-            <div
-                className={`text-white py-2 m-0 text-sm text-center inline-block px-8 font-bold
-                    ${isActive === 1 ? "bg-green-600" : isActive === 0 ? "bg-red-600" : "bg-gray-300"}`}
-                >
-                {isActive === 1 ? "Active" : isActive === 0 ? "Inactive" : "Unknown"}
-                </div>
-            </div>
-            </td>
-            <td className={`${classes} text-center`}>
-            <Typography  color="blue-gray" className="text-md">
-                {createDateTime
-                ? new Intl.DateTimeFormat('en-US', {
-                    month: '2-digit',
-                    day: '2-digit',
-                    year: 'numeric',
-                    }).format(new Date(createDateTime))
-                : "No Date Available"}
-            </Typography>
-            </td>
-            <td className={`${classes} text-center`}>
-            <div className="">
-                <div className="flex justify-center items-center">
-                    <button onClick={() => InstitutionInfo(id)} className="mx-1">
-                        <FaEdit />
-                    </button>
-                    <button onClick={() => DeleteInstitution(id, label)} className="mx-1">
-                        <FaTrashCan color="#D32F2F" className="hover:scale-110 hover:rotate-6 transition-transform duration-200"/>
-                    </button>
-                </div>
-            </div>
+          return (
+          <tr key={id}>
+              <td className={classes}>
+              <div className="block text-left">
+                      <Typography  color="blue-gray" className="text-md">
+                          {label}
+                      </Typography>
+              </div>
+              </td>
+              <td className={classes}>
+              <div className="block text-left">
+                      <Typography  color="blue-gray" className="text-md">
+                          {value}
+                      </Typography>
+              </div>
+              </td>
+              <td className={classes}>
+              <div className='flex items-center justify-center'>
+              <div
+                  className={`text-white py-2 m-0 text-sm text-center inline-block px-8 font-bold
+                      ${isActive === 1 ? "bg-green-600" : isActive === 0 ? "bg-red-600" : "bg-gray-300"}`}
+                  >
+                  {isActive === 1 ? "Active" : isActive === 0 ? "Inactive" : "Unknown"}
+                  </div>
+              </div>
+              </td>
+              <td className={`${classes} text-center`}>
+              <Typography  color="blue-gray" className="text-md">
+                  {createDateTime
+                  ? new Intl.DateTimeFormat('en-US', {
+                      month: '2-digit',
+                      day: '2-digit',
+                      year: 'numeric',
+                      }).format(new Date(createDateTime))
+                  : "No Date Available"}
+              </Typography>
+              </td>
+              <td className={`${classes} text-center`}>
+              <div className="">
+                  <div className="flex justify-center items-center">
+                      <button onClick={() => InstitutionInfo(id)} className="mx-1">
+                          <FaEdit />
+                      </button>
+                      <button onClick={() => DeleteInstitution(id, label)} className="mx-1">
+                          <FaTrashCan color="#D32F2F" className="hover:scale-110 hover:rotate-6 transition-transform duration-200"/>
+                      </button>
+                  </div>
+              </div>
 
-            </td>
-        </tr>
-        );
-    })}
-    </tbody>
+              </td>
+          </tr>
+          );
+      })}
+      </tbody>
 
-        </table>
-    </div>
+          </table>
+      </div>
+    </div>))}
     </CardBody>
 
-    <CardFooter className="flex items-center justify-between border-t border-blue-gray-50 p-3 z-50">
+    {/* <CardFooter className="flex items-center justify-between border-t border-blue-gray-50 p-3 z-50">
         <div className="flex gap-2">
         </div>
-      </CardFooter>
+      </CardFooter> */}
     </Card>
 
 

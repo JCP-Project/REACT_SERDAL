@@ -82,12 +82,11 @@ function Publications()
 
       // Generate page numbers for pagination with a max of 10 buttons shown at a time
       const generatePageNumbers = () => {
-        const maxPageNumbers = 10;
-        let startPage = Math.max(1, currentPage - Math.floor(maxPageNumbers / 2));
-        let endPage = Math.min(totalPages, startPage + maxPageNumbers - 1);
+        let startPage = Math.max(1, currentPage - Math.floor(pageSize / 2));
+        let endPage = Math.min(totalPages, startPage + pageSize - 1);
 
-        if (endPage - startPage + 1 < maxPageNumbers) {
-          startPage = Math.max(1, endPage - maxPageNumbers + 1);
+        if (endPage - startPage + 1 < pageSize) {
+          startPage = Math.max(1, endPage - pageSize + 1);
         }
 
         return Array.from({ length: endPage - startPage + 1 }, (_, index) => startPage + index);
@@ -518,13 +517,13 @@ function Publications()
 
 
                     {
-                      publications && publications.length > 100 && (
+                      publications && totalCount > pageSize && (
                         <div className="flex items-center justify-end my-2">
                         {/* Previous Button */}
                         <button
                           onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
                           disabled={currentPage === 1}
-                          className="px-4 py-2 text-sm font-semibold text-white bg-primary rounded-l-lg hover:bg-secondary disabled:bg-gray-400"
+                          className="mx-3 px-4 py-2 text-sm font-semibold text-white bg-primary rounded-l-lg hover:bg-secondary disabled:bg-gray-400"
                         >
                           Prev
                         </button>
@@ -550,7 +549,7 @@ function Publications()
                         <button
                           onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
                           disabled={currentPage === totalPages}
-                          className="px-4 py-2 text-sm font-semibold text-white bg-primary rounded-r-lg hover:bg-secondary disabled:bg-gray-400"
+                          className="mx-3 px-4 py-2 text-sm font-semibold text-white bg-primary rounded-r-lg hover:bg-secondary disabled:bg-gray-400"
                         >
                           Next
                         </button>

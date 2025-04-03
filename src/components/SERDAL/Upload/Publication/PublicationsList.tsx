@@ -122,7 +122,7 @@ const PublicationsList: React.FC<datas> = ({data, university}) =>{
                             <Link      to={`/Publication/Info/${post.id}`} // Ensure this is the correct route
                                 onClick={(e) => {
                                   e.preventDefault(); // Prevent React Router's default navigation behavior
-                                  window.location.href = `/Publication/Info/${post.id}`; // Force a full page reload
+                                  window.location.href = `/Publication/Info/${post.id}-${encodeURIComponent(post.title)}`; // Force a full page reload
                                 }}
                                 className="hover:underline"
                               >

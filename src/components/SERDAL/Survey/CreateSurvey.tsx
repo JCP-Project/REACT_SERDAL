@@ -511,7 +511,7 @@ const handleMoveDown = (ID: number) => {
 
   return (
     <>
-      <div className="relative max-w-3xl mx-3 lg:mx-auto p-8 bg-white rounded-lg shadow-lg my-2 z-50 overflow-hidden">
+      <div className="relative max-w-3xl mx-3 lg:mx-auto p-8 bg-white rounded-lg shadow-2xl my-2 z-50 overflow-hidden">
         <div className="absolute top-0 left-0 w-full h-3 bg-primary"></div>
         <div>
             <label className="block text-lg font-medium text-gray-800">Survey Title:</label>
@@ -542,7 +542,7 @@ const handleMoveDown = (ID: number) => {
         <div
           ref={(el) => (fieldRefs.current[field.ID] = el!)}
           key={field.ID}
-          className="relative max-w-3xl mx-3 lg:mx-auto px-6 py-1 bg-white rounded-lg shadow-lg my-2 z-50 overflow-hidden group"
+          className="relative max-w-3xl mx-3 lg:mx-auto px-6 py-1 bg-white rounded-lg shadow-2xl my-2 z-50 overflow-hidden group"
         >
         
         <div className="flex flex-col items-center my-2"> 

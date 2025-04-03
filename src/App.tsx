@@ -31,6 +31,7 @@ function App() {
   const [loading, setLoading] = useState<boolean>(true);
   const { pathname } = useLocation();
   const navigate = useNavigate();
+  const [isActive, setIsActive] = useState(true);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -52,14 +53,12 @@ function App() {
   const validateRoute = (pathname: string) => {
     // List of valid base routes (without dynamic parameters)
     const validRoutes = [
-      '/profile', '/auth/signin', '/signup', 
-      '/admin/users', '/admin/publicationrequest', '/calendar', 
-      '/forms/form-elements', '/forms/form-layout', 
-      '/tables', '/tableapproval', '/chart', 
-      '/ui/alerts', '/ui/buttons', '/uploadpublication', 
-      '/publication', '/login', '/createpublication','/createpost','/auth/signup','/datasets','/','/survey','/admin/survey/create','/admin/survey/form',
+     '/auth/signin', '/signup', 
+      '/tables', '/tableapproval','/chart', 
+      '/uploadpublication', 
+      '/publication','/createpublication','/createpost','/auth/signup','/datasets','/','/survey',
       '/datasets/generatechart',
-      '/admin/datasets','/admin/Management/Institution',
+      '/admin/users', '/admin/datasets','/admin/Management/Institution','/admin/survey/create','/admin/survey/form','/admin/publicationrequest',
       '/auth/resetpassword',
     ];
 
@@ -73,38 +72,56 @@ function App() {
     });
   };
 
-
-
-
-  useEffect(() => {
-    const pathname = location.pathname.toLowerCase();
-
-    if (!validateRoute(pathname)) {
-      navigate('/'); // Redirect to '/publication' if invalid route
-    }
-  }, [location.pathname, navigate]);
-
-
-  useEffect(() => {
-    // Set interval to update seconds every 1 second
-    const intervalId = setInterval(() => {
-      setSeconds(prevSeconds => prevSeconds + 1); // Increment seconds
-    }, 1000);
-
-    // When 10 seconds have passed, set the session storage item
-    //console.log("Admin",sessionStorage.getItem('isAdmin'));
-    if (seconds >= 30) {
-     // sessionStorage.setItem('isLoggedIn', 'false');
-     // window.location.reload();
-
-    }
-
-    // Cleanup the interval when the component unmounts
-    return () => clearInterval(intervalId);
-  }, [seconds]); // Dependency array includes `seconds` so it triggers when `seconds` updates
-
-
-
+ //#region Auto Logout
+    // Function to reset the timer
+    const resetTimer = () => {
+      setSeconds(0); // Reset the inactivity timer
+    };
+  
+    useEffect(() => {
+      const pathname = location.pathname.toLowerCase();
+      if (!validateRoute(pathname)) {
+        navigate('/'); // Redirect to '/publication' if invalid route
+      }
+    }, [location.pathname, navigate]);
+  
+    useEffect(() => {
+      // Set interval to update seconds every 1 second
+      const intervalId = setInterval(() => {
+        setSeconds(prevSeconds => prevSeconds + 1); // Increment seconds
+      }, 1000);
+  
+      // Cleanup the interval when the component unmounts
+      return () => clearInterval(intervalId);
+    }, []);
+  
+    useEffect(() => {
+      if (seconds >= 3600) {
+        sessionStorage.clear();
+        window.location.reload(); // Reload the page after clearing session storage
+      }
+    }, [seconds]);
+  
+    // Detect user activity (mousemove, keydown, or click)
+    const handleActivity = () => {
+      setIsActive(true); // Set user as active
+      resetTimer(); // Reset the timer when activity is detected
+    };
+  
+    useEffect(() => {
+      // Set up event listeners for user activity
+      window.addEventListener('mousemove', handleActivity);
+      window.addEventListener('keydown', handleActivity);
+      window.addEventListener('click', handleActivity);
+  
+      // Cleanup event listeners when the component unmounts
+      return () => {
+        window.removeEventListener('mousemove', handleActivity);
+        window.removeEventListener('keydown', handleActivity);
+        window.removeEventListener('click', handleActivity);
+      };
+    }, []); // This only runs once when the component is mounted
+ //#endregion
 
   return loading ? (
     <Loader />

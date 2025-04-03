@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { Link } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import { motion } from 'framer-motion';
+import Loader from '../../../../common/Loader';
 const TABS = [
   {
     label: "All",
@@ -60,7 +61,11 @@ interface UpdateStatus{
   
 export default function PublicationRequest() {
   const apiUrl = import.meta.env.VITE_API_URL;
-   const [activeTab, setActiveTab] = useState("all");
+
+  const [loading, setLoading] = useState<boolean>(false);
+  const [errorMessage, seterrorMessage] = useState<string>("");
+
+  const [activeTab, setActiveTab] = useState("all");
   const [filter, setFilter] = useState("");
   const [data, setData] = useState<ApiData[]>([]);
   const [status, setStatus] = useState<UpdateStatus>();
@@ -80,6 +85,8 @@ export default function PublicationRequest() {
 //Get All publication
   const fetchData = async () => {
     try {
+      setLoading(true);
+      seterrorMessage("");
       const response = await fetch(`${apiUrl}/api/Publication`, {
         method: "GET", // Use GET to fetch data
       });
@@ -89,9 +96,14 @@ export default function PublicationRequest() {
         setData(jsonData);       
       } else {
         console.error("Error fetching publication data");
+        seterrorMessage("Failed to fetch Publications from the server.");
       }
     } catch (error) {
       console.error("Error fetching publication data:", error);
+      seterrorMessage("Failed to fetch Publications from the server.");
+    }
+    finally{
+      setLoading(false);
     }
   };
 
@@ -297,155 +309,166 @@ const ApproveRequest = async (bodyData: UpdateStatus, actionText:string) => {
         </div>
       </CardHeader>
 
-<CardBody className="px-0">
-  {/* Wrapper div for scrolling */}
-  <div className="max-h-[500px] min-h-[500px] overflow-y-auto scrollbar-thin scrollbar-thumb-gray-200 scrollbar-track-white">
-    <table className="mt-2 w-full min-w-max table-auto text-left">
-      {/* Make the header sticky */}
-      <thead className="sticky top-0 bg-white z-50">
-        <tr>
-            <th key="title" className="border-y border-blue-gray-100 bg-blue-gray-50/50 p-2">
-              <Typography   color="blue-gray"  className="text-md leading-none opacity-70">
-                TITLE
-              </Typography>
-            </th>
-            <th key="author" className="border-y border-blue-gray-100 bg-blue-gray-50/50 p-2">
-              <Typography   color="blue-gray"  className="text-md leading-none opacity-70">
-                UPLOADER
-              </Typography>
-            </th>
-            <th key="status" className="border-y border-blue-gray-100 bg-blue-gray-50/50 p-2 text-center">
-              <Typography   color="blue-gray"  className="text-md leading-none opacity-70">
-                STATUS
-              </Typography>
-            </th>
-            <th key="uploaddate" className="border-y border-blue-gray-100 bg-blue-gray-50/50 p-2 text-center">
-              <Typography   color="blue-gray"  className="text-md leading-none opacity-70">
-                UPLOAD DATE
-              </Typography>
-            </th>
-            <th key="delete" className="border-y border-blue-gray-100 bg-blue-gray-50/50 p-2 text-center">
-              <Typography   color="blue-gray"  className="text-md leading-none opacity-70">
-                ACTION
-              </Typography>
-            </th>
-
-            
-        </tr>
-      </thead>
-      <tbody >
-        {filteredRows.map(
-          ({ id, title, author,firstname,lastname, email, status, createdDate }) => {
-            const classes = "p-1 border-b border-blue-gray-50";
-            
-            return (
-              <tr key={id}>
-                <td className={classes}>
-                  <div className="flex items-center gap-3">
-                    <div className="flex flex-col">
-                    <Link to={`/Publication/Info/${id}`}>
-                      <Typography  color="blue-gray" className="text-md" >
-                      {truncateTitle(title)}
-                      </Typography>
-                    </Link>
-                      <Typography  color="blue-gray" className="text-md opacity-70">
-                        {truncateTitle(author)}
-                      </Typography>
-                    </div>
-                  </div>
-                </td>
-                <td className={classes}>
-                  <div className="block">
-                    <Typography   color="blue-gray" className="text-md">
-                    {`${firstname} ${lastname}`}
+    <CardBody className="px-0">
+    {loading ? (
+          <div className="w-full"><Loader /></div>
+      ): (
+       errorMessage ? (
+       <div className='h-full mb-50 w-[100%] text-center py-20 text-gray-400 font-bold text-lg'>
+          {errorMessage}
+       </div>
+        ) : (
+      <div>
+        <div className="max-h-[500px] min-h-[500px] overflow-y-auto scrollbar-thin scrollbar-thumb-gray-200 scrollbar-track-white">
+          <table className="mt-2 w-full min-w-max table-auto text-left">
+            {/* Make the header sticky */}
+            <thead className="sticky top-0 bg-white z-50">
+              <tr>
+                  <th key="title" className="border-y border-blue-gray-100 bg-blue-gray-50/50 p-2">
+                    <Typography   color="blue-gray"  className="text-md leading-none opacity-70">
+                      TITLE
                     </Typography>
-                    <Typography   color="blue-gray" className="text-md opacity-70">
-                      {email}
+                  </th>
+                  <th key="author" className="border-y border-blue-gray-100 bg-blue-gray-50/50 p-2">
+                    <Typography   color="blue-gray"  className="text-md leading-none opacity-70">
+                      UPLOADER
                     </Typography>
-                  </div>
-                </td>
-                <td className={`${classes}`}>
-                <div className="flex items-center justify-center">
-                    <div
-                      className={`text-white px-2 py-1 m-0 text-sm text-center w-25 rounded-sm font-bold ${
-                        status === 0
-                          ? "bg-yellow-400"  // yellow-400 for pending
-                          : status === 1
-                          ? "bg-green-700"   // green-700 for approved
-                          : status === 2
-                          ? "bg-red-700"     // red-700 for declined
-                          : "bg-white"       // white for unknown
-                      }`}
-                    >
-                      {status === 0
-                        ? "Pending"
-                        : status === 1
-                        ? "Approved"
-                        : status === 2
-                        ? "Declined"
-                        : "unknown"}
-                    </div>
-                  </div>
-                </td>
-                <td className={`${classes} text-center`}>
-                  <Typography  color="blue-gray" className="text-md" >
-                  {new Intl.DateTimeFormat('en-US', {
-                          month: '2-digit',
-                          day: '2-digit',
-                          year: 'numeric',
-                        }).format(new Date(`${createdDate}Z`))}
-                  </Typography>
-                </td>
-                <td className={`${classes} text-center z-40`}>
-                  <span>
-                    <Link to={`/Publication/Info/${id}`}>
-                    <button 
-                    className="md:m-0 bg-primary text-white rounded-md hover:bg-secondary text-md px-2 py-0 md:px-2
-                                hover:scale-110 transition-transform duration-200 ease-in-out
-                    ">
-                      <FontAwesomeIcon icon={faEye} />
-                      <span className=""></span>
-                    </button>
-                    </Link>
+                  </th>
+                  <th key="status" className="border-y border-blue-gray-100 bg-blue-gray-50/50 p-2 text-center">
+                    <Typography   color="blue-gray"  className="text-md leading-none opacity-70">
+                      STATUS
+                    </Typography>
+                  </th>
+                  <th key="uploaddate" className="border-y border-blue-gray-100 bg-blue-gray-50/50 p-2 text-center">
+                    <Typography   color="blue-gray"  className="text-md leading-none opacity-70">
+                      UPLOAD DATE
+                    </Typography>
+                  </th>
+                  <th key="delete" className="border-y border-blue-gray-100 bg-blue-gray-50/50 p-2 text-center">
+                    <Typography   color="blue-gray"  className="text-md leading-none opacity-70">
+                      ACTION
+                    </Typography>
+                  </th>
 
-                  </span>
-                  <span>
-                    <button 
-                      onClick={() => handleStatus(id, 1, 0)} 
-                      disabled={status === 1} // Disable button if status is 1
-                      className={`mx-1 text-white rounded-md text-md px-2 py-0 md:px-2
-                        ${status === 1 ? 'bg-green-400 cursor-not-allowed' : 'bg-green-600 hover:bg-green-500'} 
-                        ${status === 1 ? '' : 'hover:scale-110 transition-transform duration-200 ease-in-out'}
-                      `}
-                    >
-                      <FontAwesomeIcon icon={faCheck} />
-                      <span></span>
-                    </button>
-                  </span>
-
-                  <span>
-                    <button 
-                      onClick={() => handleStatus(id, 2, 0)} 
-                      disabled={status === 2} // Disable button if status is 2
-                      className={`md:m-0 text-white rounded-md text-md px-2 py-0 md:px-2
-                        ${status === 2 ? 'bg-red-400 cursor-not-allowed' : 'bg-red-600 hover:bg-gray-500'} 
-                        ${status === 2 ? '' : 'hover:scale-110 transition-transform duration-200 ease-in-out'}
-                      `}
-                    >
-                      <FontAwesomeIcon icon={faClose} />
-                      <span></span>
-                    </button>
-                  </span>
-
-                </td>
+                  
               </tr>
-            );
-          }
-        )}
-      </tbody>
-    </table>
-  </div>
-</CardBody>
+            </thead>
+            <tbody >
+              {filteredRows.map(
+                ({ id, title, author,firstname,lastname, email, status, createdDate }) => {
+                  const classes = "p-1 border-b border-blue-gray-50";
+                  
+                  return (
+                    <tr key={id}>
+                      <td className={classes}>
+                        <div className="flex items-center gap-3">
+                          <div className="flex flex-col">
+                          <Link to={`/Publication/Info/${id}`}>
+                            <Typography  color="blue-gray" className="text-md" >
+                            {truncateTitle(title)}
+                            </Typography>
+                          </Link>
+                            <Typography  color="blue-gray" className="text-md opacity-70">
+                              {truncateTitle(author)}
+                            </Typography>
+                          </div>
+                        </div>
+                      </td>
+                      <td className={classes}>
+                        <div className="block">
+                          <Typography   color="blue-gray" className="text-md">
+                          {`${firstname} ${lastname}`}
+                          </Typography>
+                          <Typography   color="blue-gray" className="text-md opacity-70">
+                            {email}
+                          </Typography>
+                        </div>
+                      </td>
+                      <td className={`${classes}`}>
+                      <div className="flex items-center justify-center">
+                          <div
+                            className={`text-white px-2 py-1 m-0 text-sm text-center w-25 rounded-sm font-bold ${
+                              status === 0
+                                ? "bg-yellow-400"  // yellow-400 for pending
+                                : status === 1
+                                ? "bg-green-700"   // green-700 for approved
+                                : status === 2
+                                ? "bg-red-700"     // red-700 for declined
+                                : "bg-white"       // white for unknown
+                            }`}
+                          >
+                            {status === 0
+                              ? "Pending"
+                              : status === 1
+                              ? "Approved"
+                              : status === 2
+                              ? "Declined"
+                              : "unknown"}
+                          </div>
+                        </div>
+                      </td>
+                      <td className={`${classes} text-center`}>
+                        <Typography  color="blue-gray" className="text-md" >
+                        {new Intl.DateTimeFormat('en-US', {
+                                month: '2-digit',
+                                day: '2-digit',
+                                year: 'numeric',
+                              }).format(new Date(`${createdDate}Z`))}
+                        </Typography>
+                      </td>
+                      <td className={`${classes} text-center z-40`}>
+                        <span>
+                          <Link to={`/Publication/Info/${id}`}>
+                          <button 
+                          className="md:m-0 bg-primary text-white rounded-md hover:bg-secondary text-md px-2 py-0 md:px-2
+                                      hover:scale-110 transition-transform duration-200 ease-in-out
+                          ">
+                            <FontAwesomeIcon icon={faEye} />
+                            <span className=""></span>
+                          </button>
+                          </Link>
+
+                        </span>
+                        <span>
+                          <button 
+                            onClick={() => handleStatus(id, 1, 0)} 
+                            disabled={status === 1} // Disable button if status is 1
+                            className={`mx-1 text-white rounded-md text-md px-2 py-0 md:px-2
+                              ${status === 1 ? 'bg-green-400 cursor-not-allowed' : 'bg-green-600 hover:bg-green-500'} 
+                              ${status === 1 ? '' : 'hover:scale-110 transition-transform duration-200 ease-in-out'}
+                            `}
+                          >
+                            <FontAwesomeIcon icon={faCheck} />
+                            <span></span>
+                          </button>
+                        </span>
+
+                        <span>
+                          <button 
+                            onClick={() => handleStatus(id, 2, 0)} 
+                            disabled={status === 2} // Disable button if status is 2
+                            className={`md:m-0 text-white rounded-md text-md px-2 py-0 md:px-2
+                              ${status === 2 ? 'bg-red-400 cursor-not-allowed' : 'bg-red-600 hover:bg-gray-500'} 
+                              ${status === 2 ? '' : 'hover:scale-110 transition-transform duration-200 ease-in-out'}
+                            `}
+                          >
+                            <FontAwesomeIcon icon={faClose} />
+                            <span></span>
+                          </button>
+                        </span>
+
+                      </td>
+                    </tr>
+                  );
+                }
+              )}
+            </tbody>
+          </table>
+        </div>
+      </div>
+        ))}
+
+    </CardBody>
 
 
 

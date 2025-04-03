@@ -81,7 +81,8 @@ function Info() {
   }, [infopage]);  // Depend on `infopage` so it runs when it changes
 
   useEffect(() => {
-   fetchData(Number(infopage));
+    const [postId] = infopage.split('-'); 
+   fetchData(Number(postId));
   }, []); 
 
 
