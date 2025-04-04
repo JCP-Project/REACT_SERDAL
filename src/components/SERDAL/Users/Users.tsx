@@ -290,10 +290,7 @@ export default function Users() {
 <CardBody className="px-0">
   {/* Wrapper div for scrolling */}
   
-    
-      {/* Make the header sticky */}
-
-      
+   
       {loading ? (
           <div className="w-full"><Loader /></div>
       ): (
@@ -341,7 +338,7 @@ export default function Users() {
                 const classes = "p-1 border-b border-blue-gray-50";
             
                 return (
-                  <tr key={id}>
+                  <tr key={id} className="hover:bg-[#daf1f8]">
                     <td className={classes}>
                       <div className="flex items-center gap-3 lg:w-45">
                         <div>

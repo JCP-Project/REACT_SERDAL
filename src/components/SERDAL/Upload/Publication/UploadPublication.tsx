@@ -90,7 +90,6 @@ export default function UploadPublication() {
 
       if (response.ok) {
         const jsonData: ApiData[] = await response.json();
-        console.log("Fetched publication by Id:",id, jsonData);
         setData(jsonData);
       } else {       
         const errorResponse = await response.json();

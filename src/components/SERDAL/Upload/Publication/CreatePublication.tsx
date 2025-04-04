@@ -16,6 +16,8 @@ interface Institution {
 
 function CreatePublication() {
   const apiUrl = import.meta.env.VITE_API_URL;
+  const token = localStorage.getItem("APIToken");
+
   const [institution, setInstitution] = useState<Institution[]>([]);
 
   const navigate = useNavigate();
@@ -97,7 +99,6 @@ function CreatePublication() {
 
       if (isSubmitting)
       {
-        console.log("disabled", isSubmitting);
         return;
       } 
       setIsSubmitting(true);
@@ -113,8 +114,6 @@ function CreatePublication() {
       data.append("publicationDate", formData.publicationDate);
       data.append("publication_Institutions", selectedOption.map(option => option.value));
 
-     console.log("good", new Date().toLocaleString('en-CA'));
-
     const id = sessionStorage.getItem('id');
       if (id) {
         data.append("CreatedBy", id);
@@ -125,11 +124,6 @@ function CreatePublication() {
         data.append("university", university);
 
       }
-
-      console.log("test", data);
-
-
-
     
       if (formData.file) {
         data.append("file", formData.file);
@@ -146,15 +140,27 @@ function CreatePublication() {
         }
       }
       
-      console.log(data);
     try {
+
+      if (!token) {
+        console.error("No token found, ");
+        return Swal.fire({
+          icon: 'error',
+          title: 'No token found',
+          text: 'User is not authenticated. Please try again.',
+          confirmButtonColor: '#17C0CC',
+        });
+	    }
+
       const response = await fetch(`${apiUrl}/api/Publication/Create`, {
-        method: "POST",
+        method: "PUT",
+        headers:{
+          'Authorization': `Bearer ${token}`,
+        },
         body: data,
       });
 
       if (response.ok) {
-        console.log("Form data submitted successfully!");
           setFormData({
             citation: "",
             journal: "",
@@ -209,7 +215,6 @@ function CreatePublication() {
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files ? e.target.files[0] : null;
     const fileType = e.target.id;
-    console.log("File",fileType);
 
     if (file) {
       if (fileType === "file") {
@@ -244,9 +249,6 @@ function CreatePublication() {
       }
     }
     
-
-
-
   };
 
   const errorAlert = (msg:string) => {

@@ -61,6 +61,7 @@ interface UpdateStatus{
   
 export default function PublicationRequest() {
   const apiUrl = import.meta.env.VITE_API_URL;
+  const token = localStorage.getItem("APIToken");
 
   const [loading, setLoading] = useState<boolean>(false);
   const [errorMessage, seterrorMessage] = useState<string>("");
@@ -115,6 +116,7 @@ const ApproveRequest = async (bodyData: UpdateStatus, actionText:string) => {
       method: "POST",  // Correct method spelling
       headers: {
         'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`,
       },
       body: JSON.stringify(bodyData),
     });
@@ -359,7 +361,7 @@ const ApproveRequest = async (bodyData: UpdateStatus, actionText:string) => {
                   const classes = "p-1 border-b border-blue-gray-50";
                   
                   return (
-                    <tr key={id}>
+                    <tr key={id} className="hover:bg-[#daf1f8]">
                       <td className={classes}>
                         <div className="flex items-center gap-3">
                           <div className="flex flex-col">

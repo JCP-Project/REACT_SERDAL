@@ -59,18 +59,19 @@ interface userOTP {
 const ResetPassword: React.FC = () => {
 
   const apiUrl = import.meta.env.VITE_API_URL;
+  const [loading, setLoading] = useState<boolean>(false);
 
   const [isChecked, setIsChecked] = useState<boolean>(false);
   const [ismatchpass, setIsmatchpass] = useState<boolean>(true);
-    const [ErrorMessage, setErrorMessage] = useState<string>("");
-    const [isSubmitting, setIsSubmitting] = useState(false);
+  const [ErrorMessage, setErrorMessage] = useState<string>("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-    const [isModalOpen, setIsModalOpen] = useState(false);
-    const [isPolicyOpen, setIsPolicyOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isPolicyOpen, setIsPolicyOpen] = useState(false);
 
-    const [OTP, setOTP] = useState("");
-    const navigate = useNavigate();
-      const [formData, setFormData] = useState<userOTP>({
+  const [OTP, setOTP] = useState("");
+  const navigate = useNavigate();
+  const [formData, setFormData] = useState<userOTP>({
         otp: "",
         userEmail:"",
         password: "",
@@ -79,14 +80,13 @@ const ResetPassword: React.FC = () => {
       });
 
 
-    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-      const { name, value } = e.target;
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const { name, value } = e.target;
       setFormData((prev) => ({ ...prev, [name]: value }));
     };
 
 
-    const handleSubmit = async (e: React.FormEvent) => {
-
+  const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setErrorMessage("");
         setIsmatchpass(true);
@@ -108,23 +108,40 @@ const ResetPassword: React.FC = () => {
         console.log(resetidotp);
         console.log(useremail);
 
-        setIsSubmitting(true);
+        //setIsSubmitting(true);
 
 
         const encodedEmail = encodeURIComponent(formData.userEmail)
 
         try {
+
+          const swalLoading = Swal.fire({
+            title: 'Loading...',
+            text: 'Please wait...',
+            icon: '',
+            allowOutsideClick: false,
+            didOpen: () => {
+              Swal.showLoading();
+            },
+            backdrop: `rgba(0,0,0,0.4) url("https://loading.io/spinners/comets/index.svg?color=%2317C0CC") left top no-repeat`,
+            customClass: {
+              popup: 'swal-popup',
+            },
+            showConfirmButton: false,
+          });
+
           const response = await fetch(`${apiUrl}/api/Users/ResetPasswordOTP/${encodedEmail}`);
 
           const responseData = await response.json();
   
           if (response.ok) {
-            console.log("Form data submitted successfully!");
-              setIsSubmitting(false);
+              swalLoading.close();
+              //setIsSubmitting(false);
               setOTP(responseData);
               OTPVerify(responseData);
   
             } else {
+              swalLoading.close();
               return Swal.fire({
                 icon: 'error',
                 title: 'Reset password failed',
@@ -133,6 +150,7 @@ const ResetPassword: React.FC = () => {
               });
           }
         } catch (error) {
+          swalLoading.close();
           console.error("Error submitting OTP:", error);
           Swal.fire({
             icon: 'error',
@@ -141,7 +159,8 @@ const ResetPassword: React.FC = () => {
             confirmButtonColor: '#17C0CC',
           });
         } finally {
-          setIsSubmitting(false);
+          swalLoading.close();
+          //setIsSubmitting(false);
         }
     };
 
@@ -454,7 +473,7 @@ const ResetPassword: React.FC = () => {
 
                 <div className="mb-4">
                   <label className="mb-2.5 block text-sm text-black dark:text-white">
-                    Password
+                    New Password
                   </label>
                   <div className="relative">
                     <input

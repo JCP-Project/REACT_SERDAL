@@ -53,11 +53,10 @@ const PublicationsList: React.FC<datas> = ({data, university}) =>{
           });
       
           if (response.ok) {
-            console.log("Download count updated successfully!");
             setPublications((prevPublications) => 
                 prevPublications.map((publication) =>
                   publication.id === Id
-                    ? { ...publication, download: publication.download + 1 } // Update the download count locally
+                    ? { ...publication, download: publication.download + 1 }
                     : publication
                 ));
           } else {

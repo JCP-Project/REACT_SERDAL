@@ -477,102 +477,102 @@ export default function Institution() {
           {errorMessage}
        </div>
         ) : (
-    <div>
-      <div className="max-h-[500px] min-h-[500px] overflow-y-auto scrollbar-thin scrollbar-thumb-gray-200 scrollbar-track-white">
-          <table className="mt-2 w-full min-w-max table-auto text-left">
-          {/* Make the header sticky */}
-          <thead className="sticky top-0 bg-white z-50">
-              <tr>
-                  <th key="title" className="border-y border-blue-gray-100 bg-blue-gray-50/50 p-2">
-                  <Typography   color="blue-gray"  className="text-md leading-none opacity-70">
-                      Label
-                  </Typography>
-                  </th>
-                  <th key="author" className="border-y border-blue-gray-100 bg-blue-gray-50/50 p-2 text-center">
-                  <Typography   color="blue-gray"  className="text-md leading-none opacity-70">
-                      Value
-                  </Typography>
-                  </th>
-                  <th key="status" className="border-y border-blue-gray-100 bg-blue-gray-50/50 p-2 text-center">
-                  <Typography   color="blue-gray"  className="text-md leading-none opacity-70">
-                      Status
-                  </Typography>
-                  </th>
-                  <th key="uploaddate" className="border-y border-blue-gray-100 bg-blue-gray-50/50 p-2 text-center">
-                  <Typography   color="blue-gray"  className="text-md leading-none opacity-70">
-                      Created Date
-                  </Typography>
-                  </th>
-                  <th key="delete" className="border-y border-blue-gray-100 bg-blue-gray-50/50 p-2 text-center">
-                  <Typography   color="blue-gray"  className="text-md leading-none opacity-70">
-                      Action
-                  </Typography>
-                  </th>
+      <div>
+        <div className="max-h-[500px] min-h-[500px] overflow-y-auto scrollbar-thin scrollbar-thumb-gray-200 scrollbar-track-white">
+            <table className="mt-2 w-full min-w-max table-auto text-left">
+            {/* Make the header sticky */}
+            <thead className="sticky top-0 bg-white z-50">
+                <tr>
+                    <th key="title" className="border-y border-blue-gray-100 bg-blue-gray-50/50 p-2">
+                    <Typography   color="blue-gray"  className="text-md leading-none opacity-70">
+                        Label
+                    </Typography>
+                    </th>
+                    <th key="author" className="border-y border-blue-gray-100 bg-blue-gray-50/50 p-2 text-center">
+                    <Typography   color="blue-gray"  className="text-md leading-none opacity-70">
+                        Value
+                    </Typography>
+                    </th>
+                    <th key="status" className="border-y border-blue-gray-100 bg-blue-gray-50/50 p-2 text-center">
+                    <Typography   color="blue-gray"  className="text-md leading-none opacity-70">
+                        Status
+                    </Typography>
+                    </th>
+                    <th key="uploaddate" className="border-y border-blue-gray-100 bg-blue-gray-50/50 p-2 text-center">
+                    <Typography   color="blue-gray"  className="text-md leading-none opacity-70">
+                        Created Date
+                    </Typography>
+                    </th>
+                    <th key="delete" className="border-y border-blue-gray-100 bg-blue-gray-50/50 p-2 text-center">
+                    <Typography   color="blue-gray"  className="text-md leading-none opacity-70">
+                        Action
+                    </Typography>
+                    </th>
 
-                  
-              </tr>
-          </thead>
-          <tbody>
-      {filteredRows.map(({ id, isActive, label, value, createDateTime }) => {
-          const classes = "p-1 border-b border-blue-gray-50";
+                    
+                </tr>
+            </thead>
+            <tbody>
+              {filteredRows.map(({ id, isActive, label, value, createDateTime }) => {
+                  const classes = "p-1 border-b border-blue-gray-50";
 
-          return (
-          <tr key={id}>
-              <td className={classes}>
-              <div className="block text-left">
+                  return (
+                  <tr key={id} className="hover:bg-[#daf1f8]">
+                      <td className={classes}>
+                      <div className="block text-left">
+                              <Typography  color="blue-gray" className="text-md">
+                                  {label}
+                              </Typography>
+                      </div>
+                      </td>
+                      <td className={classes}>
+                      <div className="block text-left">
+                              <Typography  color="blue-gray" className="text-md">
+                                  {value}
+                              </Typography>
+                      </div>
+                      </td>
+                      <td className={classes}>
+                      <div className='flex items-center justify-center'>
+                      <div
+                          className={`text-white py-2 m-0 text-sm text-center inline-block px-8 font-bold
+                              ${isActive === 1 ? "bg-green-600" : isActive === 0 ? "bg-red-600" : "bg-gray-300"}`}
+                          >
+                          {isActive === 1 ? "Active" : isActive === 0 ? "Inactive" : "Unknown"}
+                          </div>
+                      </div>
+                      </td>
+                      <td className={`${classes} text-center`}>
                       <Typography  color="blue-gray" className="text-md">
-                          {label}
+                          {createDateTime
+                          ? new Intl.DateTimeFormat('en-US', {
+                              month: '2-digit',
+                              day: '2-digit',
+                              year: 'numeric',
+                              }).format(new Date(createDateTime))
+                          : "No Date Available"}
                       </Typography>
-              </div>
-              </td>
-              <td className={classes}>
-              <div className="block text-left">
-                      <Typography  color="blue-gray" className="text-md">
-                          {value}
-                      </Typography>
-              </div>
-              </td>
-              <td className={classes}>
-              <div className='flex items-center justify-center'>
-              <div
-                  className={`text-white py-2 m-0 text-sm text-center inline-block px-8 font-bold
-                      ${isActive === 1 ? "bg-green-600" : isActive === 0 ? "bg-red-600" : "bg-gray-300"}`}
-                  >
-                  {isActive === 1 ? "Active" : isActive === 0 ? "Inactive" : "Unknown"}
-                  </div>
-              </div>
-              </td>
-              <td className={`${classes} text-center`}>
-              <Typography  color="blue-gray" className="text-md">
-                  {createDateTime
-                  ? new Intl.DateTimeFormat('en-US', {
-                      month: '2-digit',
-                      day: '2-digit',
-                      year: 'numeric',
-                      }).format(new Date(createDateTime))
-                  : "No Date Available"}
-              </Typography>
-              </td>
-              <td className={`${classes} text-center`}>
-              <div className="">
-                  <div className="flex justify-center items-center">
-                      <button onClick={() => InstitutionInfo(id)} className="mx-1">
-                          <FaEdit />
-                      </button>
-                      <button onClick={() => DeleteInstitution(id, label)} className="mx-1">
-                          <FaTrashCan color="#D32F2F" className="hover:scale-110 hover:rotate-6 transition-transform duration-200"/>
-                      </button>
-                  </div>
-              </div>
+                      </td>
+                      <td className={`${classes} text-center`}>
+                      <div className="">
+                          <div className="flex justify-center items-center">
+                              <button onClick={() => InstitutionInfo(id)} className="mx-1">
+                                  <FaEdit />
+                              </button>
+                              <button onClick={() => DeleteInstitution(id, label)} className="mx-1">
+                                  <FaTrashCan color="#D32F2F" className="hover:scale-110 hover:rotate-6 transition-transform duration-200"/>
+                              </button>
+                          </div>
+                      </div>
 
-              </td>
-          </tr>
-          );
-      })}
-      </tbody>
+                      </td>
+                  </tr>
+                  );
+              })}
+              </tbody>
 
-          </table>
-      </div>
+            </table>
+        </div>
     </div>))}
     </CardBody>
 

@@ -69,6 +69,8 @@ interface UpdateStatus{
 
 function Info() {
   const apiUrl = import.meta.env.VITE_API_URL;
+  const token = localStorage.getItem("APIToken");
+
   const { infopage } = useParams(); 
   const [data, setData] = useState<APIData>();
   const [relatedArticle, setrelatedArticle] = useState<Publication[]>([]);
@@ -129,19 +131,11 @@ function Info() {
 const getUniversity =  (id:number) =>{
   const filter = university.find((uni) => uni.id === id);
   return filter ? filter?.label : "Unknown University"; 
-
 }
 
 
-
-
-
-  // if (loading) {
-  //   return <div className="text-center">Loading...</div>;
-  // }
-
   const handleBackClick = () => {
-    window.history.back(); // This will navigate to the previous page in the browser's history
+    window.history.back();
   };
 
   const adminStatus = sessionStorage.getItem('isAdmin') === 'true';
@@ -152,7 +146,6 @@ const getUniversity =  (id:number) =>{
     }
     return title;
   };
-
 
   const handleReloadAndNavigate = (id:number) => {
     window.location.href = `/Publication/Info/${id}`;
@@ -233,6 +226,7 @@ const getUniversity =  (id:number) =>{
         method: "POST",  // Correct method spelling
         headers: {
           'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,
         },
         body: JSON.stringify(bodyData),
       });
@@ -371,11 +365,24 @@ const getUniversity =  (id:number) =>{
 
 
           <div className="py-1 text-xs lg:text-lg lg:py-5">
-            <div><span className="font-bold">PDF File: </span><a href={data?.pdfFile} target="_blank" className="pl-1 hover:text-primary"><span className="text-red"><FontAwesomeIcon icon={faFilePdf}/></span>View PDF</a></div>
+            
+            {
+              !data?.pdfFile || data?.pdfFile.trim() === "" ? 
+              (
+                <div>---</div>
+                
+              ):(
+                <div><span className="font-bold">PDF File: </span><a href={data?.pdfFile} target="_blank" className="pl-1 hover:text-primary"><span className="text-red"><FontAwesomeIcon icon={faFilePdf}/></span>View PDF</a></div>
+              )
+            }
+            
+            
+            
+            
             {
               !data?.pdfLink || data?.pdfLink.trim() === "" ? 
               (
-                <div></div>
+                <div>---</div>
                 
               ):(
                 <div><span className="font-bold">PDF Link: </span><a href={data?.pdfLink} target="_blank" className="pb-5 text-blue-500 underline hover:text-primary">Click here</a></div>

@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 
 interface ApiData {
     publication: Publication[]; 
-    university: University[];
+    institution: University[];
   }
   
   interface Publication {
@@ -24,12 +24,12 @@ interface ApiData {
     pdfLink: string;
     pdfFile: string;
     category: string;
-    university: number;
+    institution: number;
     download: number;
     isDeleted: number;
   }
   
-  interface University {
+  interface Institution {
     id: number;
     value: string;
     label: string;
@@ -43,7 +43,7 @@ function RecentUpload()
     const apiUrl = import.meta.env.VITE_API_URL;
 
     const [publications, setPublications] = useState<Publication[]>([]);
-    const [university, setUniversity] = useState<University[]>([]);
+    const [institution, setInstitution] = useState<Institution[]>([]);
 
     const [loading, setLoading] = useState<boolean>(false);
 
@@ -61,19 +61,24 @@ function RecentUpload()
               if (response.ok) {
                 const jsonData = await response.json();        
                 setPublications(jsonData.publications);
-                setUniversity(jsonData.university);
+                setInstitution(jsonData.institution);
+                
               }
             } catch (error) {
               console.error('Error fetching publications:', error);
             } finally {
               setLoading(false);
+              console.log(publications);
             }
           };
       //#endregion
 
       const getUniversity = (id:number) =>{
-        const filter = university.find((uni) => uni.id === id);
-        return filter ? filter?.label : "Unknown University"; 
+        //console.log(institution);
+        //console.log(id);
+        const filter = institution.find((uni) => uni.id === id);
+       // console.log(filter);
+        return filter ? filter?.label : "Unknown Institution"; 
     
       }
 
@@ -113,7 +118,7 @@ function RecentUpload()
                     <div key={post.id} id={`publication-${post}`} className="flex flex-col md:mx-10 py-1   border-b border-gray-300"> 
 
                         <div className=" flex items-center justify-between text-sm my-1">
-                            <div><h5 className="font-bold">{getUniversity(post.university)}</h5></div>
+                            <div><h5 className="font-bold">{getUniversity(post.institution)}</h5></div>
                             <div><h5>{formatDateTime(post.createdDate)}</h5></div>
                             
                         </div>
