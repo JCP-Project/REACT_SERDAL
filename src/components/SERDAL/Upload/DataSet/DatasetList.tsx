@@ -47,7 +47,7 @@ const DatasetList: React.FC<DatasetListProps> = ({ dataSets, fetchDataSets }) =>
   
   const apiUrl = import.meta.env.VITE_API_URL;
   const token = localStorage.getItem("APIToken");
-  const adminStatus = sessionStorage.getItem('isAdmin') === 'true';
+  const adminStatus = localStorage.getItem('isAdmin') === 'true';
 
   const handleDelete = (id: number, title: string) => {
 
@@ -83,7 +83,7 @@ const DatasetList: React.FC<DatasetListProps> = ({ dataSets, fetchDataSets }) =>
     //update Confirm Delete
     const ConfirmDelete = async (id: number, title: string) => {
 
-      const userId = Number(sessionStorage.getItem('id'));
+      const userId = Number(localStorage.getItem('id'));
   
       try {
         const response = await fetch(`${apiUrl}/api/Dataset/Delete/${id}?ModifiedBy=${userId}`, {

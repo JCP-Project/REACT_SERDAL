@@ -75,7 +75,7 @@ export default function PublicationRequest() {
     setActiveTab(newValue);
   };
 
-  const adminStatus = sessionStorage.getItem('isAdmin') === 'true';
+  const adminStatus = localStorage.getItem('isAdmin') === 'true';
 
   // Handle input change
   const handleFilterChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -183,7 +183,7 @@ const ApproveRequest = async (bodyData: UpdateStatus, actionText:string) => {
   }, []); 
 
   const handleStatus = (id: number, status: number, isDelete: number) => {
-    const userId = Number(sessionStorage.getItem('id'));
+    const userId = Number(localStorage.getItem('id'));
     const actionText = status === 1 ? "approve" : "decline";
 
     const updateStatus: UpdateStatus = {

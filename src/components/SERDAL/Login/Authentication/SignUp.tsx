@@ -279,7 +279,36 @@ const SignUp: React.FC = () => {
                 }
               }
     
-              const responseData: UserInfo = await response.json();  
+             const responseData = await response.json();
+
+              const userDetails = responseData.user;
+              const Token = responseData.apiToken;
+
+              const returnedUser: User = {
+                id: userDetails.id,
+                firstName: userDetails.firstName,
+                lastName: userDetails.lastName,
+                email: userDetails.email,
+                IsActive: userDetails.isActive,
+                role: userDetails.role,
+                img: userDetails.img,
+                createDateTime: userDetails.createDateTime,
+                university: userDetails.university,
+              };
+
+              console.log(userDetails);
+              console.log(Token);
+
+              localStorage.setItem('id', returnedUser.id.toString());
+              localStorage.setItem('firstname', returnedUser.firstName);
+              localStorage.setItem('lastname', returnedUser.lastName);
+              localStorage.setItem('email', returnedUser.email);
+              localStorage.setItem('img', returnedUser.img);
+              localStorage.setItem('role', returnedUser.role);
+              localStorage.setItem('university', returnedUser.university.toString());
+              localStorage.setItem('isLoggedIn', 'true');
+              localStorage.setItem('APIToken', Token.toString());
+
               // Show success message for 2 seconds
               Swal.fire({
                 icon: 'success',
@@ -289,25 +318,15 @@ const SignUp: React.FC = () => {
                 showConfirmButton: false, // Hide the confirm button
               }).then(() =>{
 
-
-                sessionStorage.setItem('id', responseData.id.toString());
-                sessionStorage.setItem('firstname', responseData.firstName);
-                sessionStorage.setItem('lastname', responseData.lastName);
-                sessionStorage.setItem('email', responseData.email);
-                sessionStorage.setItem('img', responseData.img);
-                sessionStorage.setItem('role', responseData.role);
-                sessionStorage.setItem('university', responseData.university.toString());
-                sessionStorage.setItem('isLoggedIn', 'true');
-
-                if (responseData.role.toLowerCase() == "admin") {
-                  sessionStorage.setItem('isAdmin', 'true');
+                if (userDetails.role.toLowerCase() == "admin") {
+                  localStorage.setItem('isAdmin', 'true');
                   navigate('/');
                  window.location.reload();
                   
                 }
                 else
                 {
-                  sessionStorage.setItem('isAdmin', 'false');
+                  localStorage.setItem('isAdmin', 'false');
                   navigate('/');
                   
                 }

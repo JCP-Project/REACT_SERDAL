@@ -82,7 +82,7 @@ export default function UploadPublication() {
   const fetchData = async () => {
     setLoading(true);
     setErrorMessage(null);
-    const id = sessionStorage.getItem('id');
+    const id = localStorage.getItem('id');
     try {
       const response = await fetch(`${apiUrl}/api/Publication/Publication/${id}`, {
         method: "GET",
@@ -226,7 +226,7 @@ export default function UploadPublication() {
 
 
       const handleStatus = (id: number, status: number, isDelete: number) => {
-        const userId = Number(sessionStorage.getItem('id'));
+        const userId = Number(localStorage.getItem('id'));
  
         const updateStatus: UpdateStatus = {
           Id: id,

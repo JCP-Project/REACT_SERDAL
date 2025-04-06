@@ -121,8 +121,6 @@ function Publications()
         order: selectedOption1 ? selectedOption1.value : "",
         search: searchTerm,
       };
-
-      console.log(loadpage);
       
       try {
         const response = await fetch(`${apiUrl}/api/Publication/PublicationPerPage`, {
@@ -136,7 +134,6 @@ function Publications()
         if (response.ok) {
           const jsonData = await response.json();
           
-          console.log(jsonData.publications)
           setPublications(jsonData.publications);  // Update publications
           setTotalCount(jsonData.totalCount); // Update total count
 

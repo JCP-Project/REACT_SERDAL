@@ -78,7 +78,7 @@ function GenerateChart() {
 
   const [FilteredYears, setFilterYears] = useState<string[]>([]);
 
-  const adminStatus = sessionStorage.getItem('isAdmin') === 'true';
+  const adminStatus = localStorage.getItem('isAdmin') === 'true';
 
   const chartOptions = [
     { label: "Line Chart", value: "line" },
@@ -132,7 +132,6 @@ const formattedSeries1 = () => {
     }))
     .sort((a, b) => a.x - b.x); // Sorting by year (x value)
 
-  console.log("Sorted Data Points:", sortedDataPoints);
 
   // Calculate the regression line
   const regressionLine = calculateRegression(
@@ -176,7 +175,6 @@ const formattedSeries1 = () => {
       const response = await fetch(`${apiUrl}/api/Dataset/DataById/${Id}`);
       if (response.ok) {
         const jsonData: DataSets = await response.json();
-        console.log(jsonData);
         setDataSet(jsonData);
       } else {
         console.error("Error fetching data");
@@ -199,7 +197,6 @@ const formattedSeries1 = () => {
             .filter((index) => index !== null) // Ensure we only keep valid indices
         : [...Array(dataSet?.dataGroup[selectedProd].dataYear.length).keys()]; // Select all years if none are selected
   
-    console.log("Filtered Years Indices:", filterYears);
   
     return dataSet?.dataGroup[selectedProd].series
       .filter((s) => selectedVariables.length === 0 || selectedVariables.includes(s.name))

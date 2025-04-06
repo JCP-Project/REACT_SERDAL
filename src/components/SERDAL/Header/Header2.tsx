@@ -31,7 +31,7 @@ function Header2() {
     }, []);
 
   useEffect(() => {
-    const loggedInStatus = sessionStorage.getItem('isLoggedIn') === 'true';
+    const loggedInStatus = localStorage.getItem('isLoggedIn') === 'true';
     setIsLoggedIn(loggedInStatus);
   }, []); 
 

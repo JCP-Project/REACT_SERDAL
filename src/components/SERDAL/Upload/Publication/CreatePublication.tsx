@@ -114,14 +114,14 @@ function CreatePublication() {
       data.append("publicationDate", formData.publicationDate);
       data.append("publication_Institutions", selectedOption.map(option => option.value));
 
-    const id = sessionStorage.getItem('id');
+    const id = localStorage.getItem('id');
       if (id) {
         data.append("CreatedBy", id);
       }
 
-      const university = sessionStorage.getItem('university');
-      if (university) {
-        data.append("university", university);
+      const institution = localStorage.getItem('university');
+      if (institution) {
+        data.append("institution", institution);
 
       }
     

@@ -16,7 +16,7 @@ interface TotalCount {
 
 const Dashboard2: React.FC = () => {
   const apiUrl = import.meta.env.VITE_API_URL;
-  const isAdmin = sessionStorage.getItem('isAdmin') === 'true';
+  const isAdmin = localStorage.getItem('isAdmin') === 'true';
 
   const [totalCount, setTotalCount] = useState<TotalCount>();
 

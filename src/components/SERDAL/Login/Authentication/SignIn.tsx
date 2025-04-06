@@ -115,14 +115,14 @@ const handleSubmit = async (e: React.FormEvent) => {
               createDateTime: userDetails.createDateTime,
               university: userDetails.university,
             };
-            sessionStorage.setItem('id', returnedUser.id.toString());
-            sessionStorage.setItem('firstname', returnedUser.firstName);
-            sessionStorage.setItem('lastname', returnedUser.lastName);
-            sessionStorage.setItem('email', returnedUser.email);
-            sessionStorage.setItem('img', returnedUser.img);
-            sessionStorage.setItem('role', returnedUser.role);
-            sessionStorage.setItem('university', returnedUser.university.toString());
-            sessionStorage.setItem('isLoggedIn', 'true');
+            localStorage.setItem('id', returnedUser.id.toString());
+            localStorage.setItem('firstname', returnedUser.firstName);
+            localStorage.setItem('lastname', returnedUser.lastName);
+            localStorage.setItem('email', returnedUser.email);
+            localStorage.setItem('img', returnedUser.img);
+            localStorage.setItem('role', returnedUser.role);
+            localStorage.setItem('university', returnedUser.university.toString());
+            localStorage.setItem('isLoggedIn', 'true');
             localStorage.setItem('APIToken', Token.toString());
 
             setIsLoading(true);
@@ -130,14 +130,14 @@ const handleSubmit = async (e: React.FormEvent) => {
             setIsLoading(false);
 
                 if (returnedUser.role.toLowerCase() == "admin") {
-                  sessionStorage.setItem('isAdmin', 'true');
+                  localStorage.setItem('isAdmin', 'true');
                   navigate('/');
                   window.location.reload();
                   
                 }
                 else
                 {
-                  sessionStorage.setItem('isAdmin', 'false');
+                  localStorage.setItem('isAdmin', 'false');
                   const redirectSurvey = localStorage.getItem("surveyPath");
                   
                   if (redirectSurvey) {

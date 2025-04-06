@@ -103,8 +103,8 @@ const ResetPassword: React.FC = () => {
           return;
         }
         
-        const resetidotp = sessionStorage.getItem('otp');
-        const useremail = sessionStorage.getItem('userEmail');
+        const resetidotp = localStorage.getItem('otp');
+        const useremail = localStorage.getItem('userEmail');
         console.log(resetidotp);
         console.log(useremail);
 

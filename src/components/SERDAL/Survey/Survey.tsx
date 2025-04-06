@@ -60,12 +60,12 @@ function Survey (){
         const [activeTab, setActiveTab] = useState("all");
         const [formData, setformData] = useState<FormData[]>([]);
         const [isLoggedIn, setIsLoggedIn] = useState<boolean>(
-            sessionStorage.getItem("isLoggedIn") === "true"
+            localStorage.getItem("isLoggedIn") === "true"
           );
 
         const [errorMessage, seterrorMessage] = useState<string>("");       
         const [loading, setLoading] = useState<boolean>(false);
-        const adminStatus = sessionStorage.getItem('isAdmin') === 'true';
+        const adminStatus = localStorage.getItem('isAdmin') === 'true';
         const [sort, setSort] = useState<any>(null);
         
         useEffect(() =>{

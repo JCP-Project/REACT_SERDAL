@@ -32,7 +32,7 @@ const AnswerSurvey = () => {
   const [form, setForm] = useState<FormField[]>([]);
   const [errorMessages, setErrorMessages] = useState<string[]>([]);
 
-  const adminStatus = sessionStorage.getItem('isAdmin') === 'true';
+  const adminStatus = localStorage.getItem('isAdmin') === 'true';
 
   useEffect(() => {
     console.log("TEST");

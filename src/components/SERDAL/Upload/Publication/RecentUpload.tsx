@@ -6,8 +6,8 @@ import { Link } from "react-router-dom";
 
 
 interface ApiData {
-    publication: Publication[]; 
-    institution: University[];
+    publications: Publication[]; 
+    institution: Institution[];
   }
   
   interface Publication {
@@ -59,9 +59,11 @@ function RecentUpload()
               const response = await fetch(`${apiUrl}/api/Dashboard/RecentPublication`);
       
               if (response.ok) {
-                const jsonData = await response.json();        
+                const jsonData = await response.json(); 
+                  
                 setPublications(jsonData.publications);
                 setInstitution(jsonData.institution);
+                console.log(institution);   
                 
               }
             } catch (error) {

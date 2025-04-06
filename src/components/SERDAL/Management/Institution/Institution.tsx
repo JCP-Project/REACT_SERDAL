@@ -59,8 +59,8 @@ export default function Institution() {
   const [modal, setmodal] = useState(false);
   const [modalCreate, setmodalCreate] = useState(false);
 
-  const adminStatus = sessionStorage.getItem('isAdmin') === 'true';
-  const userId = Number(sessionStorage.getItem('id'));
+  const adminStatus = localStorage.getItem('isAdmin') === 'true';
+  const userId = Number(localStorage.getItem('id'));
 
     const [formData, setFormData] = useState({
       label: "",

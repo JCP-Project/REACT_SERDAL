@@ -57,9 +57,9 @@ function Form () {
     const [formData, setformData] = useState<FormData[]>([]);
     const [sort, setSort] = useState<any>(null);
 
-    const adminStatus = sessionStorage.getItem('isAdmin') === 'true';
+    const adminStatus = localStorage.getItem('isAdmin') === 'true';
     const [isLoggedIn, setIsLoggedIn] = useState<boolean>(
-      sessionStorage.getItem("isLoggedIn") === "true"
+      localStorage.getItem("isLoggedIn") === "true"
     );
     const navigate = useNavigate();
 

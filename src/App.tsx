@@ -43,11 +43,11 @@ function App() {
   }, []);
 
 
-  //sessionStorage.setItem('isLoggedIn', 'false');
+  //localStorage.setItem('isLoggedIn', 'false');
   //essionStorage.setItem('isAdmin', 'false');
 
-  const isAdmin = sessionStorage.getItem('isAdmin') === 'true';
-  const isLoggedIn = sessionStorage.getItem('isLoggedIn') === 'true';
+  const isAdmin = localStorage.getItem('isAdmin') === 'true';
+  const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
   const [seconds, setSeconds] = useState(0);
 
   const validateRoute = (pathname: string) => {
@@ -97,7 +97,7 @@ function App() {
   
     useEffect(() => {
       if (seconds >= 3600) {
-        sessionStorage.clear();
+        localStorage.clear();
         window.location.reload(); // Reload the page after clearing session storage
       }
     }, [seconds]);

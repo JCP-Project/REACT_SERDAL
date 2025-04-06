@@ -53,7 +53,7 @@ function Datasets() {
   const [file, setFile] = useState<File | null>(null);
 
   // Define adminStatus variable here
-  const adminStatus = sessionStorage.getItem('isAdmin') === 'true';
+  const adminStatus = localStorage.getItem('isAdmin') === 'true';
 
   useEffect(() => {
     if (!hasFetched.current) {

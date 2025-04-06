@@ -53,7 +53,7 @@ export default function Users() {
 
   const [tableRows, setTableRows] = useState<User[]>([]);
 
-  const adminStatus = sessionStorage.getItem('isAdmin') === 'true';
+  const adminStatus = localStorage.getItem('isAdmin') === 'true';
 
   useEffect(() => {
 
@@ -112,7 +112,7 @@ export default function Users() {
 
   const saveEdit = async () => {
 
-    const userId = Number(sessionStorage.getItem('id'));
+    const userId = Number(localStorage.getItem('id'));
     const userUpdate = {
       id: selectedInfo?.id,
       firstName: selectedInfo?.firstName,

@@ -11,8 +11,8 @@ const DefaultLayout: React.FC<{ children: ReactNode }> = ({ children }) => {
 
 
   useEffect(() => {
-    const loggedInStatus = sessionStorage.getItem('isLoggedIn') === 'true';
-    const adminStatus = sessionStorage.getItem('isAdmin') === 'true';
+    const loggedInStatus = localStorage.getItem('isLoggedIn') === 'true';
+    const adminStatus = localStorage.getItem('isAdmin') === 'true';
 
     setIsLoggedIn(loggedInStatus);
     setIsAdmin(adminStatus);

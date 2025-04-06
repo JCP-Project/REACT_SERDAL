@@ -10,22 +10,22 @@ const DropdownUser = () => {
   const navigate = useNavigate();
   
   const logout = () => {
-    sessionStorage.setItem('id', "");
-    sessionStorage.setItem('firstname', "");
-    sessionStorage.setItem('lastname',"");
-    sessionStorage.setItem('email', "");
-    sessionStorage.setItem('img', "");
-    sessionStorage.setItem('role', "");
-    sessionStorage.setItem('isLoggedIn', 'false');
-    sessionStorage.setItem('isAdmin', 'false');
+    localStorage.setItem('id', "");
+    localStorage.setItem('firstname', "");
+    localStorage.setItem('lastname',"");
+    localStorage.setItem('email', "");
+    localStorage.setItem('img', "");
+    localStorage.setItem('role', "");
+    localStorage.setItem('isLoggedIn', 'false');
+    localStorage.setItem('isAdmin', 'false');
     navigate('/');
     window.location.reload();
 
   }
   
-  const firstname = sessionStorage.getItem('firstname');
-  const lastName = sessionStorage.getItem('lastname');
-  const img = sessionStorage.getItem('img');
+  const firstname = localStorage.getItem('firstname');
+  const lastName = localStorage.getItem('lastname');
+  const img = localStorage.getItem('img');
 
   return (
     <ClickOutside onClick={() => setDropdownOpen(false)} className="relative">

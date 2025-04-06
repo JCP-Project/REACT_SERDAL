@@ -138,7 +138,7 @@ const getUniversity =  (id:number) =>{
     window.history.back();
   };
 
-  const adminStatus = sessionStorage.getItem('isAdmin') === 'true';
+  const adminStatus = localStorage.getItem('isAdmin') === 'true';
 
   const truncateTitle = (title: string): string => {
     if (title.length > 500) {
@@ -174,7 +174,7 @@ const getUniversity =  (id:number) =>{
 
 
     const handleStatus = (status: number, isDelete: number) => {
-      const userId = Number(sessionStorage.getItem('id'));
+      const userId = Number(localStorage.getItem('id'));
       const actionText = status === 1 ? "approve" : "decline";
       const updateStatus: UpdateStatus = {
         Id: Number(data?.id),
@@ -369,7 +369,7 @@ const getUniversity =  (id:number) =>{
             {
               !data?.pdfFile || data?.pdfFile.trim() === "" ? 
               (
-                <div>---</div>
+                <div>PDF File: ---</div>
                 
               ):(
                 <div><span className="font-bold">PDF File: </span><a href={data?.pdfFile} target="_blank" className="pl-1 hover:text-primary"><span className="text-red"><FontAwesomeIcon icon={faFilePdf}/></span>View PDF</a></div>
@@ -377,12 +377,10 @@ const getUniversity =  (id:number) =>{
             }
             
             
-            
-            
             {
               !data?.pdfLink || data?.pdfLink.trim() === "" ? 
               (
-                <div>---</div>
+                <div>PDF Link: ---</div>
                 
               ):(
                 <div><span className="font-bold">PDF Link: </span><a href={data?.pdfLink} target="_blank" className="pb-5 text-blue-500 underline hover:text-primary">Click here</a></div>
