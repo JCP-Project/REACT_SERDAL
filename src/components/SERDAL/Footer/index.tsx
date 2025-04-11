@@ -33,7 +33,7 @@ function footer() {
                     </div>
                     <div className="flex items-center text-white text-sm py-2">
                         <FontAwesomeIcon icon={faMessage}  className="text-xl pr-3"/>               
-                        Serdal.uplb@up.edu.ph
+                        serdal.uplb@up.edu.ph
                     </div>
                     <div className="flex items-center text-white text-sm py-3">
                         <Link to={"https://www.facebook.com/UPLB.SERDAL"} target="_">

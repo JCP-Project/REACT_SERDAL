@@ -1,13 +1,20 @@
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import DropdownUser from './DropdownUser';
 
 import { useState, useEffect  } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars, faTimes } from '@fortawesome/free-solid-svg-icons';
 
+
 function Header2() {
+  const location = useLocation();
+
+  const isIndexPage = location.pathname === '/';
+
+  
   const [menuOpen, setMenuOpen] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
+  const [isAdmin, setIsAdmin] = useState<boolean>(false);
 
   const toggleMenu = () => {
     setMenuOpen(prevState => !prevState); // Toggle the menu state
@@ -32,13 +39,15 @@ function Header2() {
 
   useEffect(() => {
     const loggedInStatus = localStorage.getItem('isLoggedIn') === 'true';
+    const adminStatus = localStorage.getItem('isAdmin') === 'true';
     setIsLoggedIn(loggedInStatus);
+    setIsAdmin(adminStatus);
   }, []); 
 
   let user = (
     <div>
       <Link to="/auth/signin">
-        <button onClick={() => setMenuOpen(false)}  className="bg-white border-2 border-primary text-primary py-3 md:py-1 px-10 md:px-5 rounded-sm hover:bg-white hover:border-primary text-xl md:text-sm">
+        <button onClick={() => setMenuOpen(false)}  className="bg-black border-2 border-primary text-primary py-3 md:py-1 px-10 md:px-5 rounded-sm hover:bg-black hover:border-primary text-xl md:text-sm">
           Sign in
         </button>
       </Link>
@@ -51,12 +60,48 @@ function Header2() {
   
   return (
     <>
-    <header className="sticky top-0 z-999 flex w-full bg-white drop-shadow-1">
-      <div className="flex flex-grow items-center justify-center py-5 shadow-2 md:px-6 2xl:px-11">
+    {
+      !isAdmin && (
+        <div>
+              {isIndexPage && 
+              <div className="w-full bg-black">
+                <div  className='flex items-center justify-between py-3'>
+                  <div className="px-3">
+                    <img src="/UPLB_VIGHRColor_1.png" alt='UPLB Logo' className="h-15" />
+                  </div>
+                  <div className="flex space-x-5 px-3">
+                    <div>
+                      <img src="/CEM.png" alt='CEM Logo' className="h-15" />
+                    </div>
+                    <div>
+                      <img src="/logo.png" alt='SERDAL Logo' className="h-15" />
+                    </div>
+                  </div>
+                </div>
+                <div className="text-3xl font-bold text-center py-10 text-white bg-primary">Socio-Economics Research and Data Analytics Laboratory,</div>
+              </div>}
+        </div>
+      )
+    }
+
+    <header className="sticky top-0 z-999 flex w-full bg-black drop-shadow-1">
+      <div className={`flex flex-grow items-center ${!isAdmin && isIndexPage ? "justify-center" : "justify-between"} py-5 shadow-2 md:px-6`}>
         <div className="flex items-center gap-2 sm:gap-4">
-          <Link className="block flex-shrink-0" to="http://localhost/SERDAL/">
-            <img src="/logo.png" alt="Logo" height={55} width={55}/>
-          </Link>
+          {
+            !isAdmin && (
+              <div>
+                    {
+                      !isIndexPage && 
+                    <div className="w-full bg-black">
+                      <Link className="block flex-shrink-0" to="http://localhost/SERDAL/">
+                        <img src="/UPLB_VIGHRColor_1.png" alt="UPLB Logo" className='h-15'/>
+                      </Link>
+                    </div>
+                    }
+              </div>
+            )
+          }
+
 
           <div className="flex items-center gap-6">
               <FontAwesomeIcon
@@ -67,35 +112,35 @@ function Header2() {
             </div>
         </div>
 
-        <div className={`sm:block ${menuOpen ? 'block' : 'hidden'} text-black font-medium z-50`}>
+        <div className={`sm:block ${menuOpen ? 'block' : 'hidden'} text-white font-medium z-50`}>
             {/* Mobile and Desktop Combined Navigation */}
-            <nav className={`${ menuOpen ? "block" : "hidden" } absolute md:static top-0 left-0 w-full bg-white md:flex md:items-center md:w-auto z-50`}>
+            <nav className={`${ menuOpen ? "block" : "hidden" } absolute md:static top-0 left-0 w-full bg-black md:flex md:items-center md:w-auto z-50`}>
                 {/* Full-Screen Mobile Menu */}
-                <div className={`${ menuOpen ? "block h-screen w-full fixed top-0 left-0 bg-white z-50" : "hidden" } md:hidden`} >
+                <div className={`${ menuOpen ? "block h-screen w-full fixed top-0 left-0 bg-black z-50" : "hidden" } md:hidden`} >
                   <FontAwesomeIcon icon={menuOpen ? faTimes : faBars} onClick={toggleMenu} className="absolute top-4 right-4 cursor-pointer text-3xl" />
 
                   <ul className="flex flex-col items-center justify-center h-full gap-8">
                     <li><a className="hover:text-gray-500 text-3xl" href="http://localhost/SERDAL/">Home</a></li>
                     <li className="flex flex-col items-center justify-center">
-                      <Link to="/" className="text-black text-3xl" onClick={() => setMenuOpen(false)}> Publications </Link>
+                      <Link to="/" className="text-white text-3xl" onClick={() => setMenuOpen(false)}> Publications </Link>
                     </li>
                     <li className="flex flex-col items-center justify-center">
-                      <Link to="/datasets" className="text-black text-3xl" onClick={() => setMenuOpen(false)}> Dataset </Link>
+                      <Link to="/datasets" className="text-white text-3xl" onClick={() => setMenuOpen(false)}> Dataset </Link>
                     </li>
                     <li className="flex flex-col items-center justify-center">
-                      <Link to="/survey" className="text-black text-3xl" onClick={() => setMenuOpen(false)}> Survey </Link>
+                      <Link to="/survey" className="text-white text-3xl" onClick={() => setMenuOpen(false)}> Survey </Link>
                     </li>
                     <li className="flex flex-col items-center justify-center">
-                      <a className="text-black hover:text-gray-500 text-3xl" href="http://localhost/SERDAL/contact/">Contact</a>
+                      <a className="text-white hover:text-gray-500 text-3xl" href="http://localhost/SERDAL/contact/">Contact</a>
                     </li>
                     <li className="flex flex-col items-center justify-center">
-                      <a className="text-black hover:text-gray-500 text-3xl" href="http://localhost/SERDAL/services/">Services</a>
+                      <a className="text-white hover:text-gray-500 text-3xl" href="http://localhost/SERDAL/services/">Services</a>
                     </li>
                     <li className="flex flex-col items-center justify-center">
-                      <a className="text-black hover:text-gray-500 text-3xl" href="http://localhost/SERDAL/training/">Trainings</a>
+                      <a className="text-white hover:text-gray-500 text-3xl" href="http://localhost/SERDAL/training/">Trainings</a>
                     </li>
                     <li className="flex flex-col items-center justify-center">
-                      <a className="text-black hover:text-gray-500 text-3xl" href="http://localhost/SERDAL/training/">Events & Highlights</a>
+                      <a className="text-white hover:text-gray-500 text-3xl" href="http://localhost/SERDAL/training/">Events & Highlights</a>
                     </li>
                     <li>{user}</li>
                   </ul>        
@@ -105,31 +150,43 @@ function Header2() {
                 <div className="hidden md:flex w-full justify-center">
                   <ul className="flex md:flex-row gap-8">
                     <li className="flex flex-col items-center justify-center">
-                      <a className="text-black hover:text-gray-500 text-md" href="http://localhost/SERDAL/">Home</a>
+                      <Link to="/" className="text-white text-md"> Home </Link>
+                    </li>
+                    
+                    <li className="relative group flex flex-col items-center justify-center">
+                      <Link to="/people" className="text-white text-md">People</Link>
+
+                      {/* Dropdown menu */}
+                      <ul className="absolute top-full ml-15 hidden group-hover:flex flex-col bg-black border border-1 border-gray-800 text-white p-2 rounded-md shadow-sm z-50 min-w-[160px]">
+                        <li>
+                          <Link to="/people/team" className="block px-4 py-2 hover:bg-gray-700 rounded">Phase 1</Link>
+                        </li>
+                        <li>
+                          <Link to="/people/mission" className="block px-4 py-2 hover:bg-gray-700 rounded">Phase 2</Link>
+                        </li>
+                        <li>
+                          <Link to="/people/history" className="block px-4 py-2 hover:bg-gray-700 rounded">Expert pool</Link>
+                        </li>
+                      </ul>
+                    </li>
+
+                    <li className="flex flex-col items-center justify-center">
+                      <Link to="/publication" className="text-white text-md"> Publications </Link>
                     </li>
                     <li className="flex flex-col items-center justify-center">
-                      <a className="text-black hover:text-gray-500 text-md" href="http://localhost/SERDAL/aboutus/">About</a>
+                      <Link to="/datasets" className="text-white text-md"> Dataset </Link>
                     </li>
                     <li className="flex flex-col items-center justify-center">
-                      <Link to="/" className="text-black text-md"> Publications </Link>
+                      <Link to="/survey" className="text-white text-md"> Survey </Link>
                     </li>
                     <li className="flex flex-col items-center justify-center">
-                      <Link to="/datasets" className="text-black text-md"> Dataset </Link>
+                      <a className="text-white hover:text-gray-500 text-md" href="http://localhost/SERDAL/contact/">Contact</a>
                     </li>
                     <li className="flex flex-col items-center justify-center">
-                      <Link to="/survey" className="text-black text-md"> Survey </Link>
+                      <a className="text-white hover:text-gray-500 text-md" href="http://localhost/SERDAL/services/">Services</a>
                     </li>
                     <li className="flex flex-col items-center justify-center">
-                      <a className="text-black hover:text-gray-500 text-md" href="http://localhost/SERDAL/contact/">Contact</a>
-                    </li>
-                    <li className="flex flex-col items-center justify-center">
-                      <a className="text-black hover:text-gray-500 text-md" href="http://localhost/SERDAL/services/">Services</a>
-                    </li>
-                    <li className="flex flex-col items-center justify-center">
-                      <a className="text-black hover:text-gray-500 text-md" href="http://localhost/SERDAL/training/">Trainings</a>
-                    </li>
-                    <li className="flex flex-col items-center justify-center">
-                      <a className="text-black hover:text-gray-500 text-md" href="http://localhost/SERDAL/training/">Events & Highlights</a>
+                      <a className="text-white hover:text-gray-500 text-md" href="http://localhost/SERDAL/training/">Trainings</a>
                     </li>
                     <li>{user}</li>
                   </ul>
@@ -152,13 +209,31 @@ function Header2() {
             {/* <!-- Chat Notification Area --> */}
           </ul>
 
-            {/* <!-- User Area --> */}
-            {/* <DropdownUser /> */}
-            
-            {/* <!-- User Area --> */}
         </div>
 
 
+        {
+            !isAdmin && (
+              <div>
+                    {
+                      !isIndexPage && 
+                    <div className="w-full bg-black flex">
+                      <div className="mx-2">
+                        <Link className="block flex-shrink-0" to="http://localhost/SERDAL/">
+                            <img src="/CEM.png" alt="CEM Logo" className='h-15'/>
+                        </Link>
+                      </div>
+
+                      <div className="mx-2">
+                        <Link className="block flex-shrink-0" to="http://localhost/SERDAL/">
+                            <img src="/logo.png" alt="SERDAL Logo" className='h-15'/>
+                        </Link>
+                      </div>
+                    </div>
+                    }
+              </div>
+            )
+          }
 
         
       </div>

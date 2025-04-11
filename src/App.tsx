@@ -24,6 +24,9 @@ import AnswerSurvey from './components/SERDAL/Survey/AnswerSurvey';
 import GenerateChart from './components/SERDAL/Upload/DataSet/GenerateChart';
 import ResetPassword from './components/SERDAL/Login/Authentication/ResetPassword';
 import Institution from './components/SERDAL/Management/Institution/Institution';
+import Home from './components/SERDAL/Home/home';
+import Publications from './components/SERDAL/Upload/Publication/Publications';
+import About from './components/SERDAL/About/about';
 
 
 
@@ -53,6 +56,7 @@ function App() {
   const validateRoute = (pathname: string) => {
     // List of valid base routes (without dynamic parameters)
     const validRoutes = [
+      '/people',
      '/auth/signin', '/signup', 
       '/tables', '/tableapproval','/chart', 
       '/uploadpublication', 
@@ -128,6 +132,8 @@ function App() {
   ) : (
     <DefaultLayout>
       <Routes>
+        <Route path="/publication" element={<> <PageTitle title="Publications" /> <Publications /> </>} />
+        <Route path="/people" element={<> <PageTitle title="people" /> <About /> </>} />
         <Route path="/UploadPublication" element={<> <PageTitle title="Upload Publication" /> <UploadPublication /> </>} />
         <Route path="/createpost" element={<> <PageTitle title="Upload" /> <CreatePublication /> </>} />
         <Route path="/datasets" element={<> <PageTitle title="Datasets" /> <Datasets /> </>} />
@@ -165,7 +171,7 @@ function App() {
         ):
         (
           // Site Index
-          <Route index element={<> <PageTitle title="SERDAL" /> <Publication /> </>} />
+          <Route index element={<> <PageTitle title="Home" /> <Home /> </>} />
           
         )}
        
