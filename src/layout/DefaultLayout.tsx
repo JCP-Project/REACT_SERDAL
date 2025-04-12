@@ -3,12 +3,36 @@ import Header from '../components/SERDAL/Header/index';
 import Header2 from '../components/SERDAL/Header/Header2';
 import Sidebar2 from '../components/SERDAL/Sidebar';
 import Footer from '../components/SERDAL/Footer/index';
+import { useLocation } from 'react-router-dom';
 
 const DefaultLayout: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
+
+  const [isSticky, setIsSticky] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const trigger = document.getElementById('sticky-trigger');
+      if (!trigger) return;
+  
+      const triggerTop = trigger.getBoundingClientRect().top;
+      setIsSticky(triggerTop < 0);
+    };
+  
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+
+
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
   const [isAdmin, setIsAdmin] = useState<boolean>(false);
 
+
+
+
+    const location = useLocation(); 
+    const isIndexPage = location.pathname === '/';
 
   useEffect(() => {
     const loggedInStatus = localStorage.getItem('isLoggedIn') === 'true';
@@ -21,13 +45,16 @@ const DefaultLayout: React.FC<{ children: ReactNode }> = ({ children }) => {
   
   let header,sidebar,tempfooter;
   if (isAdmin) {
-    header =  <div ><Header sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} /> </div> ;
+    header =  <div><Header sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} /> </div> ;
     sidebar =  <div ><Sidebar2 sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} /> </div> ;
      tempfooter =  <div ></div> ;
   } else {
-    header =  <div className="z-50"><Header2/></div> ;
+    header =  <div className={`sticky top-0 z-50 ${isSticky ? 'bg-red-500' : 'bg-orange'}`}><Header2/></div> ;
     tempfooter = <Footer />
   }
+
+
+
 
   return (
     <>
@@ -39,25 +66,72 @@ const DefaultLayout: React.FC<{ children: ReactNode }> = ({ children }) => {
           {/* <!-- ===== Sidebar End ===== --> */}
 
           {/* <!-- ===== Content Area Start ===== --> */}
-          <div className="relative flex flex-1 flex-col overflow-y-auto overflow-x-hidden bg-white min-h-screen bg-white">
-            {/* <!-- ===== Header Start ===== --> */}
-            {header}         
-            {/* <!-- ===== Header End ===== --> */}
+          <div className="relative flex flex-1 flex-col overflow-y-auto bg-white min-h-screen bg-white">
+              
+              {
+                !isAdmin && (
+                  <div>
+                        {isIndexPage && 
+                        <div className="w-full bg-black-2">
+                          <div  className='flex items-center justify-between py-3'>
+                            <div className="px-3">
+                              <img src="/UPLB_VIGHRColor_1.png" alt='UPLB Logo' className="h-15" />
+                            </div>
+                            <div className="flex space-x-5 px-3">
+                              <div>
+                                <img src="/CEM.png" alt='CEM Logo' className="h-15" />
+                              </div>
+                              <div>
+                                <img src="/logo.png" alt='SERDAL Logo' className="h-15" />
+                              </div>
+                            </div>
+                          </div>
+                          <div className="text-3xl font-bold text-center py-10 text-white bg-primary">Socio-Economics Research and Data Analytics Laboratory,</div>
+                        </div>}
+                  </div>
+                )
+              }
 
-            {/* <!-- ===== Main Content Start ===== --> */}
-            <main  className="bg-white">
-              <div className="mx-auto  max-w-[100%]">
-                {children}
+              <div id="sticky-trigger" className="h-0"></div>
+
+              {header}
+
+
+              <div className={`sticky h-10 top-0 z-999 w-full transition-all duration-300 ${isSticky ? 'bg-red-500' : 'bg-black'}`}>
+                </div>
+              
+
+              <main  className="bg-white">
+                  <div className="mx-auto  max-w-[100%]">
+                    {children}
+                  </div>
+                </main>
+
+              <div className="bg-[#032c54] z-10">
+                  <div className="px-2 md:px-[15%] text-white">
+                    {tempfooter}
+                </div>             
               </div>
-            </main>
-            {/* <!-- ===== Main Content End ===== --> */}
 
-          <div className="bg-[#032c54] z-10">
-            <div className="px-2 md:px-[15%] text-white">
-              {tempfooter}
-            </div>
-            
-          </div>
+            {/* <div className="overflow-y-auto">
+
+            <div className="w-full h-20 bg-blue-500 ">test</div>
+
+            <div className="w-full h-20 bg-red-500 sticky top-0 z-50 ">test</div>
+
+              <main  className="bg-white">
+                  <div className="mx-auto  max-w-[100%]">
+                    {children}
+                  </div>
+                </main>
+
+              <div className="bg-[#032c54] z-10">
+                  <div className="px-2 md:px-[15%] text-white">
+                    {tempfooter}
+                </div>             
+              </div>
+            </div> */}
+
 
           </div>
 

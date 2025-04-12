@@ -26,7 +26,10 @@ import ResetPassword from './components/SERDAL/Login/Authentication/ResetPasswor
 import Institution from './components/SERDAL/Management/Institution/Institution';
 import Home from './components/SERDAL/Home/home';
 import Publications from './components/SERDAL/Upload/Publication/Publications';
-import About from './components/SERDAL/About/about';
+import Training from './components/SERDAL/Training/training';
+import People from './components/SERDAL/People/people';
+import AboutUs from './components/SERDAL/AboutUs/aboutus';
+import TrainingInfo from './components/SERDAL/Training/traininginfo';
 
 
 
@@ -57,12 +60,14 @@ function App() {
     // List of valid base routes (without dynamic parameters)
     const validRoutes = [
       '/people',
-     '/auth/signin', '/signup', 
+      '/about',
+      '/trainings',
+      '/auth/signin', '/signup', 
       '/tables', '/tableapproval','/chart', 
       '/uploadpublication', 
-      '/publication','/createpublication','/createpost','/auth/signup','/datasets','/','/survey',
+      '/publication','/createpublication','/createpost','/auth/signup','/datasets','/','/toolbox',
       '/datasets/generatechart',
-      '/admin/users', '/admin/datasets','/admin/Management/Institution','/admin/survey/create','/admin/survey/form','/admin/publicationrequest',
+      '/admin/users', '/admin/datasets','/admin/Management/Institution','/admin/toolbox/create','/admin/toolbox/form','/admin/publicationrequest',
       '/auth/resetpassword',
     ];
 
@@ -100,7 +105,7 @@ function App() {
     }, []);
   
     useEffect(() => {
-      if (seconds >= 3600) {
+      if (seconds >= 1000) {
         localStorage.clear();
         window.location.reload(); // Reload the page after clearing session storage
       }
@@ -133,10 +138,14 @@ function App() {
     <DefaultLayout>
       <Routes>
         <Route path="/publication" element={<> <PageTitle title="Publications" /> <Publications /> </>} />
-        <Route path="/people" element={<> <PageTitle title="people" /> <About /> </>} />
+        <Route path="/about" element={<> <PageTitle title="About Us" /> <AboutUs /> </>} />
+        <Route path="/people" element={<> <PageTitle title="People" /> <People /> </>} />
         <Route path="/UploadPublication" element={<> <PageTitle title="Upload Publication" /> <UploadPublication /> </>} />
         <Route path="/createpost" element={<> <PageTitle title="Upload" /> <CreatePublication /> </>} />
         <Route path="/datasets" element={<> <PageTitle title="Datasets" /> <Datasets /> </>} />
+
+        <Route path="/trainings" element={<> <PageTitle title="Training" /> <Training /> </>} />
+        <Route path="/trainings/Info/:infopage" element={<> <PageTitle title="Trainings Info" /> <TrainingInfo /> </>} />
         
         <Route path="/Publication/Info/:infopage" element={<> <PageTitle title="Publication Info" /> <Info /> </>} />
 
@@ -149,7 +158,7 @@ function App() {
         <Route path="/auth/signup" element={<> <PageTitle title="Signup" /> <SignUp /> </>} />
         <Route path="/auth/resetpassword" element={<> <PageTitle title="Reset Password" /> <ResetPassword /> </>} />
 
-        <Route path="/survey" element={<> <PageTitle title="Survey" /> <Survey /> </>} />
+        <Route path="/toolbox" element={<> <PageTitle title="SERDAL Toolbox" /> <Survey /> </>} />
 
         
         <Route path="/createpublication" element={<> <PageTitle title="Add Publication" /> <CreatePublication /> </>} />

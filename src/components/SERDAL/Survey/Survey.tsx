@@ -151,9 +151,9 @@ function Survey (){
     const openSurvey = (id: number) => {
 
       if (isLoggedIn) {
-        return navigate( `/survey/answer/${id}`);    
+        return navigate( `/toolbox/answer/${id}`);    
       }
-      localStorage.setItem("surveyPath", `/survey/answer/${id}`);
+      localStorage.setItem("surveyPath", `/toolbox/answer/${id}`);
       navigate("/auth/signin");
     }
 
@@ -168,7 +168,7 @@ function Survey (){
                 animate={{ x: 0 }}
                 transition={{ type: 'spring', stiffness: 100 }}
                 >
-                        <h1 className="text-2xl font-bold text-left text-white px-3 lg:px-40">Survey</h1>
+                        <h1 className="text-2xl font-bold text-left text-white px-3 lg:px-40">SERDAL Toolbox</h1>
                 </motion.div>
             </div>
 

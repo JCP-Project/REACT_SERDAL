@@ -69,7 +69,7 @@ function Form () {
     
     const GetSurveyList = async() =>{
         try {
-            const response = await fetch(`${apiUrl}/api/Survey/AllSurvey`, {
+            const response = await fetch(`${apiUrl}/api/AllSurvey`, {
               method: 'GET',
             });
     
@@ -161,9 +161,9 @@ function Form () {
 
       const openSurvey = (id: number) => {
         if (isLoggedIn) {
-          return navigate( `/survey/answer/${id}`);    
+          return navigate( `/toolbox/answer/${id}`);    
         }
-        localStorage.setItem("surveyPath", `/survey/answer/${id}`);
+        localStorage.setItem("surveyPath", `/toolbox/answer/${id}`);
         navigate("/auth/signin");
       }
 
@@ -177,7 +177,7 @@ function Form () {
                 animate={{ x: 0 }}
                 transition={{ type: 'spring', stiffness: 100 }}
                 >
-                        <h1 className={`text-2xl font-bold text-left text-white px-3 ${adminStatus ? 'lg:px-5' : 'lg:px-40'}`}>Survey</h1>
+                        <h1 className={`text-2xl font-bold text-left text-white px-3 ${adminStatus ? 'lg:px-5' : 'lg:px-40'}`}>SERDAL Toolbox</h1>
                 </motion.div>
             </div>
 
@@ -218,7 +218,7 @@ function Form () {
 
                           <div className="flex justify-end  lg:justify-end lg:ml-1 py-3">
                                               
-                            <Link to="/admin/survey/create">
+                            <Link to="/admin/toolbox/create">
                               <button className="flex items-center gap-3 bg-[#17C0CC] text-white px-4 py-2 rounded-md hover:bg-[#139B99]">
                                 <FontAwesomeIcon icon={faAdd} className="cursor-pointer" />
                                   Create

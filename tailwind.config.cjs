@@ -39,6 +39,7 @@ module.exports = {
         bodydark2: '#8A99AF',
         primary: '#2591DE',
         secondary: '#4FB7E5',
+        Tertiary: "#70DFED",
         stroke: '#E2E8F0',
         gray: {
           ...colors.gray,

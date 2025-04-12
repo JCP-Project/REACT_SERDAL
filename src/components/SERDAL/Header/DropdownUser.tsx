@@ -31,15 +31,14 @@ const DropdownUser = () => {
     <ClickOutside onClick={() => setDropdownOpen(false)} className="relative">
       <Link
         onClick={() => setDropdownOpen(!dropdownOpen)}
-        className="flex items-center gap-4"
+        className="flex items-center lg:gap-4"
         to="#"
       >
-        <span className="hidden text-right lg:block">
-          <span className="block text-[14px] text-black">
+        {/* <span className="hidden text-right lg:block">
+          <span className="block text-[14px] text-white">
            {firstname} {lastName}
           </span>
-          {/* <span className="block text-xs">UX Designer</span> */}
-        </span>
+        </span> */}
 
         <span className="h-9 w-9 rounded-full overflow-hidden">
           {
@@ -60,9 +59,9 @@ const DropdownUser = () => {
       {/* <!-- Dropdown Start --> */}
       {dropdownOpen && (
         <div
-        className={`absolute right-0 mt-4 flex w-62.5 flex-col rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark left-1/2 transform -translate-x-1/2`}
+        className={`absolute right-0 mt-4 flex w-62.5 flex-col rounded-sm border bg-black shadow-default`}
         >
-          <ul className="flex flex-col gap-5 border-b border-stroke px-6 py-7.5 dark:border-strokedark">
+          <ul className="flex flex-col gap-5 px-6 py-7.5 hover:bg-gray-700  hover:text-primary ">
             {/* <li>
               <Link
                 to="/"
@@ -77,7 +76,7 @@ const DropdownUser = () => {
               <Link
                 to="/UploadPublication"
                 onClick={() => setDropdownOpen(false)}
-                className="flex items-center gap-3.5 text-lg lg:text-sm font-medium duration-300 ease-in-out hover:text-primary lg:text-base"
+                className="flex items-center gap-3.5 text-lg lg:text-sm font-medium duration-300 ease-in-out"
               >
                 <FontAwesomeIcon icon={faUpload}></FontAwesomeIcon>
                 Upload Publication
@@ -94,7 +93,7 @@ const DropdownUser = () => {
               </Link>
             </li> */}
           </ul>
-          <button onClick={logout} className="flex items-center gap-3.5 px-6 py-4 text-lg lg:text-sm font-medium duration-300 ease-in-out hover:text-primary lg:text-base">
+          <button onClick={logout} className="flex items-center gap-3.5 px-6 py-4 text-lg lg:text-sm font-medium duration-300 ease-in-out hover:text-primary h-full hover:bg-gray-700">
             <FontAwesomeIcon icon={faLeftLong}></FontAwesomeIcon>
             Log Out
           </button>
