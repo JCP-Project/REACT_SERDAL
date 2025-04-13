@@ -5,16 +5,32 @@ import { useState, useEffect  } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { motion } from "framer-motion";
+import servicesData from '../Resources/Services/servicesData';
+
+interface data {
+  id: number;
+  title: string;
+  summary: string;
+  img: string;  
+}
 
 function Header2() {
   const location = useLocation();
+  const [data, setData] = useState<data[]>([])
 
   const isIndexPage = location.pathname === '/';
 
   
   const [menuOpen, setMenuOpen] = useState(false);
+  const [openDropdown, setOpenDropdown] = useState("");
+
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
   const [isAdmin, setIsAdmin] = useState<boolean>(false);
+
+
+  const toggleDropdown = (menu: string) => {
+    setOpenDropdown(prev => (prev === menu ? "" : menu));
+  };
 
   const toggleMenu = () => {
     setMenuOpen(prevState => !prevState); // Toggle the menu state
@@ -29,6 +45,7 @@ function Header2() {
 
     // Listen for window resize events
     useEffect(() => {
+      setData(servicesData);
       window.addEventListener('resize', handleResize);
   
       // Cleanup the event listener on unmount
@@ -69,7 +86,7 @@ function Header2() {
     <>
 
     <header className="sticky top-0 z-50 flex w-full bg-black-2 drop-shadow-1">
-      <div className={`flex flex-grow items-center ${!isAdmin && isIndexPage ? "justify-center" : "justify-between"} py-5 shadow-2 md:px-6`}>
+      <div className={`flex flex-grow items-center ${!isAdmin && isIndexPage ? "justify-center" : "justify-between"} py-5 shadow-2`}>
         <div className="flex items-center gap-2 sm:gap-4">
           {
             !isAdmin && (
@@ -77,7 +94,7 @@ function Header2() {
                     {
                       !isIndexPage && 
                     <div className="w-full bg-black-2">
-                      <Link className="block flex-shrink-0" to="http://localhost/SERDAL/">
+                      <Link className="block flex-shrink-0" to="https://uplb.edu.ph/" target='_'>
                         <img src="/UPLB_VIGHRColor_1.png" alt="UPLB Logo" className='h-15'/>
                       </Link>
                     </div>
@@ -93,41 +110,116 @@ function Header2() {
                   onClick={toggleMenu}
                   className="text-3xl cursor-pointer md:hidden"
                 />
-            </div>
+          </div>
         </div>
 
         <div className={`sm:block ${menuOpen ? 'block' : 'hidden'} text-white font-medium z-50`}>
             {/* Mobile and Desktop Combined Navigation */}
             <nav className={`${ menuOpen ? "block" : "hidden" } absolute md:static top-0 left-0 w-full bg-black-2 md:flex md:items-center md:w-auto z-50`}>
                 {/* Full-Screen Mobile Menu */}
-                <div className={`${ menuOpen ? "block h-screen w-full fixed top-0 left-0 bg-black-2 z-50" : "hidden" } md:hidden`} >
+                <div className={`${ menuOpen ? "block min-h-screen w-full fixed top-0 left-0 bg-black-2 z-50" : "hidden" } md:hidden`} >
                   <FontAwesomeIcon icon={menuOpen ? faTimes : faBars} onClick={toggleMenu} className="absolute top-4 right-4 cursor-pointer text-3xl" />
 
-                  <ul className="flex flex-col items-center justify-center h-full gap-8">
-                    <li><a className="hover:text-gray-500 text-3xl" href="http://localhost/SERDAL/">Home</a></li>
-                    <li className="flex flex-col items-center justify-center">
-                      <Link to="/" className="text-white text-3xl" onClick={() => setMenuOpen(false)}> Publications </Link>
+                  <ul className="h-screen flex flex-col bg-black w-full py-20 my-15 gap-2 text-white text-2xl items-center z-50">
+                    <li>
+                      <Link to="/" className="block px-4 py-2 hover:text-primary" onClick={toggleMenu}>
+                        Home
+                      </Link>
                     </li>
-                    <li className="flex flex-col items-center justify-center">
-                      <Link to="/datasets" className="text-white text-3xl" onClick={() => setMenuOpen(false)}> Dataset </Link>
+                    <li>
+                      <Link to="/about" className="block px-4 py-2 hover:text-primary" onClick={toggleMenu}>
+                        About Us
+                      </Link>
                     </li>
-                    <li className="flex flex-col items-center justify-center">
-                      <Link to="toolbox" className="text-white text-3xl" onClick={() => setMenuOpen(false)}> SERDAL Toolbox </Link>
+
+                    <li>
+                      <button
+                        className="w-full text-left px-4 py-2 hover:text-primary"
+                        onClick={() => toggleDropdown("people")}
+                      >
+                        People
+                      </button>
+                      {openDropdown === "people" && (
+                        <ul className="ml-4 border-l border-gray-700 pl-4">
+                          <li>
+                            <Link to="/people#phase1" className="block py-1 hover:text-primary" onClick={toggleMenu}>
+                              Phase 1
+                            </Link>
+                          </li>
+                          <li>
+                            <Link to="/people#phase2" className="block py-1 hover:text-primary" onClick={toggleMenu}>
+                              Phase 2
+                            </Link>
+                          </li>
+                          <li>
+                            <a
+                              href="https://cem.uplb.edu.ph/faculty-reps/"
+                              target="_blank"
+                              rel="noreferrer"
+                              className="block py-1 hover:text-primary"
+                              onClick={toggleMenu}
+                            >
+                              Expert Pool
+                            </a>
+                          </li>
+                        </ul>
+                      )}
                     </li>
-                    <li className="flex flex-col items-center justify-center">
-                      <a className="text-white hover:text-gray-500 text-3xl" href="http://localhost/SERDAL/contact/">Contact</a>
+
+                    <li>
+                      <Link to="/publication" className="block px-4 py-2 hover:text-primary" onClick={toggleMenu}>
+                        Publications
+                      </Link>
                     </li>
-                    <li className="flex flex-col items-center justify-center">
-                      <a className="text-white hover:text-gray-500 text-3xl" href="http://localhost/SERDAL/services/">Services</a>
+                    <li>
+                      <Link to="/datasets" className="block px-4 py-2 hover:text-primary" onClick={toggleMenu}>
+                        Dataset
+                      </Link>
                     </li>
-                    <li className="flex flex-col items-center justify-center">
-                      <a className="text-white hover:text-gray-500 text-3xl" href="http://localhost/SERDAL/training/">Trainings</a>
+
+                    <li>
+                      <button
+                        className="w-full text-left px-4 py-2 hover:text-primary"
+                        onClick={() => toggleDropdown("services")}
+                      >
+                        Services
+                      </button>
+                      {openDropdown === "services" && (
+                        <ul className="ml-4 border-l border-gray-700 pl-4">
+                          {data.map((service) => (
+                            <li id={`Mservies${service.id}`} key={`M${service.title}`}>
+                              <Link
+                                to={`/services#${service.title.replace(/[\s\-]/g, "")}`}
+                                className="block py-1 hover:text-primary"
+                                onClick={toggleMenu}
+                              >
+                                {service.title}
+                              </Link>
+                            </li>
+                          ))}
+                        </ul>
+                      )}
                     </li>
-                    <li className="flex flex-col items-center justify-center">
-                      <a className="text-white hover:text-gray-500 text-3xl" href="http://localhost/SERDAL/training/">Events & Highlights</a>
+
+                    <li>
+                      <Link to="/toolbox" className="block px-4 py-2 hover:text-primary" onClick={toggleMenu}>
+                        SERDAL Toolbox
+                      </Link>
                     </li>
-                    <li>{user}</li>
-                  </ul>        
+                    <li>
+                      <Link to="/trainings" className="block px-4 py-2 hover:text-primary" onClick={toggleMenu}>
+                        Trainings
+                      </Link>
+                    </li>
+                    <li>
+                      <Link to="/contact" className="block px-4 py-2 hover:text-primary" onClick={toggleMenu}>
+                        Contact Us
+                      </Link>
+                    </li>
+
+                    <li className="px-4 py-2">{user}</li>
+                  </ul>
+       
                 </div>
 
                 {/* Desktop Menu */}
@@ -136,7 +228,7 @@ function Header2() {
                     <li className="flex flex-col items-center justify-center ">
                       <Link to="/" className="text-white text-md hover:text-primary"> Home </Link>
                     </li>
-                    <li className="flex flex-col items-center justify-center ">
+                    <li className="flex flex-col w-full items-center justify-center">
                       <Link to="/about" className="text-white text-md hover:text-primary"> About Us </Link>
                     </li>
                     
@@ -164,18 +256,33 @@ function Header2() {
                     <li className="flex flex-col items-center justify-center">
                       <Link to="/datasets" className="text-white text-md hover:text-primary"> Dataset </Link>
                     </li>
+
+                    <li className="relative group flex flex-col items-center justify-center">
+                      <Link to="/services" className="text-white text-md hover:text-primary"> Services</Link>
+                      {/* Dropdown menu */}
+                      <ul className="absolute top-full ml-15 hidden group-hover:flex flex-col bg-black border border-1 border-gray-800 text-white p-2 rounded-md shadow-sm z-50 min-w-[260px]">
+                        {
+                          data.map(services => (
+                          <li id={`D${services.id}`} key={`D${services.title}`}>
+                            <Link to={`/services#${services.title.replace(/[\s\-]/g, '')}`} className="block px-4 py-2 hover:bg-gray-700 rounded">{services.title}</Link>
+                          </li>
+                          ))
+                        }
+                      </ul>
+                    </li>
+
                     <li className="flex w-full items-center justify-center">
                       <Link to="/toolbox" className="text-white text-center text-md hover:text-primary"> SERDAL Toolbox </Link>
                     </li>
+
                     <li className="flex flex-col items-center justify-center">
-                      <a className="text-whitetext-md hover:text-primary" href="http://localhost/SERDAL/contact/">Contact</a>
+                      <Link to="/trainings" className="text-white text-md hover:text-primary"> Trainings</Link>
                     </li>
-                    <li className="flex flex-col items-center justify-center">
-                      <a className="text-whitetext-md hover:text-primary" href="http://localhost/SERDAL/services/">Services</a>
+
+                    <li className="flex flex-col w-full items-center justify-center">
+                      <Link to="/contact" className="text-white text-md hover:text-primary"> Contact Us </Link>
                     </li>
-                    <li className="flex flex-col items-center justify-center">
-                    <Link to="/trainings" className="text-white text-md hover:text-primary"> Trainings</Link>
-                    </li>
+                    
                     <li>{user}</li>
                   </ul>
                 </div>
@@ -207,13 +314,13 @@ function Header2() {
                       !isIndexPage && 
                     <div className="w-full bg-black-2 flex">
                       <div className="mx-2">
-                        <Link className="block flex-shrink-0" to="http://localhost/SERDAL/">
+                        <Link className="block flex-shrink-0" to="https://cem.uplb.edu.ph/" target='_'>
                             <img src="/CEM.png" alt="CEM Logo" className='h-15'/>
                         </Link>
                       </div>
 
                       <div className="mx-2">
-                        <Link className="block flex-shrink-0" to="http://localhost/SERDAL/">
+                        <Link className="block flex-shrink-0" to="/" >
                             <img src="/logo.png" alt="SERDAL Logo" className='h-15'/>
                         </Link>
                       </div>

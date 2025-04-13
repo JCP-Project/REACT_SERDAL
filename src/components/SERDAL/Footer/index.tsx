@@ -2,11 +2,23 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHouse, faMessage, faPhone } from "@fortawesome/free-solid-svg-icons";
 import { FaFacebook } from "react-icons/fa6";
 import { Link } from "react-router-dom";
+import contactUsData from '../Resources/ContactUs/contactData'
+import { ReactNode, useEffect, useState } from "react";
 
+interface ContactData {
+    address: ReactNode;
+    contact1: string;
+    contact2: string;
+    email: string;
+    fb: string;
+}
 
 function footer() {
+    const [data, setData] = useState<ContactData>()
 
-
+    useEffect(() =>{
+        setData(contactUsData);
+    },[])
 
   return (
         <>
@@ -21,22 +33,22 @@ function footer() {
                     <h2 className="text-primary text-2xl">Contact Us</h2>
                     <div className="flex items-center text-white text-sm py-2">
                         <FontAwesomeIcon icon={faHouse}  className="text-xl pr-3"/>
-                        Institute of Cooperatives and Bio-Enterprise Development (ICOPED) Fabian A. Tiongson Avenue, University of the Philippines Los Baños, College, Laguna, 4031 Philippines
+                        {data?.address}
                     </div>
                     <div className="flex items-center text-white text-sm py-2">
                         <FontAwesomeIcon icon={faPhone}  className="text-xl pr-3"/>
-                        +63 961-057-5841 (Viber)
+                        {data?.contact1} (Viber)
                     </div>
                     <div className="flex items-center text-white text-sm py-2">
                         <FontAwesomeIcon icon={faPhone}  className="text-xl pr-3"/>
-                        +63 927-963-4704
+                        {data?.contact2}
                     </div>
                     <div className="flex items-center text-white text-sm py-2">
                         <FontAwesomeIcon icon={faMessage}  className="text-xl pr-3"/>               
-                        serdal.uplb@up.edu.ph
+                        {data?.email}
                     </div>
                     <div className="flex items-center text-white text-sm py-3">
-                        <Link to={"https://www.facebook.com/UPLB.SERDAL"} target="_">
+                        <Link to={data?.fb ?? ""} target="_">
                             <div className="bg-[#1877F2] h-9 w-9 flex items-center justify-center  rounded-full">
                             <FaFacebook className="h-5 w-5" />
                             </div>     

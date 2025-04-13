@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import peopleData from "../Resources/People/peopleData";
 import { motion } from 'framer-motion';
 import { useLocation } from "react-router-dom";
+import titleHeader from "../components/titleHeader";
 interface data {
     id: number;
     title: string;
@@ -32,29 +33,7 @@ function People () {
     return(
         <>
             <div className="w-full">
-                <div className="font-bold text-primary text-center text-4xl py-10">
-                <motion.h2
-                    initial={{ y: -20, scale:1.5 }}
-                    animate={{ y: 0, scale: 1 }}   
-                    transition={{
-                    type: 'spring',
-                    stiffness: 300,
-                    damping: 15,
-                    duration: 2,
-                    }}
-                >
-                    OUR TEAM
-                </motion.h2>
-
-                <motion.div
-                    className="border-b-2 border-primary mx-20 mt-5"
-                    initial={{ scaleX: 0 }}
-                    animate={{ scaleX: 1 }}
-                    transition={{ duration: 1, ease: 'easeInOut' }}
-                    style={{ originX: 0.5 }}  // This sets the animation to grow from the center
-                ></motion.div>
-                </div>
-
+            {titleHeader("Our Team")}
                 <div id="phase1" className="min-h-screen flex justify-center">
                     <div>
                         <div className="font-bold text-white bg-primary text-center text-3xl py-5"><h1>Phase 1</h1></div>              

@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Select, { StylesConfig } from 'react-select';
 import Loader from '../../../common/Loader';
+import Maintenance from '../Maintenance';
 
 
 
@@ -160,8 +161,8 @@ function Survey (){
 
     return(
         <>
-
-        <div className="bg-white">
+        <Maintenance/>
+        <div className="bg-white hidden">
             <div className="bg-primary text-left py-8">
                 <motion.div
                 initial={{ x: -300 }}

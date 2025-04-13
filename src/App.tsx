@@ -30,6 +30,10 @@ import Training from './components/SERDAL/Training/training';
 import People from './components/SERDAL/People/people';
 import AboutUs from './components/SERDAL/AboutUs/aboutus';
 import TrainingInfo from './components/SERDAL/Training/traininginfo';
+import Services from './components/SERDAL/Services/services';
+import ContactUs from './components/SERDAL/ContactUs/contactUs';
+import NotFound from './components/SERDAL/Notfound';
+import Maintenance from './components/SERDAL/Maintenance';
 
 
 
@@ -59,8 +63,11 @@ function App() {
   const validateRoute = (pathname: string) => {
     // List of valid base routes (without dynamic parameters)
     const validRoutes = [
+      '/404Notfound','/Maintenance',
       '/people',
       '/about',
+      '/contact',
+      '/services',
       '/trainings',
       '/auth/signin', '/signup', 
       '/tables', '/tableapproval','/chart', 
@@ -90,7 +97,7 @@ function App() {
     useEffect(() => {
       const pathname = location.pathname.toLowerCase();
       if (!validateRoute(pathname)) {
-        navigate('/'); // Redirect to '/publication' if invalid route
+        navigate('/404Notfound'); // Redirect to '/publication' if invalid route
       }
     }, [location.pathname, navigate]);
   
@@ -137,12 +144,17 @@ function App() {
   ) : (
     <DefaultLayout>
       <Routes>
+      <Route path="/404Notfound" element={<> <PageTitle title="404" /> <NotFound /> </>} />
+      <Route path="/Maintenance" element={<> <PageTitle title="Maintenance" /> <Maintenance /> </>} />
+
         <Route path="/publication" element={<> <PageTitle title="Publications" /> <Publications /> </>} />
         <Route path="/about" element={<> <PageTitle title="About Us" /> <AboutUs /> </>} />
         <Route path="/people" element={<> <PageTitle title="People" /> <People /> </>} />
         <Route path="/UploadPublication" element={<> <PageTitle title="Upload Publication" /> <UploadPublication /> </>} />
         <Route path="/createpost" element={<> <PageTitle title="Upload" /> <CreatePublication /> </>} />
         <Route path="/datasets" element={<> <PageTitle title="Datasets" /> <Datasets /> </>} />
+        <Route path="/contact" element={<> <PageTitle title="Contact Us" /> <ContactUs /> </>} />
+        <Route path="/services" element={<> <PageTitle title="Services" /> <Services /> </>} />
 
         <Route path="/trainings" element={<> <PageTitle title="Training" /> <Training /> </>} />
         <Route path="/trainings/Info/:infopage" element={<> <PageTitle title="Trainings Info" /> <TrainingInfo /> </>} />
