@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { FaTrashCan } from "react-icons/fa6";
 import Swal from 'sweetalert2';
+import { useEffect, useState } from "react";
 
 
 interface DatasetListProps {
@@ -18,6 +19,7 @@ interface DatasetGroup {
 interface DataSets {
   id: number;
   title: string;
+  img: string;
  // dataGroup: DataGroup[];
 }
 
@@ -151,7 +153,8 @@ const DatasetList: React.FC<DatasetListProps> = ({ dataSets, fetchDataSets }) =>
       }
     };
       //#endregion
-
+    useEffect(() =>{console.log(dataSets);},[])
+      
 
   return (
 <>
@@ -167,9 +170,11 @@ const DatasetList: React.FC<DatasetListProps> = ({ dataSets, fetchDataSets }) =>
                           data.dataset.map((datarow,datarowIndex) =>(
                             <div key={`$datarowKey${datarow.id}${datarowIndex}`} id={`$datarowID${datarow.id}${datarowIndex}`} 
                                   className="relative flex items-center px-4 py-2  border-b border-gray-300 hover:bg-[#daf1f8]">
-                              <div className="h-2 w-2 bg-primary rounded-full mr-3"></div>
-                              <h5 className="text-sm font-bold uppercase text-primary text-left">
-                                
+                              
+                              <h5 className="text-sm font-bold uppercase text-primary text-left"> </h5>
+                              <div className="mr-3">
+                                <img src={datarow.img}  className="h-10" />
+                              </div>
                               <Link  to={`/datasets/generatechart/${datarow.id}-${encodeURIComponent(datarow.title)}`}>
                                   {
                                       datarow.title
@@ -185,7 +190,7 @@ const DatasetList: React.FC<DatasetListProps> = ({ dataSets, fetchDataSets }) =>
                                 </button>
                               </div>
                               
-                            </h5>
+
                           </div>
                           ))
                         }

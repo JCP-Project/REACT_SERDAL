@@ -5,6 +5,8 @@ import { Link } from "react-router-dom";
 import contactUsData from '../Resources/ContactUs/contactData'
 import { ReactNode, useEffect, useState } from "react";
 
+import UPLB from '../Resources/logo.png'
+
 interface ContactData {
     address: ReactNode;
     contact1: string;
@@ -25,7 +27,7 @@ function footer() {
             <div className="flex items-center justify-center md:justify-between flex-wrap text-sm py-15">
 
                 <div className="max-w-100 max:h-50 text-justify">
-                    <div className="w-auto h-50 flex items-center justify-center"><img src="/logo.png" className="w-auto h-50"></img></div>
+                    <div className="w-auto h-50 flex items-center justify-center"><img src={UPLB} className="w-auto h-50"></img></div>
                     <div className="py-2">Advancing Socio-Economics Research through Data Analytics</div>
                 </div>
 

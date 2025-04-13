@@ -7,6 +7,10 @@ import { faBars, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { motion } from "framer-motion";
 import servicesData from '../Resources/Services/servicesData';
 
+import UP from '../Resources/UPLB_VIGHRColor_1.png'
+import CEM from '../Resources/CEM.png'
+import UPLB from '../Resources/logo.png'
+
 interface data {
   id: number;
   title: string;
@@ -95,7 +99,7 @@ function Header2() {
                       !isIndexPage && 
                     <div className="w-full bg-black-2">
                       <Link className="block flex-shrink-0" to="https://uplb.edu.ph/" target='_'>
-                        <img src="/UPLB_VIGHRColor_1.png" alt="UPLB Logo" className='h-15'/>
+                        <img src={UP} alt="UPLB Logo" className='h-15'/>
                       </Link>
                     </div>
                     }
@@ -315,13 +319,13 @@ function Header2() {
                     <div className="w-full bg-black-2 flex">
                       <div className="mx-2">
                         <Link className="block flex-shrink-0" to="https://cem.uplb.edu.ph/" target='_'>
-                            <img src="/CEM.png" alt="CEM Logo" className='h-15'/>
+                            <img src={CEM} alt="CEM Logo" className='h-15'/>
                         </Link>
                       </div>
 
                       <div className="mx-2">
                         <Link className="block flex-shrink-0" to="/" >
-                            <img src="/logo.png" alt="SERDAL Logo" className='h-15'/>
+                            <img src={UPLB} alt="SERDAL Logo" className='h-15'/>
                         </Link>
                       </div>
                     </div>

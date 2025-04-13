@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { ChangeEvent, useEffect, useRef, useState } from "react";
 import Loader from "../../../../common/Loader/Loader2";
 import Select, { StylesConfig } from 'react-select';
 import { motion } from 'framer-motion';
@@ -17,6 +17,7 @@ interface DatasetGroup {
 interface DataSets {
   id: number;
   title: string;
+  img: string;
 }
 
 interface DatasetCategory {
@@ -35,6 +36,8 @@ function Datasets() {
 
   const { dataset } = useParams();
 
+
+
   const [sort, setSort] = useState<any>(null);
 
   const [dataSetGroup, setDataSetGroup] = useState<DatasetGroup[]>([]);
@@ -51,9 +54,29 @@ function Datasets() {
 
   const [loading, setLoading] = useState<boolean>(false);
   const [file, setFile] = useState<File | null>(null);
+  const [image, setImage] = useState<File | null>(null);
+  const [preview, setPreview] = useState<string | null>(null);
 
   // Define adminStatus variable here
   const adminStatus = localStorage.getItem('isAdmin') === 'true';
+
+ const openModal = () =>{
+    setmodal(true);
+    setFile(null);
+    setImage(null);
+    setPreview(null);
+ }
+
+
+  const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+
+    if (file) {
+      setImage(file);
+      setPreview(URL.createObjectURL(file));
+    }
+  };
+
 
   useEffect(() => {
     if (!hasFetched.current) {
@@ -127,7 +150,7 @@ function Datasets() {
     const formData = new FormData();
     formData.append('file', file);
     formData.append('Id', selectedCategory.value);
-
+    formData.append('img', image)
  
     try {
 
@@ -219,6 +242,7 @@ function Datasets() {
     const formData = new FormData();
     formData.append('file', file);
     formData.append('Id', selectedCategory.value);
+    formData.append('img', image)
 
     try {
 
@@ -295,7 +319,7 @@ function Datasets() {
   const save = async (e: React.FormEvent) =>{
     e.preventDefault();
 
-    if (!selectedCategory || !file) {
+    if (!selectedCategory || !file || !image) {
       return;
     }
 
@@ -333,7 +357,7 @@ function Datasets() {
               <button
                 className="flex items-center gap-3 bg-[#17C0CC] text-white px-4 py-2 rounded-md hover:bg-[#139B99]"
                 //onClick={() => document.getElementById('fileInput')?.click()}
-                onClick={() => setmodal(true)}
+                onClick={() => openModal(true)}
               >
                 Upload
               </button>
@@ -365,7 +389,7 @@ function Datasets() {
 
 
         {modal && (
-      <div className="fixed inset-0 text-sm flex justify-center items-center z-50 bg-gray-600 bg-opacity-50 ">
+      <div className="fixed inset-0 text-sm flex justify-center items-center bg-gray-600 bg-opacity-50 z-[9999]">
         <div className="bg-white p-6 rounded-lg max-w-2xl w-full mx-5 px-10 text-lg">
           <h2 className="text-2xl font-bold mb-4">Upload Dataset</h2>
           
@@ -375,7 +399,7 @@ function Datasets() {
             <section className="mt-10 flex">
               <Select
                 id="category"
-                placeholder="Category"
+                placeholder="Choose Sector"
                 value={selectedCategory}
                 onChange={(e) => setSelectedCategory(e)}
                 options={categoryList}
@@ -395,6 +419,30 @@ function Datasets() {
                 className="file-input"
                 required
               />
+            </section>
+
+            <section>
+              <div className="flex flex-col gap-4 items-start">
+                <label className="w-64 h-64 border border-dashed border-gray-400 rounded flex items-center justify-center cursor-pointer bg-gray-50 hover:bg-gray-100">
+                  {preview ? (
+                    <img
+                      src={preview}
+                      alt="Preview"
+                      className="w-full h-full object-cover rounded"
+                    />
+                  ) : (
+                    <span className="text-gray-500 text-sm text-center px-4">
+                      Click to upload an image
+                    </span>
+                  )}
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={handleImageChange}
+                    className="hidden"
+                  />
+                </label>
+              </div>
             </section>
 
             <section className="mt-3 flex justify-end">

@@ -555,7 +555,8 @@ const handleToggleSelectAllVariables = () => {
             <h2 className="text-2xl font-bold">{dataSet?.title}</h2>
 
             <div className="flex items-center justify-end py-1 mx-1">
-              <div className="flex items-center justify-end py-1 mx-1 border-gray-300 w-full md:w-[400px]">
+            <span className="text-lg mr-3">Select Variable:</span>
+              <div className="flex items-center justify-end py-1 mx-1 border-gray-300 w-full md:w-[400px]">             
                 <Select
                   id="SelectProduction"
                   placeholder="Select Production"
@@ -635,7 +636,7 @@ const handleToggleSelectAllVariables = () => {
 
 
                 <div className="mt-3">
-                  <strong>Selected Variables:</strong>
+                  <strong>Selected Commodity:</strong>
                   <div>{selectedVariables.join(", ")}</div>
                 </div>
               </div>
