@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { HashRouter as Router } from 'react-router-dom';
 import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 
 import Loader from './common/Loader';
@@ -142,6 +143,7 @@ function App() {
   return loading ? (
     <Loader />
   ) : (
+    <Router>
     <DefaultLayout>
       <Routes>
       <Route path="/404Notfound" element={<> <PageTitle title="404" /> <NotFound /> </>} />
@@ -199,6 +201,7 @@ function App() {
         
       </Routes>
   </DefaultLayout> 
+  </Router>
   );
 }
 
