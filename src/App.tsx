@@ -98,7 +98,7 @@ function App() {
     useEffect(() => {
       const pathname = location.pathname.toLowerCase();
       if (!validateRoute(pathname)) {
-        navigate('/404Notfound'); // Redirect to '/publication' if invalid route
+        navigate('/'); // Redirect to '/publication' if invalid route
       }
     }, [location.pathname, navigate]);
   
@@ -143,7 +143,6 @@ function App() {
   return loading ? (
     <Loader />
   ) : (
-    <Router>
     <DefaultLayout>
       <Routes>
       <Route path="/404Notfound" element={<> <PageTitle title="404" /> <NotFound /> </>} />
@@ -201,7 +200,6 @@ function App() {
         
       </Routes>
   </DefaultLayout> 
-  </Router>
   );
 }
 
