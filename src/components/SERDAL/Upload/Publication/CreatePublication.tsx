@@ -35,6 +35,7 @@ function CreatePublication() {
     journal: "",
     title: "",
     author: "",
+    fundingAgency: "",
     abstract: "",
     CreatedBy: 0, 
     keywords: "",
@@ -108,6 +109,7 @@ function CreatePublication() {
       data.append("journal", formData.journal);
       data.append("title", formData.title);
       data.append("author", formData.author);
+      data.append("fundingAgency", formData.fundingAgency);
       data.append("summary", formData.abstract);
       data.append("pdflink", formData.pdfLink);
       data.append("keywords", formData.keywords);
@@ -148,7 +150,7 @@ function CreatePublication() {
           icon: 'error',
           title: 'No token found',
           text: 'User is not authenticated. Please try again.',
-          confirmButtonColor: '#17C0CC',
+          confirmButtonColor: '#2591DE',
         });
 	    }
 
@@ -166,6 +168,7 @@ function CreatePublication() {
             journal: "",
             title: "",
             author: "",
+            fundingAgency: "",
             abstract: "",
             CreatedBy: 0,
             keywords: "",
@@ -180,7 +183,7 @@ function CreatePublication() {
             text: 'Your publication was created successfully.',
             icon: 'success',
             confirmButtonText: 'Okay',
-            confirmButtonColor: '#17C0CC',
+            confirmButtonColor: '#2591DE',
           }).then(() => {
             navigate('/UploadPublication');
             window.location.reload();
@@ -196,7 +199,7 @@ function CreatePublication() {
           icon: 'error',
           title: 'Submission Failed',
           text: 'Something went wrong while submitting your publication. Please try again.',
-          confirmButtonColor: '#17C0CC',
+          confirmButtonColor: '#2591DE',
         });
       }
     } catch (error) {
@@ -205,7 +208,7 @@ function CreatePublication() {
         icon: 'error',
         title: 'Submission Failed',
         text: 'Something went wrong while submitting your publication. Please try again.',
-        confirmButtonColor: '#17C0CC',
+        confirmButtonColor: '#2591DE',
       });
     } finally {
       setIsSubmitting(false);
@@ -223,7 +226,7 @@ function CreatePublication() {
             icon: 'error',
             title: 'Invalid PDF',
             text: 'Please select a valid PDF file.',
-            confirmButtonColor: '#17C0CC',
+            confirmButtonColor: '#2591DE',
           });
 
         } else {
@@ -240,7 +243,7 @@ function CreatePublication() {
             icon: 'error',
             title: 'Invalid Image',
             text: 'Please select a valid image file.',
-            confirmButtonColor: '#17C0CC',
+            confirmButtonColor: '#2591DE',
           });
         } else {
           setImgError("");
@@ -257,7 +260,7 @@ function CreatePublication() {
       text: msg,
       icon: 'error',
       confirmButtonText: 'Retry',
-      confirmButtonColor: '#17C0CC',
+      confirmButtonColor: '#2591DE',
     });
   };
 
@@ -318,8 +321,8 @@ function CreatePublication() {
                 className="mt-4 w-full border-b-2 border-gray-300 bg-transparent focus:border-primary focus:outline-none"
               />
           </div>
-
-            <div className="my-5">
+            
+          <div className="my-5">
                 <input
                   required
                   type="text"
@@ -330,7 +333,7 @@ function CreatePublication() {
                   onChange={handleInputChange}
                   className="mt-4 w-full border-b-2 border-gray-300 bg-transparent focus:border-primary focus:outline-none"
                 />
-            </div>
+          </div>
 
             <div className="my-5">
               <input
@@ -347,15 +350,15 @@ function CreatePublication() {
 
             <div className="my-5">
               <input
-                type="date"
-                id="publicationDate"
-                name="publicationDate"
-                value={formData.publicationDate} // You can bind this to your form data if needed
-                onChange={handleInputChange} // Update form data when the date is changed
-                max={todayDate} // Restrict the date selection to today or earlier
+                type="text"
+                id="fundingAgency"
+                name="fundingAgency"
+                placeholder="Funding Agency"
+                value={formData.fundingAgency}
+                onChange={handleInputChange}
                 className="mt-4 w-full border-b-2 border-gray-300 bg-transparent focus:border-primary focus:outline-none"
               />
-            </div>
+            </div>            
 
           <div className="mt-10">
             <div className="relative">
@@ -376,6 +379,18 @@ function CreatePublication() {
 
           <div className="my-5">
               <input
+                type="date"
+                id="publicationDate"
+                name="publicationDate"
+                value={formData.publicationDate}
+                onChange={handleInputChange}
+                max={todayDate}
+                className="mt-4 w-full border-b-2 border-gray-300 bg-transparent focus:border-primary focus:outline-none"
+              />
+            </div>
+
+            <div className="my-5">
+              <input
                 required
                 type="text"
                 id="keywords"
@@ -385,7 +400,7 @@ function CreatePublication() {
                 onChange={handleInputChange}
                 className="mt-4 w-full border-b-2 border-gray-300 bg-transparent focus:border-primary focus:outline-none"
               />
-          </div>
+            </div>
 
             <div className="my-10">
               <textarea
@@ -399,6 +414,7 @@ function CreatePublication() {
                 required
               ></textarea>
             </div>
+
           </div>
 
           <div>
@@ -416,29 +432,26 @@ function CreatePublication() {
             </div>
 
             <div>
-            <div className="flex flex-col mb-6 mt-10">
-              <label className="block text-lg ml-2">PDF File</label>
+              <div className="flex flex-col mb-6 mt-10">
+                <label className="block text-lg ml-2">PDF File</label>
                   <label
                     htmlFor="file"
                     className="w-full cursor-pointer rounded-lg border-2 border-gray-300 bg-transparent focus:border-primary focus:outline-none 
-                            flex justify-center items-center text-gray-700 bg-transparent border-2 border-gray-300 rounded-md text-lg font-medium hover:bg-primary hover:text-white"
+                            flex justify-center items-center text-gray-700 text-lg font-medium hover:bg-primary hover:text-white"
                   >
-                    {/* Custom placeholder text */}
                     {!fileName && (
-                      <span className="text-gray-500">Choose PDF file</span>
+                      <span>Choose PDF file</span>
                     )}
 
-                    {/* Display file name after selection */}
                     {fileName && (
-                      <span className="text-gray-600">{fileName}</span>
+                      <span >{fileName}</span>
                     )}
 
-                    {/* File input is hidden, triggered by the label */}
                     <input
                       id="file"
                       type="file"
                       onChange={handleFileChange}
-                      className="hidden" // Hide the default file input
+                      className="hidden"
                     />
                   </label>
 
@@ -447,29 +460,7 @@ function CreatePublication() {
                     <p className="text-red-500 text-lg mt-[-10px]">{pdfError}</p>
                   )}
               </div>
-
-            </div>
-
-            {/* <div>
-              <label className="block text-lgml-2">Image</label>
-              <div className="flex flex-col gap-5.5 mb-6">
-                <input
-                  id="img"
-                  type="file"
-                  onChange={handleFileChange}
-                  className="w-full cursor-pointer rounded-lg border-[2px] border-stroke bg-transparent outline-none transition 
-                            file:mr-2 file:border-collapse file:cursor-pointer file:border-0 file:border-r file:border-solid file:border-stroke 
-                            file:bg-whiter file:py-0 file:px-2 file:hover:bg-primary 
-                            file:hover:bg-opacity-10 focus:border-primary active:border-primary disabled:cursor-default disabled:bg-white"
-                />
-                  {imgError && (
-                    <p className="text-red-500 text-lgmt-[-10px]">{imgError}</p>
-                  )}
-              </div>  
-            </div> */}
-          
-
-            
+            </div>        
             
             {
             ErrorMessage && 
@@ -499,7 +490,7 @@ const customStyles: StylesConfig = {
     fontSize: '1rem',
     borderWidth: '2px',
     borderColor: "6B7280",
-    boxShadow: state.isFocused ? '0 0 0 0px #17C0CC' : 'none',
+    boxShadow: state.isFocused ? '0 0 0 0px #2591DE' : 'none',
     '&:hover': {
       borderColor: "6B7280",
     },
@@ -507,11 +498,11 @@ const customStyles: StylesConfig = {
   option: (provided, state) => ({
     ...provided,
     fontSize: '1rem',
-    backgroundColor: state.isSelected ? "#17C0CC" : 'transparent',
+    backgroundColor: state.isSelected ? "#2591DE" : 'transparent',
     color: state.isSelected ? '#fff' : '#000',
     cursor: 'pointer',
     '&:hover': {
-      backgroundColor: "#17C0CC", // Keep hover effect consistent
+      backgroundColor: "#2591DE", // Keep hover effect consistent
       color: '#fff',
     },
   }),

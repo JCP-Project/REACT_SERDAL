@@ -130,7 +130,7 @@ export default function Users() {
           icon: 'error',
           title: 'No token found',
           text: 'User is not authenticated. Please try again.',
-          confirmButtonColor: '#17C0CC',
+          confirmButtonColor: '#2591DE',
         });
       }
 
@@ -148,7 +148,7 @@ export default function Users() {
                 icon: 'error',
                 title: 'Failed',
                 text: 'Something went wrong. Please try again.',
-                confirmButtonColor: '#17C0CC',
+                confirmButtonColor: '#2591DE',
         });
       }
   
@@ -157,7 +157,7 @@ export default function Users() {
             text: 'Saved successfully.',
             icon: 'success',
             confirmButtonText: 'Okay',
-            confirmButtonColor: '#17C0CC',
+            confirmButtonColor: '#2591DE',
           }).then(() => {
               fetchTableRows();
           });
@@ -168,7 +168,7 @@ export default function Users() {
         icon: 'error',
         title: 'Failed',
         text: 'Something went wrong. Please try again.',
-        confirmButtonColor: '#17C0CC',
+        confirmButtonColor: '#2591DE',
       });
     }
   };
@@ -506,24 +506,24 @@ const customStyles: StylesConfig = {
   control: (provided, state) => ({
     ...provided,
     fontSize: '1rem',
-    border: "1px solid gray-100", // Set the border color to #17C0CC
+    border: "1px solid gray-100", // Set the border color to #2591DE
     boxShadow: 'none', // Remove any default focus outline or shadow
     width: '100%', // Ensures it takes full width in the parent container
     '&:hover': {
-      borderColor: "#17C0CC", // Border color remains #17C0CC on hover
+      borderColor: "#2591DE", // Border color remains #2591DE on hover
     },
     '&:focus': {
-      borderColor: "#17C0CC", // Border color remains #17C0CC when focused
+      borderColor: "#2591DE", // Border color remains #2591DE when focused
     },
   }),
   option: (provided, state) => ({
     ...provided,
     fontSize: '1rem',
-    backgroundColor: state.isSelected ? "#17C0CC" : 'transparent', // Background color when selected
+    backgroundColor: state.isSelected ? "#2591DE" : 'transparent', // Background color when selected
     color: state.isSelected ? '#fff' : '#000', // Text color when selected
     cursor: 'pointer',
     '&:hover': {
-      backgroundColor: "#17C0CC", // Background color on hover
+      backgroundColor: "#2591DE", // Background color on hover
       color: '#fff', // Text color on hover
     },
   }),

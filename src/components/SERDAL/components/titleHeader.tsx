@@ -6,7 +6,7 @@ const titleHeader = (title: string) => {
 
     return(
         <>
-        <div className="font-bold text-primary text-center text-4xl py-10">
+        <div className="font-optima font-bold text-primary text-center text-4xl py-10">
                 <motion.h2
                     initial={{ y: -20, scale:1.5 }}
                     animate={{ y: 0, scale: 1 }}   

@@ -65,21 +65,21 @@ function Header2() {
     setIsAdmin(adminStatus);
   }, []); 
 
-  let user = (
-    <div>
-      <Link to="/auth/signin">
-      <motion.button
-        onClick={() => setMenuOpen(false)}
-        whileHover={{ scale: 1.05 }}
-        whileTap={{ scale: 0.97 }}
-        transition={{ type: "spring", stiffness: 300 }}
-        className="min-w-[100px] bg-black-2 border-2 border-primary text-primary py-3 md:py-1 px-10 md:px-5 rounded-lg hover:text-white hover:bg-gray-700 hover:border-secondary text-xl md:text-sm"
-      >
-      Sign in
-    </motion.button>
-      </Link>
-    </div>
-  );
+    let user = (
+      <div>
+        <Link to="/auth/signin">
+        <motion.button
+          onClick={() => setMenuOpen(false)}
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.97 }}
+          transition={{ type: "spring", stiffness: 300 }}
+          className="min-w-[100px] bg-black-2 border-2 border-primary text-primary py-3 md:py-1 px-10 md:px-5 rounded-lg hover:text-white hover:bg-gray-700 hover:border-secondary text-xl md:text-sm"
+        >
+        Sign in
+      </motion.button>
+        </Link>
+      </div>
+    );
   
   if (isLoggedIn) {
     user = <div><DropdownUser /></div>;
@@ -89,17 +89,15 @@ function Header2() {
   return (
     <>
 
-    <header className="sticky top-0 z-50 flex w-full bg-black-2 drop-shadow-1">
-      <div className={`flex flex-grow items-center ${!isAdmin && isIndexPage ? "justify-center" : "justify-between"} py-5 shadow-2`}>
-        <div className="flex items-center gap-2 sm:gap-4">
+    <div className="w-full flex items-center justify-between md:justify-center bg-black-2">
           {
             !isAdmin && (
               <div>
                     {
                       !isIndexPage && 
-                    <div className="w-full bg-black-2">
+                    <div className="w-full">
                       <Link className="block flex-shrink-0" to="https://uplb.edu.ph/" target='_'>
-                        <img src={UP} alt="UPLB Logo" className='h-15'/>
+                        <img src={UP} alt="UPLB Logo" className='md:ml-3 max-w-[200px] max-h-[50px] w-auto h-auto'/>
                       </Link>
                     </div>
                     }
@@ -107,21 +105,20 @@ function Header2() {
             )
           }
 
-
-          <div className="flex items-center gap-6">
+            <div className="flex items-center gap-6">
               <FontAwesomeIcon
                   icon={menuOpen ? faTimes : faBars}
                   onClick={toggleMenu}
                   className="text-3xl cursor-pointer md:hidden"
                 />
           </div>
-        </div>
 
-        <div className={`sm:block ${menuOpen ? 'block' : 'hidden'} text-white font-medium z-50`}>
-            {/* Mobile and Desktop Combined Navigation */}
-            <nav className={`${ menuOpen ? "block" : "hidden" } absolute md:static top-0 left-0 w-full bg-black-2 md:flex md:items-center md:w-auto z-50`}>
+
+
+          <div className={`sm:block ${menuOpen ? 'block' : 'hidden'} text-white font-medium z-50 w-full`}>
+            <nav className={`${ menuOpen ? "block" : "hidden" } absolute md:static top-0 left-0 w-full md:flex md:items-center md:w-auto z-50`}>
                 {/* Full-Screen Mobile Menu */}
-                <div className={`${ menuOpen ? "block min-h-screen w-full fixed top-0 left-0 bg-black-2 z-50" : "hidden" } md:hidden`} >
+                <div className={`bg-black-2 ${ menuOpen ? "block min-h-screen w-full fixed top-0 left-0 z-50" : "hidden" } md:hidden`} >
                   <FontAwesomeIcon icon={menuOpen ? faTimes : faBars} onClick={toggleMenu} className="absolute top-4 right-4 cursor-pointer text-3xl" />
 
                   <ul className="h-screen flex flex-col bg-black w-full py-20 my-15 gap-2 text-white text-2xl items-center z-50">
@@ -227,21 +224,21 @@ function Header2() {
                 </div>
 
                 {/* Desktop Menu */}
-                <div className="hidden md:flex w-full justify-center">
-                  <ul className="flex md:flex-row gap-8">
-                    <li className="flex flex-col items-center justify-center ">
+                <div className="hidden md:flex w-full justify-center py-5">
+                  <ul className="flex md:flex-row md:items-center gap-8">
+                    <li className="">
                       <Link to="/" className="text-white text-md hover:text-primary"> Home </Link>
                     </li>
-                    <li className="flex flex-col w-full items-center justify-center">
+                    <li className="">
                       <Link to="/about" className="text-white text-md hover:text-primary"> About Us </Link>
                     </li>
                     
-                    <li className="relative group flex flex-col items-center justify-center">
+                    <li className="relative group">
                       <Link to="/people" className="text-white text-md hover:text-primary"
                       >People</Link>
 
                       {/* Dropdown menu */}
-                      <ul className="absolute top-full ml-15 hidden group-hover:flex flex-col bg-black border border-1 border-gray-800 text-white p-2 rounded-md shadow-sm z-50 min-w-[160px]">
+                      <ul className="absolute top-full hidden group-hover:flex flex-col bg-black border border-1 border-gray-800 text-white p-2 rounded-md shadow-sm z-50 min-w-[160px]">
                         <li>
                           <Link to="/people#phase1" className="block px-4 py-2 hover:bg-gray-700 rounded">Phase 1</Link>
                         </li>
@@ -254,17 +251,17 @@ function Header2() {
                       </ul>
                     </li>
 
-                    <li className="flex flex-col items-center justify-center">
+                    <li className="flex">
                       <Link to="/publication" className="text-white text-md hover:text-primary"> Publications </Link>
                     </li>
-                    <li className="flex flex-col items-center justify-center">
+                    <li className="flex">
                       <Link to="/datasets" className="text-white text-md hover:text-primary"> Dataset </Link>
                     </li>
 
-                    <li className="relative group flex flex-col items-center justify-center">
+                    <li className="relative group">
                       <Link to="/services" className="text-white text-md hover:text-primary"> Services</Link>
                       {/* Dropdown menu */}
-                      <ul className="absolute top-full ml-15 hidden group-hover:flex flex-col bg-black border border-1 border-gray-800 text-white p-2 rounded-md shadow-sm z-50 min-w-[260px]">
+                      <ul className="absolute top-full hidden group-hover:flex flex-col bg-black border border-1 border-gray-800 text-white p-2 rounded-md shadow-sm z-50 min-w-[260px]">
                         {
                           data.map(services => (
                           <li id={`D${services.id}`} key={`D${services.title}`}>
@@ -275,15 +272,15 @@ function Header2() {
                       </ul>
                     </li>
 
-                    <li className="flex w-full items-center justify-center">
+                    <li className="">
                       <Link to="/toolbox" className="text-white text-center text-md hover:text-primary"> SERDAL Toolbox </Link>
                     </li>
 
-                    <li className="flex flex-col items-center justify-center">
+                    <li className="">
                       <Link to="/trainings" className="text-white text-md hover:text-primary"> Trainings</Link>
                     </li>
 
-                    <li className="flex flex-col w-full items-center justify-center">
+                    <li className="">
                       <Link to="/contact" className="text-white text-md hover:text-primary"> Contact Us </Link>
                     </li>
                     
@@ -293,39 +290,22 @@ function Header2() {
               </nav>
         </div>
 
-        <div className="flex items-center gap-3 2xsm:gap-7">
-          <ul className="flex items-center gap-2 2xsm:gap-4">
-            {/* <!-- Dark Mode Toggler --> */}
-            {/* <DarkModeSwitcher /> */}
-            {/* <!-- Dark Mode Toggler --> */}
-
-            {/* <!-- Notification Menu Area --> */}
-            {/* <DropdownNotification /> */}
-            {/* <!-- Notification Menu Area --> */}
-
-            {/* <!-- Chat Notification Area --> */}
-            {/* <DropdownMessage /> */}
-            {/* <!-- Chat Notification Area --> */}
-          </ul>
-
-        </div>
-
 
         {
             !isAdmin && (
               <div>
                     {
                       !isIndexPage && 
-                    <div className="w-full bg-black-2 flex">
+                    <div className="md:mr-3 w-full bg-black-2 flex">
                       <div className="mx-2">
                         <Link className="block flex-shrink-0" to="https://cem.uplb.edu.ph/" target='_'>
-                            <img src={CEM} alt="CEM Logo" className='h-15'/>
+                            <img src={CEM} alt="CEM Logo" className="max-w-[100px] max-h-[50px] w-auto h-auto"/>
                         </Link>
                       </div>
 
                       <div className="mx-2">
                         <Link className="block flex-shrink-0" to="/" >
-                            <img src={UPLB} alt="SERDAL Logo" className='h-15'/>
+                            <img src={UPLB} alt="SERDAL Logo" className="max-w-[100px] max-h-[50px] w-auto h-auto"/>
                         </Link>
                       </div>
                     </div>
@@ -333,10 +313,8 @@ function Header2() {
               </div>
             )
           }
+    </div>
 
-        
-      </div>
-    </header>
     </>
   );
   

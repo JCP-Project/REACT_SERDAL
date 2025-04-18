@@ -24,7 +24,7 @@ function footer() {
 
   return (
         <>
-            <div className="flex items-center justify-center md:justify-between flex-wrap text-sm py-15">
+            <div className="font-optima flex items-center justify-center md:justify-between flex-wrap text-sm py-15">
 
                 <div className="max-w-100 max:h-50 text-justify">
                     <div className="w-auto h-50 flex items-center justify-center"><img src={UPLB} className="w-auto h-50"></img></div>

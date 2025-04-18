@@ -9,9 +9,8 @@ module.exports = {
   darkMode: 'class',
   theme: {
     fontFamily: {
-      // satoshi: ['Satoshi', 'sans-serif'],
-     // avenir: ['Avenir', 'sans-serif'], 
-      plusjakarta: ['Plus Jakarta Sans', 'sans-serif'],
+          avenir: ['Avenir', 'sans-serif'], 
+          optima: ['Optima', 'sans-serif'],
     },
     screens: {
       '2xsm': '375px',

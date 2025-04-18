@@ -1,6 +1,6 @@
 //Phase 1
 import pic1 from '..//AboutUs/AboutUs.jpg'
-import pic2 from '../AboutUs/Network Map.png'
+import pic2 from '../AboutUs/Network Map 3.png'
 
 
 

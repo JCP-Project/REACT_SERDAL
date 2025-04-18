@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { Link, useParams } from 'react-router-dom';
 import { FaAngleLeft } from "react-icons/fa";
 import Swal from 'sweetalert2';
+import Loader2 from "../../../../common/Loader/Loader2";
 
 interface APIData {
   id: number;
@@ -310,215 +311,219 @@ const getUniversity =  (id:number) =>{
     }
 
 
+    {
+      !data ? (
+        <Loader2/>
+      ) :
+      (
+        <div className="bg-white min-h-screen px-4 md:px-[15%] pt-5 md:pt-10">
+        <div>
+             <p className="text-black-980 text-black-800 text-xs md:text-sm mt-auto mb-3">
+                <FontAwesomeIcon icon={faCalendarAlt} className="mr-1" />
+                  <span>
+                  {new Date(`${data?.publicationDate}Z`).toLocaleDateString('en-US', {
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric',
+                  })}
+                  </span>
+              </p>            
+        </div>
 
+        <div className="py-1 text-xs lg:text-lg text-primary leading-relaxed flex justify-center items-center">
+          <div><h5><span className="font-bold"></span>{data?.citation}</h5></div>
+        </div>
 
-      <div className="bg-white min-h-screen px-4 md:px-[15%] pt-5 md:pt-10">
+        <div className="py-2 text-xs lg:text-4xl font-bold leading-relaxed flex justify-center items-center">
+          <div><h5><span className="font-bold"></span>{data?.journal}</h5></div>
+        </div>
 
+        <div className="text-left py-2 md:py-10"><h1 className="text-sm lg:text-3xl md:text-4xl leading-relaxed text-primary">  {data?.title} </h1></div>
 
+        <div className="py-2 text-xs lg:text-lg leading-relaxed">
+          <div><h5><span className="font-bold">Authors: </span>{data?.author}</h5></div>
+        </div>
 
-          <div>
-               <p className="text-black-980 text-black-800 text-xs md:text-sm mt-auto mb-3">
-                  <FontAwesomeIcon icon={faCalendarAlt} className="mr-1" />
-                    <span>
-                    {new Date(`${data?.publicationDate}Z`).toLocaleDateString('en-US', {
-                      year: 'numeric',
-                      month: 'long',
-                      day: 'numeric',
-                    })}
-                    </span>
-                </p>            
-          </div>
+        <div className="py-2 text-xs lg:text-lg leading-relaxed">
+          <div><h5><span className="font-bold">Institutions: </span>{data?.publication_Institutions}</h5></div>
+        </div>
 
-          <div className="py-1 text-xs lg:text-lg text-primary leading-relaxed flex justify-center items-center">
-            <div><h5><span className="font-bold"></span>{data?.citation}</h5></div>
-          </div>
-
-          <div className="py-2 text-xs lg:text-4xl font-bold leading-relaxed flex justify-center items-center">
-            <div><h5><span className="font-bold"></span>{data?.journal}</h5></div>
-          </div>
-
-          <div className="text-left py-2 md:py-10"><h1 className="text-sm lg:text-3xl md:text-4xl leading-relaxed text-primary">  {data?.title} </h1></div>
-
-          <div className="py-2 text-xs lg:text-lg leading-relaxed">
-            <div><h5><span className="font-bold">Authors: </span>{data?.author}</h5></div>
-          </div>
-
-          <div className="py-2 text-xs lg:text-lg leading-relaxed">
-            <div><h5><span className="font-bold">Institutions: </span>{data?.publication_Institutions}</h5></div>
-          </div>
-
-          {
-            data?.imgPath && data.imgPath.trim() !== "" ? (
-                <div>
-                  <img className="mx-auto md:h-[800px] border-[3px] rounded-lg border-primary" src={data.imgPath} alt="Publication" />
-                </div>
-              ) : null
-            }
-          <div className="yp-2 lg:py-5 text-xs md:text-lg leading-relaxed">
-            <div className="py-1"><h5><span className="font-bold">Abstract:</span></h5></div>
-            <div><p className="text-left lg:text-justify ">{data?.summary}</p></div>
-          </div>
-
-          <div className="py-4 lg:py-10 text-xs lg:text-lg leading-relaxed">
-            <div><h5><span className="font-bold">Keywords: </span>{data?.keywords}</h5></div>
-          </div>
-
-
-          <div className="py-1 text-xs lg:text-lg lg:py-5">
-            
-            {
-              !data?.pdfFile || data?.pdfFile.trim() === "" ? 
-              (
-                <div>PDF File: ---</div>
-                
-              ):(
-                <div><span className="font-bold">PDF File: </span><a href={data?.pdfFile} target="_blank" className="pl-1 hover:text-primary"><span className="text-red"><FontAwesomeIcon icon={faFilePdf}/></span>View PDF</a></div>
-              )
-            }
-            
-            
-            {
-              !data?.pdfLink || data?.pdfLink.trim() === "" ? 
-              (
-                <div>PDF Link: ---</div>
-                
-              ):(
-                <div><span className="font-bold">PDF Link: </span><a href={data?.pdfLink} target="_blank" className="pb-5 text-blue-500 underline hover:text-primary">Click here</a></div>
-              )
-            }
-            
-          </div>
-
-          {
-            relatedArticle.length > 0 && (
-              <div className={`${adminStatus ? 'hidden' : 'block'}`}> 
-              <div className="border-b-2 border-dashed border-gray-500 h-10 mb-5"></div>          
+        {
+          data?.imgPath && data.imgPath.trim() !== "" ? (
               <div>
-                <h1 className="text-black text-sm lg:text-3xl pb-10">RELATED ARTICLES</h1>
+                <img className="mx-auto md:h-[800px] border-[3px] rounded-lg border-primary" src={data.imgPath} alt="Publication" />
               </div>
-  
-              <div className="flex items-center justify-center flex-wrap">
-  
-                  <div className="w-full lg:py-5"
-                    >
-                    {relatedArticle.map(({id, title, summary, pdfFile, pdfLink, createdDate, institution}) => (
-  
-                        <div key={id} id={`relatedArticleId-${id}`} className="flex flex-col px-4 py-2 border-b">
-                          <Link
-                              key={id}
-                              to={`/Publication/Info/${id}`}
-                              onClick={(e) => {
-                                e.preventDefault(); // Prevent default navigation behavior
-                                window.location.href = `/Publication/Info/${id}`; // Navigate and reload
-                              }}
-                            >
-                          <div className=" flex items-center justify-between text-xs my-3">
-                          {/* <div><h5 className="font-bold">{getUniversity(institution)}</h5></div> */}
-  
-                              <div>
-                                    <p className="text-black-980 text-black-800 text-xs md:text-xs mt-auto mb-3">
-                                  <FontAwesomeIcon icon={faCalendarAlt} className="mr-1" />
-                                    <span>
-                                    {new Date(`${createdDate}Z`).toLocaleDateString('en-US', {
-                                      year: 'numeric',
-                                      month: 'long',
-                                      day: 'numeric',
-                                    })}
-                                    </span>
-                                </p> 
-                              </div>
-                              
-                          </div>
-  
-                          <h5 className="text-xs lg:text-sm font-bold uppercase text-primary py-2">
-                            {truncateTitle(title.trim())}
-                          </h5>
-  
-                          <div className="text-xs lg:text-sm text-justify">
-                            <p>{truncateTitle(summary.trim())}</p>
-                          </div>
-                          </Link>
-                          <div className="mt-4 flex">
-                            {
-                              pdfFile &&(
-                                <div>
-                                  <a href={pdfFile} target="_blank">
-                                    <button className="md:m-0 flex items-center bg-red-600 text-white rounded-lg hover:bg-red-700 text-[10px] px-2 lg:px-2">
-                                      <FontAwesomeIcon icon={faFilePdf} />
-                                      <span className="pl-2">PDF</span>
-                                    </button> 
-                                  </a> 
-                              </div>
-                              )
-                            }
-  
-                            {
-                              pdfLink &&(
-                                <div className="mx-1">
-                                  <a href={pdfLink} target="_blank">
-                                    <button className="md:m-0 flex items-center bg-red-600 text-white rounded-lg hover:bg-red-700 text-[10px] px-2 lg:px-2">
-                                      <FontAwesomeIcon icon={faFilePdf} />
-                                      <span className="pl-2">PDF</span>
-                                    </button> 
-                                  </a> 
-                              </div>
-                              )
-                            }
-                          </div>
-                        </div>
-  
-                    ))}
-                  </div>
-  
-  
-                </div>
-            </div>
+            ) : null
+          }
+        <div className="yp-2 lg:py-5 text-xs md:text-lg leading-relaxed">
+          <div className="py-1"><h5><span className="font-bold">Abstract:</span></h5></div>
+          <div><p className="text-left lg:text-justify ">{data?.summary}</p></div>
+        </div>
+
+        <div className="py-4 lg:py-10 text-xs lg:text-lg leading-relaxed">
+          <div><h5><span className="font-bold">Keywords: </span>{data?.keywords}</h5></div>
+        </div>
+
+
+        <div className="py-1 text-xs lg:text-lg lg:py-5">
+          
+          {
+            !data?.pdfFile || data?.pdfFile.trim() === "" ? 
+            (
+              <div>PDF File: ---</div>
+              
+            ):(
+              <div><span className="font-bold">PDF File: </span><a href={data?.pdfFile} target="_blank" className="pl-1 hover:text-primary"><span className="text-red"><FontAwesomeIcon icon={faFilePdf}/></span>View PDF</a></div>
             )
           }
-
-
+          
+          
           {
-            data && (
-              <div>
-          {
-            adminStatus && data.status == 0 &&( 
-          <div className="fixed bottom-5 right-5">
-            <div className="flex w-80 h-10 justify-end">
-                  <div>
-                    <span>
-                    <button className="bg-primary text-white font-medium mx-2 px-6 py-2 rounded-lg shadow-md 
-                      hover:bg-primary-dark transition duration-300 ease-in-out 
-                      active:scale-95 focus:outline-none" 
-                      onClick={() => handleStatus(1, 0)}
-                      >
-                        Approve
-                    </button>
-                    </span>
-                  </div>
+            !data?.pdfLink || data?.pdfLink.trim() === "" ? 
+            (
+              <div>PDF Link: ---</div>
+              
+            ):(
+              <div><span className="font-bold">PDF Link: </span><a href={data?.pdfLink} target="_blank" className="pb-5 text-blue-500 underline hover:text-primary">Click here</a></div>
+            )
+          }
+          
+        </div>
 
-                  <div>
-                    <span>
-                    <button className="bg-red-500 text-white font-medium mx-2 px-6 py-2 rounded-lg shadow-md 
-                      hover:bg-primary-dark transition duration-300 ease-in-out 
-                      active:scale-95 focus:outline-none"
-                      onClick={() => handleStatus(2, 0)}
-                      >
-                        Decline
-                    </button>
+        {
+          relatedArticle.length > 0 && (
+            <div className={`${adminStatus ? 'hidden' : 'block'}`}> 
+            <div className="border-b-2 border-dashed border-gray-500 h-10 mb-5"></div>          
+            <div>
+              <h1 className="text-black text-sm lg:text-3xl pb-10">RELATED ARTICLES</h1>
+            </div>
 
-                    </span>
+            <div className="flex items-center justify-center flex-wrap">
+
+                <div className="w-full lg:py-5"
+                  >
+                  {relatedArticle.map(({id, title, summary, pdfFile, pdfLink, createdDate, institution}) => (
+
+                      <div key={id} id={`relatedArticleId-${id}`} className="flex flex-col px-4 py-2 border-b">
+                        <Link
+                            key={id}
+                            to={`/Publication/Info/${id}`}
+                            onClick={(e) => {
+                              e.preventDefault(); // Prevent default navigation behavior
+                              window.location.href = `/Publication/Info/${id}`; // Navigate and reload
+                            }}
+                          >
+                        <div className=" flex items-center justify-between text-xs my-3">
+                        {/* <div><h5 className="font-bold">{getUniversity(institution)}</h5></div> */}
+
+                            <div>
+                                  <p className="text-black-980 text-black-800 text-xs md:text-xs mt-auto mb-3">
+                                <FontAwesomeIcon icon={faCalendarAlt} className="mr-1" />
+                                  <span>
+                                  {new Date(`${createdDate}Z`).toLocaleDateString('en-US', {
+                                    year: 'numeric',
+                                    month: 'long',
+                                    day: 'numeric',
+                                  })}
+                                  </span>
+                              </p> 
+                            </div>
+                            
+                        </div>
+
+                        <h5 className="text-xs lg:text-sm font-bold uppercase text-primary py-2">
+                          {truncateTitle(title.trim())}
+                        </h5>
+
+                        <div className="text-xs lg:text-sm text-justify">
+                          <p>{truncateTitle(summary.trim())}</p>
+                        </div>
+                        </Link>
+                        <div className="mt-4 flex">
+                          {
+                            pdfFile &&(
+                              <div>
+                                <a href={pdfFile} target="_blank">
+                                  <button className="md:m-0 flex items-center bg-red-600 text-white rounded-lg hover:bg-red-700 text-[10px] px-2 lg:px-2">
+                                    <FontAwesomeIcon icon={faFilePdf} />
+                                    <span className="pl-2">PDF</span>
+                                  </button> 
+                                </a> 
+                            </div>
+                            )
+                          }
+
+                          {
+                            pdfLink &&(
+                              <div className="mx-1">
+                                <a href={pdfLink} target="_blank">
+                                  <button className="md:m-0 flex items-center bg-red-600 text-white rounded-lg hover:bg-red-700 text-[10px] px-2 lg:px-2">
+                                    <FontAwesomeIcon icon={faFilePdf} />
+                                    <span className="pl-2">PDF</span>
+                                  </button> 
+                                </a> 
+                            </div>
+                            )
+                          }
+                        </div>
+                      </div>
+
+                  ))}
                 </div>
 
-            </div>
+
+              </div>
           </div>
           )
         }
+
+
+        {
+          data && (
+            <div>
+        {
+          adminStatus && data.status == 0 &&( 
+        <div className="fixed bottom-5 right-5">
+          <div className="flex w-80 h-10 justify-end">
+                <div>
+                  <span>
+                  <button className="bg-primary text-white font-medium mx-2 px-6 py-2 rounded-lg shadow-md 
+                    hover:bg-primary-dark transition duration-300 ease-in-out 
+                    active:scale-95 focus:outline-none" 
+                    onClick={() => handleStatus(1, 0)}
+                    >
+                      Approve
+                  </button>
+                  </span>
+                </div>
+
+                <div>
+                  <span>
+                  <button className="bg-red-500 text-white font-medium mx-2 px-6 py-2 rounded-lg shadow-md 
+                    hover:bg-primary-dark transition duration-300 ease-in-out 
+                    active:scale-95 focus:outline-none"
+                    onClick={() => handleStatus(2, 0)}
+                    >
+                      Decline
+                  </button>
+
+                  </span>
               </div>
-            )
-          }
+
+          </div>
+        </div>
+        )
+      }
+            </div>
+          )
+        }
 
 
-      </div>
+    </div>
+      )
+    }
+
+
 
 
     </>

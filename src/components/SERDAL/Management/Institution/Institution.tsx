@@ -458,7 +458,7 @@ export default function Institution() {
                 </div>
 
                 <div className="flex justify-end  lg:justify-end lg:ml-1 py-3">                                             
-                    <button onClick={() =>{ setmodalCreate(true); formData.label = ""; formData.value = ""; }} className="flex items-center gap-3 bg-[#17C0CC] text-white px-4 py-1 rounded-md hover:bg-[#139B99]">
+                    <button onClick={() =>{ setmodalCreate(true); formData.label = ""; formData.value = ""; }} className="flex items-center gap-3 bg-primary text-white px-4 py-1 rounded-md hover:bg-[#139B99]">
                         <FontAwesomeIcon icon={faAdd} className="cursor-pointer" />
                         Add
                     </button>               

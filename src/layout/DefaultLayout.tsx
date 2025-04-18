@@ -4,6 +4,9 @@ import Header2 from '../components/SERDAL/Header/Header2';
 import Sidebar2 from '../components/SERDAL/Sidebar';
 import Footer from '../components/SERDAL/Footer/index';
 import { Link, useLocation } from 'react-router-dom';
+import { motion } from 'framer-motion';
+
+import { FaChevronUp } from "react-icons/fa";
 
 import UP from '../../src/components/SERDAL/Resources/UPLB_VIGHRColor_1.png'
 import CEM from '../../src/components/SERDAL/Resources/CEM.png'
@@ -28,6 +31,31 @@ const DefaultLayout: React.FC<{ children: ReactNode }> = ({ children }) => {
   }, []);
 
 
+  const [showScrollTop, setShowScrollTop] = useState(false);
+
+  useEffect(() => {
+    const scrollContainer = document.querySelector('.overflow-y-scroll');
+  
+    const handleScroll = () => {
+      if (scrollContainer && scrollContainer.scrollTop > 300) {
+        setShowScrollTop(true);
+      } else {
+        setShowScrollTop(false);
+      }
+    };
+  
+    scrollContainer?.addEventListener('scroll', handleScroll);
+    return () => scrollContainer?.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  const scrollToTop = () => {
+    const scrollContainer = document.querySelector('.overflow-y-scroll');
+    scrollContainer?.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+
+
+
 
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
   const [isAdmin, setIsAdmin] = useState<boolean>(false);
@@ -49,11 +77,11 @@ const DefaultLayout: React.FC<{ children: ReactNode }> = ({ children }) => {
   
   let header,sidebar,tempfooter;
   if (isAdmin) {
-    header =  <div><Header sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} /> </div> ;
-    sidebar =  <div ><Sidebar2 sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} /> </div> ;
+    header =  <div className="font-optima "><Header sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} /> </div> ;
+    sidebar =  <div className="font-optima" ><Sidebar2 sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} /> </div> ;
      tempfooter =  <div ></div> ;
   } else {
-    header =  <div className={`sticky top-0 z-50 ${isSticky ? 'bg-red-500' : 'bg-orange'}`}><Header2/></div> ;
+    header =  <div className={`font-optima sticky top-0 z-50 ${isSticky ? 'bg-red-500' : 'bg-orange'}`}><Header2/></div> ;
     tempfooter = <Footer />
   }
 
@@ -70,8 +98,29 @@ const DefaultLayout: React.FC<{ children: ReactNode }> = ({ children }) => {
           {/* <!-- ===== Sidebar End ===== --> */}
 
           {/* <!-- ===== Content Area Start ===== --> */}
-          <div className="relative flex flex-1 flex-col overflow-y-auto bg-white min-h-screen bg-white">
+
+
+          <div className="relative flex flex-col flex-1 min-h-screen bg-white overflow-x-hidden  overflow-y-scroll scroll-smooth">
               
+          {showScrollTop && (
+              <motion.button
+                onClick={scrollToTop}
+                className="fixed bottom-6 right-6 z-[9999] p-3 rounded-full bg-primary text-white shadow-xl hover:bg-secondary"
+                title="Scroll to Top"
+                initial={{ y: 0 }}
+                animate={{ y: [0, -5, 0] }}
+                transition={{
+                  duration: 1.5,
+                  repeat: Infinity,
+                  ease: "easeInOut"
+                }}
+              >
+                <FaChevronUp />
+              </motion.button>
+            )}
+
+
+
               {
                 !isAdmin && (
                   <div>
@@ -96,7 +145,7 @@ const DefaultLayout: React.FC<{ children: ReactNode }> = ({ children }) => {
                               </div>
                             </div>
                           </div>
-                          <div className="text-3xl font-bold text-center py-10 text-white bg-primary">Socio-Economics Research and Data Analytics Laboratory,</div>
+                          <div className="font-optima text-3xl font-bold text-center py-10 text-white bg-primary">Socio-Economics Research and Data Analytics Laboratory,</div>
                         </div>}
                   </div>
                 )
@@ -105,10 +154,6 @@ const DefaultLayout: React.FC<{ children: ReactNode }> = ({ children }) => {
               <div id="sticky-trigger" className="h-0"></div>
 
               {header}
-
-
-              <div className={`sticky h-10 top-0 z-999 w-full transition-all duration-300 ${isSticky ? 'bg-red-500' : 'bg-black'}`}>
-                </div>
               
 
               <main  className="bg-white">

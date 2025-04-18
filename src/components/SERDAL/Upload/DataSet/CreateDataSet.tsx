@@ -67,7 +67,7 @@ const CreateSurvey = async () => {
             icon: 'error',
             title: 'Survey Creation Failed',
             text: errorResponse.message || "Unexpected Error",
-            confirmButtonColor: '#17C0CC',
+            confirmButtonColor: '#2591DE',
         });
       }
 

@@ -7,6 +7,7 @@ import { useParams } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAdd } from "@fortawesome/free-solid-svg-icons";
 import Swal from 'sweetalert2';
+import { FaFileUpload } from "react-icons/fa";
 
 interface DatasetGroup {
   id: number;
@@ -54,8 +55,17 @@ function Datasets() {
 
   const [loading, setLoading] = useState<boolean>(false);
   const [file, setFile] = useState<File | null>(null);
+  const [fileName, setFileName] = useState("Select Excel file");
   const [image, setImage] = useState<File | null>(null);
   const [preview, setPreview] = useState<string | null>(null);
+
+  const [errors, setErrors] = useState({
+    category: false,
+    file: false,
+    image: false,
+  });
+
+
 
   // Define adminStatus variable here
   const adminStatus = localStorage.getItem('isAdmin') === 'true';
@@ -141,8 +151,11 @@ function Datasets() {
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files[0]) {
       const selectedFile = event.target.files[0];
+      const file = event.target.files[0];
+      setFileName(file.name);
       setFile(selectedFile);
-      //event.target.value = '';
+    }else {
+      setFileName("Select Excel file");
     }
   };
 
@@ -160,14 +173,13 @@ function Datasets() {
           icon: 'error',
           title: 'No token found',
           text: 'User is not authenticated. Please try again.',
-          confirmButtonColor: '#17C0CC',
+          confirmButtonColor: '#2591DE',
         });
 	    }
 
       const response = await fetch(`${apiUrl}/api/Dataset/isExist`, {
         method: 'POST',
         headers: {
-          //'Content-Type': 'application/json',
           'Authorization': `Bearer ${token}`,
         },
         body: formData,
@@ -212,7 +224,7 @@ function Datasets() {
         title: 'Dataset Upload Failed',
         text: 'Error uploading file.',
         icon: 'error',
-        confirmButtonColor: '#17C0CC',
+        confirmButtonColor: '#2591DE',
       });
     } finally {
      // swalLoading.close();
@@ -252,7 +264,7 @@ function Datasets() {
           icon: 'error',
           title: 'No token found',
           text: 'User is not authenticated. Please try again.',
-          confirmButtonColor: '#17C0CC',
+          confirmButtonColor: '#2591DE',
         });
 	    }
 
@@ -271,7 +283,7 @@ function Datasets() {
           title: 'Success!',
           text: 'File uploaded successfully.',
           icon: 'success',
-          confirmButtonColor: '#17C0CC',
+          confirmButtonColor: '#2591DE',
           timer: 3000,
           willClose: () => {
             fetchDataSets();
@@ -283,7 +295,7 @@ function Datasets() {
           title: 'Dataset Upload Failed',
           text: 'Error uploading file.',
           icon: 'error',
-          confirmButtonColor: '#17C0CC',
+          confirmButtonColor: '#2591DE',
         });
       }
     } catch (error) {
@@ -292,7 +304,7 @@ function Datasets() {
         title: 'Dataset Upload Failed',
         text: 'Error uploading file.',
         icon: 'error',
-        confirmButtonColor: '#17C0CC',
+        confirmButtonColor: '#2591DE',
       });
     } finally {
       swalLoading.close();
@@ -316,13 +328,23 @@ function Datasets() {
 
   }
 
+
+
+  
   const save = async (e: React.FormEvent) =>{
     e.preventDefault();
 
-    if (!selectedCategory || !file || !image) {
-      return;
-    }
-
+    const newErrors = {
+      category: !selectedCategory,
+      file: !file,
+      image: !image,
+    };
+  
+    setErrors(newErrors);
+  
+    const hasErrors = Object.values(newErrors).some((v) => v);
+    if (hasErrors) return;
+  
     isExist();
   }
 
@@ -355,7 +377,7 @@ function Datasets() {
           </div>
           <div className={`${adminStatus ? 'block' : 'hidden'} flex justify-end my-3 mx-1`}>
               <button
-                className="flex items-center gap-3 bg-[#17C0CC] text-white px-4 py-2 rounded-md hover:bg-[#139B99]"
+                className="flex items-center gap-3 bg-primary text-white px-4 py-2 rounded-md hover:bg-[#139B99]"
                 //onClick={() => document.getElementById('fileInput')?.click()}
                 onClick={() => openModal(true)}
               >
@@ -396,34 +418,45 @@ function Datasets() {
           <form onSubmit={save} className="w-full">
 
             {/* Category Selection */}
-            <section className="mt-10 flex">
-              <Select
-                id="category"
-                placeholder="Choose Sector"
-                value={selectedCategory}
-                onChange={(e) => setSelectedCategory(e)}
-                options={categoryList}
-                styles={customStyles}
-                className="text-sm w-full md:w-full mx-1"
-                required
-              />
+            <section className="mt-10 flex flex-col">
+            <Select
+              id="category"
+              placeholder="Choose Sector"
+              value={selectedCategory}
+              onChange={(e) => setSelectedCategory(e)}
+              options={categoryList}
+              styles={customStyles}
+              className={`text-sm w-full md:w-full mx-1 ${errors.category ? 'border border-red-500 rounded' : ''}`}
+            />
+            {errors.category && <p className="text-red-500 text-xs mt-1 ml-1">Category is required.</p>}
             </section>
 
             {/* File Upload */}
-            <section className="my-5 flex ml-1">
-              <input
-                id="fileInput"
-                type="file"
-                accept=".xlsx, .xls"
-                onChange={handleFileChange}
-                className="file-input"
-                required
-              />
+            <section className="my-5 ml-1">
+            <label
+                htmlFor="fileInput"
+                className={`flex items-center gap-3 px-4 py-2 border border-dashed rounded-md cursor-pointer hover:bg-gray-50 transition-colors ${
+                  errors.file ? 'border-red-500' : 'border-gray-300'
+                }`}
+              >
+                <FaFileUpload color="green" />
+                <span className="text-sm text-gray-600 truncate w-48">{fileName}</span>
+                <input
+                  id="fileInput"
+                  type="file"
+                  accept=".xlsx, .xls"
+                  onChange={handleFileChange}
+                  className="hidden"
+                />
+              </label>
+              {errors.file && <p className="text-red-500 text-xs mt-1">Excel File is required.</p>}
             </section>
 
             <section>
-              <div className="flex flex-col gap-4 items-start">
-                <label className="w-64 h-64 border border-dashed border-gray-400 rounded flex items-center justify-center cursor-pointer bg-gray-50 hover:bg-gray-100">
+            <div className="flex flex-col gap-2 items-start">
+                <label className={`w-64 h-64 border border-dashed rounded flex items-center justify-center cursor-pointer bg-gray-50 hover:bg-gray-100 ${
+                  errors.image ? 'border-red-500' : 'border-gray-400'
+                }`}>
                   {preview ? (
                     <img
                       src={preview}
@@ -442,6 +475,7 @@ function Datasets() {
                     className="hidden"
                   />
                 </label>
+                {errors.image && <p className="text-red-500 text-xs">Image is required.</p>}
               </div>
             </section>
 
@@ -474,25 +508,25 @@ const customStyles: StylesConfig = {
   control: (provided, state) => ({
     ...provided,
     fontSize: '1rem',
-    border: "2px solid #17C0CC",
+    border: "2px solid #2591DE",
     boxShadow: 'none',
     minWidth: '200px',
     width: '100%',
     '&:hover': {
-      borderColor: "#17C0CC",
+      borderColor: "#2591DE",
     },
     '&:focus': {
-      borderColor: "#17C0CC",
+      borderColor: "#2591DE",
     },
   }),
   option: (provided, state) => ({
     ...provided,
     fontSize: '0.9rem',
-    backgroundColor: state.isSelected ? "#17C0CC" : 'transparent',
+    backgroundColor: state.isSelected ? "#2591DE" : 'transparent',
     color: state.isSelected ? '#fff' : '#000',
     cursor: 'pointer',
     '&:hover': {
-      backgroundColor: "#17C0CC",
+      backgroundColor: "#2591DE",
       color: '#fff',
     },
   }),

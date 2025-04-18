@@ -1,0 +1,108 @@
+/* avenir.css */
+
+/* Light - 300 */
+@font-face {
+  font-family: 'Avenir';
+  src: url('../fonts/Avenir/Avenir LT 35 Light.ttf') format('truetype');
+  font-weight: 300;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Avenir';
+  src: url('../fonts/Avenir/Avenir LT 35 Light Oblique.ttf') format('truetype');
+  font-weight: 300;
+  font-style: italic;
+}
+
+/* Book (Regular) - 400 */
+@font-face {
+  font-family: 'Avenir';
+  src: url('../fonts/Avenir/Avenir LT 45 Book.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Avenir';
+  src: url('../fonts/Avenir/Avenir LT 45 Book Oblique.ttf') format('truetype');
+  font-weight: 400;
+  font-style: italic;
+}
+
+/* Roman (Medium-ish) - 500 */
+@font-face {
+  font-family: 'Avenir';
+  src: url('../fonts/Avenir/Avenir LT 55 Roman.ttf') format('truetype');
+  font-weight: 500;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Avenir';
+  src: url('../fonts/Avenir/Avenir LT 55 Oblique.ttf') format('truetype');
+  font-weight: 500;
+  font-style: italic;
+}
+
+/* Medium - 600 */
+@font-face {
+  font-family: 'Avenir';
+  src: url('../fonts/Avenir/Avenir LT 65 Medium.ttf') format('truetype');
+  font-weight: 600;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Avenir';
+  src: url('../fonts/Avenir/Avenir LT 65 Medium Oblique.ttf') format('truetype');
+  font-weight: 600;
+  font-style: italic;
+}
+
+/* Heavy - 800 */
+@font-face {
+  font-family: 'Avenir';
+  src: url('../fonts/Avenir/Avenir LT 85 Heavy.ttf') format('truetype');
+  font-weight: 800;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Avenir';
+  src: url('../fonts/Avenir/Avenir LT 86 Heavy Oblique.ttf') format('truetype');
+  font-weight: 800;
+  font-style: italic;
+}
+
+/* Bonus: Alternative Heavy */
+@font-face {
+  font-family: 'Avenir';
+  src: url('../fonts/Avenir/Avenir_85_Heavy.ttf') format('truetype');
+  font-weight: 800;
+  font-style: normal;
+}
+
+/* Optional Add-ons: AvenirLTStd series */
+@font-face {
+  font-family: 'Avenir';
+  src: url('../fonts/Avenir/AvenirLTStd-Light.otf') format('opentype');
+  font-weight: 300;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Avenir';
+  src: url('../fonts/Avenir/AvenirLTStd-Book.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Avenir';
+  src: url('../fonts/Avenir/AvenirLTStd-Roman.otf') format('opentype');
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Avenir';
+  src: url('../fonts/Avenir/AvenirLTStd-Black.otf') format('opentype');
+  font-weight: 900;
+  font-style: normal;
+}

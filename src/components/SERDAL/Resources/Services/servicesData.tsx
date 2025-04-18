@@ -17,13 +17,13 @@ const servicesData = [
         img: ConsultancyServices
     },
     {   
-        id: 1,
+        id: 2,
         title: "Socio-Economics Data Portal",
         summary: "Your gateway to comprehensive socio-economic data and relevant materials for impactful research and analysis.",
         img: DataPortal,
     },
     {   
-        id: 1,
+        id: 3,
         title: "SERDAL Facility",
         summary: "Equipped with computers and statistical software, the SERDAL Facility provides essential tools for conducting in-depth socio-economics research and analysis.",
         img: Facility

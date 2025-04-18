@@ -235,7 +235,7 @@ function Survey (){
                                         </div>
 
                                         <div>
-                                                <button className="flex items-center gap-3 bg-[#17C0CC] text-white px-4 py-1 rounded-md hover:bg-[#139B99]" onClick={() => openSurvey(data.id)}>                                                                   
+                                                <button className="flex items-center gap-3 bg-primary text-white px-4 py-1 rounded-md hover:bg-[#139B99]" onClick={() => openSurvey(data.id)}>                                                                   
                                                     Answer
                                                 </button>   
                                         </div>
@@ -270,25 +270,25 @@ const customStyles: StylesConfig = {
   control: (provided, state) => ({
     ...provided,
     fontSize: '.8rem',
-    border: "2px solid #17C0CC", // Set the border color to #17C0CC
+    border: "2px solid #2591DE", // Set the border color to #2591DE
     boxShadow: 'none', // Remove any default focus outline or shadow
     minWidth: '200px', // Set the minimum width for larger screens
     width: '100%', // Ensures it takes full width in the parent container
     '&:hover': {
-      borderColor: "#17C0CC", // Border color remains #17C0CC on hover
+      borderColor: "#2591DE", // Border color remains #2591DE on hover
     },
     '&:focus': {
-      borderColor: "#17C0CC", // Border color remains #17C0CC when focused
+      borderColor: "#2591DE", // Border color remains #2591DE when focused
     },
   }),
   option: (provided, state) => ({
     ...provided,
     fontSize: '0.7rem',
-    backgroundColor: state.isSelected ? "#17C0CC" : 'transparent', // Background color when selected
+    backgroundColor: state.isSelected ? "#2591DE" : 'transparent', // Background color when selected
     color: state.isSelected ? '#fff' : '#000', // Text color when selected
     cursor: 'pointer',
     '&:hover': {
-      backgroundColor: "#17C0CC", // Background color on hover
+      backgroundColor: "#2591DE", // Background color on hover
       color: '#fff', // Text color on hover
     },
   }),

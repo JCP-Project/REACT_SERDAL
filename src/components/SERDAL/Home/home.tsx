@@ -24,8 +24,8 @@ function Home()
         <div className="w-full">
             {titleHeader(data?.title ?? "")}
 
-            <div className="flex flex-col md:flex-row items-center justify-center">
-                <div className="flex-1 p-5 order-2 md:order-1">
+            <div className="flex flex-col md:flex-row items-center justify-center px-15 md:px-20">
+                <div className="flex-1 order-2 md:order-1 md:text-2xl">
                     {data?.Maincontent}
                 </div>
                 <div className="flex-1 p-5 order-1 md:order-2">
@@ -36,6 +36,7 @@ function Home()
                 </div>
             </div>
         </div>
+
         </>
     );
 }

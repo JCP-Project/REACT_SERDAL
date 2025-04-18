@@ -64,6 +64,8 @@ interface UpdateStatus{
   
 export default function UploadPublication() {
   const apiUrl = import.meta.env.VITE_API_URL;
+  const token = localStorage.getItem("APIToken");
+
   const [activeTab, setActiveTab] = useState("all");
   const [filter, setFilter] = useState("");
   const [data, setData] = useState<ApiData[]>([]);
@@ -113,6 +115,7 @@ export default function UploadPublication() {
         method: "POST",  // Correct method spelling
         headers: {
           'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,
         },
         body: JSON.stringify(bodyData),
       });
@@ -129,10 +132,11 @@ export default function UploadPublication() {
         });
   
         swalWithTailwindButtons.fire({
-          title: "Change status",
+          title: "Success",
           text: `Publication request cancelled successfully`,
           icon: "success",
         });
+        fetchData();
       } else {
         const errorResponse = await response.json();
         console.error("Error message", errorResponse.message || "Unknown error");
@@ -317,7 +321,7 @@ export default function UploadPublication() {
 
                   <div className="flex shrink-0 flex-col gap-2 sm:flex-row p-1">
                     <Link to="/createpost">
-                        <button className="flex items-center gap-3 bg-[#17C0CC] text-white px-4 py-1 rounded-md hover:bg-[#139B99]">
+                        <button className="flex items-center gap-3 bg-primary text-white px-4 py-1 rounded-md hover:bg-[#139B99]">
                           <FontAwesomeIcon icon={faFilePdf} className="cursor-pointer" />
                           Upload
                       </button>   

@@ -35,10 +35,10 @@ function ContactUs() {
                     <div
                         className={`w-full md:flex-1 flex items-center justify-center mb-6 md:mb-0`}
                     >
-                        <img src={data?.img} alt="Contact Us" className="h-[250px] md:h-[400px] object-contain" />
+                        <img src={data?.img} alt="Contact Us" className="h-[250px] md:h-[500px] lg:h-[700px] object-contain" />
                     </div>
 
-                    <div  className={`w-full md:flex-1 px-3 md:px-5`}>
+                    <div  className={`w-full md:flex-1 px-3 md:px-5 lg:text-2xl`}>
                         <div className="flex items-center space-x-5 my-3">
                             <div><FaMapLocationDot  size={30} className="text-primary" /></div>
                             <div>{ data?.address}</div>

@@ -195,21 +195,6 @@ const DatasetList: React.FC<DatasetListProps> = ({ dataSets, fetchDataSets }) =>
                           ))
                         }
 
-                        {/* <ul className="list-disc list-inside space-y-2 text-gray-800">
-                            {data.dataGroup.map((datagroup, index) => (
-                              <li
-                                key={index}
-                                className=""
-                              >
-                                <span className="text-sm text-primary-600">
-                                  {datagroup.production}
-                                </span>
-                              </li>
-                            ))}
-                        </ul> */}
-
-
-
                     </div>
                 ))}
 

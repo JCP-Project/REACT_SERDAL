@@ -35,6 +35,9 @@ import Services from './components/SERDAL/Services/services';
 import ContactUs from './components/SERDAL/ContactUs/contactUs';
 import NotFound from './components/SERDAL/Notfound';
 import Maintenance from './components/SERDAL/Maintenance';
+import DatasetsPage from './components/SERDAL/Upload/DataSet/DatasetsPage';
+import { motion } from "framer-motion";
+import ScrollToTop from './components/SERDAL/components/scrolltop';
 
 
 
@@ -49,8 +52,8 @@ function App() {
   }, [pathname]);
 
   useEffect(() => {
-    //setTimeout(() => setLoading(false), 1000);
-    setLoading(false);
+   // setTimeout(() => setLoading(false), 1000);
+   setLoading(false);
   }, []);
 
 
@@ -98,7 +101,7 @@ function App() {
     useEffect(() => {
       const pathname = location.pathname.toLowerCase();
       if (!validateRoute(pathname)) {
-        navigate('/'); // Redirect to '/publication' if invalid route
+       //.. navigate('/'); // Redirect to '/publication' if invalid route
       }
     }, [location.pathname, navigate]);
   
@@ -116,6 +119,7 @@ function App() {
       if (seconds >= 1000) {
         localStorage.clear();
         window.location.reload(); // Reload the page after clearing session storage
+        navigate('/');
       }
     }, [seconds]);
   
@@ -140,10 +144,18 @@ function App() {
     }, []); // This only runs once when the component is mounted
  //#endregion
 
+
+
+
+ 
+
   return loading ? (
-    <Loader />
+    <Loader/>
   ) : (
+   <>
+   <ScrollToTop />
     <DefaultLayout>
+
       <Routes>
       <Route path="/404Notfound" element={<> <PageTitle title="404" /> <NotFound /> </>} />
       <Route path="/Maintenance" element={<> <PageTitle title="Maintenance" /> <Maintenance /> </>} />
@@ -153,7 +165,7 @@ function App() {
         <Route path="/people" element={<> <PageTitle title="People" /> <People /> </>} />
         <Route path="/UploadPublication" element={<> <PageTitle title="Upload Publication" /> <UploadPublication /> </>} />
         <Route path="/createpost" element={<> <PageTitle title="Upload" /> <CreatePublication /> </>} />
-        <Route path="/datasets" element={<> <PageTitle title="Datasets" /> <Datasets /> </>} />
+        <Route path="/datasets" element={<> <PageTitle title="Datasets" /> <DatasetsPage /> </>} />
         <Route path="/contact" element={<> <PageTitle title="Contact Us" /> <ContactUs /> </>} />
         <Route path="/services" element={<> <PageTitle title="Services" /> <Services /> </>} />
 
@@ -200,6 +212,7 @@ function App() {
         
       </Routes>
   </DefaultLayout> 
+  </>
   );
 }
 

@@ -6,6 +6,7 @@ import { faArrowCircleDown, faArrowDown19, faArrowDownShortWide, faArrowLeft, fa
 import { useParams } from "react-router-dom";
 import { MdOutlineCheckBox, MdOutlineIndeterminateCheckBox } from "react-icons/md";
 import { FaAngleLeft,FaAngleRight  } from "react-icons/fa";
+import Loader from "../../../../common/Loader";
 
 
 interface DataSets {
@@ -79,6 +80,8 @@ function GenerateChart() {
   const [FilteredYears, setFilterYears] = useState<string[]>([]);
 
   const adminStatus = localStorage.getItem('isAdmin') === 'true';
+  const [loading, setLoading] = useState<boolean>(false);
+  const [errorMessage, seterrorMessage] = useState<string>("");
 
   const chartOptions = [
     { label: "Line Chart", value: "line" },
@@ -171,6 +174,8 @@ const formattedSeries1 = () => {
   }, []);
 
   const fetchDataset = async (Id: number) => {
+    setLoading(true);
+    seterrorMessage("");
     try {
       const response = await fetch(`${apiUrl}/api/Dataset/DataById/${Id}`);
       if (response.ok) {
@@ -178,9 +183,13 @@ const formattedSeries1 = () => {
         setDataSet(jsonData);
       } else {
         console.error("Error fetching data");
+        seterrorMessage("Failed to fetch Data from the server.");
       }
     } catch (error) {
       console.error("Error fetching data:", error);
+      seterrorMessage("Failed to fetch Data from the server.");
+    } finally {
+      setLoading(false);     
     }
   };
 
@@ -201,7 +210,7 @@ const formattedSeries1 = () => {
     return dataSet?.dataGroup[selectedProd].series
       .filter((s) => selectedVariables.length === 0 || selectedVariables.includes(s.name))
       .map((s) => ({
-        name: s.name,
+        name: s.name ?? "No Data",
         data: filterYears.map((index) => ({
           x: dataSet?.dataGroup[selectedProd].dataYear[index], // ✅ Corrected reference
           y: s.data[index],
@@ -253,6 +262,15 @@ const formattedSeries1 = () => {
         toolbar: { show: false },
         zoom: { enabled: false }, // ✅ Disable zooming
         pan: { enabled: false }, // ✅ Disable panning
+      },
+      legend: {
+        showForSingleSeries: true, 
+        show: true, // ✅ Force legend to show even with one series
+          labels: {
+            useSeriesColors: true
+          },
+        position: "bottom", // optional: position of legend (top, bottom, left, right)
+        horizontalAlign: "center", // optional: alignment
       },
       colors: chartColors,
       title: { 
@@ -494,9 +512,6 @@ const handleToggleSelectAllVariables = () => {
 };
   return (
     <>
-
-
-
     {
       adminStatus && (
             <div className="fixed ml-2 top-1/2 transform -translate-y-1/2">
@@ -511,290 +526,303 @@ const handleToggleSelectAllVariables = () => {
       )
     }
 
-      <div className={`bg-white ${adminStatus ? 'lg:px-5' : 'lg:px-40'}`}>
+    {
+      loading ? (
+        <div className="w-full"><Loader /></div>
+      ) : (
 
-
-      <div className="w-full mx-auto bg-white">
-        {/* Tab Header */}
-        <div className="flex w-full">
-          <div
-            onClick={() => setActiveTab(1)}
-            className={`${
-              activeTab === 1 ? "bg-primary" : "bg-gray-200"
-            } flex-1 py-0.5`}
-          >
+        errorMessage ? (
+          <div className='h-full mb-50 w-[100%] text-center py-20 text-gray-400 font-bold text-lg'>
+             {errorMessage}
           </div>
-          <div
-            onClick={() => setActiveTab(2)}
-            className={`${
-              activeTab === 2 ? "bg-primary" : "bg-gray-200"
-            } flex-1 py-0.5`}
-          >
-          </div>
-        </div>
-
-        <div className="flex w-full justify-between my-3">
-          {activeTab > 1 && (
-            <button
-              onClick={() => setActiveTab(1)}
-              className="flex items-center space-x-2 bg-primary text-white py-2 px-4 rounded-lg shadow-md hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-primary-400 transition-all duration-300 ease-in-out"
-            >
-              <FaAngleLeft />
-              <span>Back</span>
-            </button>
-          )}
-        </div>
+           ): (
+            <div className={`bg-white ${adminStatus ? 'lg:px-5' : 'lg:px-40'}`}>
 
 
-        
-
-        {/* Tab Content */}
-        <div className="p-4 bg-white rounded-b-lg">
-          {activeTab === 1 && (
-            <div>
-            <h2 className="text-2xl font-bold">{dataSet?.title}</h2>
-
-            <div className="flex items-center justify-end py-1 mx-1">
-            <span className="text-lg mr-3">Select Variable:</span>
-              <div className="flex items-center justify-end py-1 mx-1 border-gray-300 w-full md:w-[400px]">             
-                <Select
-                  id="SelectProduction"
-                  placeholder="Select Production"
-                  options={optionsProduction}
-                  value={optionsProduction.find((option) => option.value === selectedProd) || null}
-                  onChange={(selected) => setSelectedProd(selected?.value ?? 0)}
-                  className="text-sm w-full z-5"
-                  styles={{
-                    control: (provided) => ({
-                      ...provided,
-                      maxHeight: "72px",
-                      overflowY: "auto",
-                    }),
-                    menu: (provided) => ({
-                      ...provided,
-                      zIndex: 9999,
-                    }),
-                  }}
-                />
-              </div>
-              <button
-                onClick={() => setActiveTab(2)}
-                className="flex items-center space-x-2 bg-primary text-white py-2 px-4 rounded-lg shadow-md hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-primary-400 transition-all duration-300 ease-in-out"
-              >
-                <span>Continue</span>
-                <FaAngleRight />
-              </button>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 py-2 mx-1">
-
-                          {/* Multi-Select for Variables */}
-                          <div className="my-4">
-                <div className="text-sm font-medium mb-2">Select Commodity:</div>
-                  <div
-                    className="w-full max-h-[250px] min-h-[250px] overflow-y-auto border p-2"
-                    style={{ borderRadius: "8px", borderColor: "#ddd" }}>
-                      {optionsVariables.map((option) => (
-                        <div key={option.value} className="flex items-center mt-2">
-                          <label htmlFor={`option-${option.value}`} className="flex items-center cursor-pointer">
-                            {/* Hidden checkbox input */}
-                            <input
-                              type="checkbox"
-                              id={`option-${option.value}`}
-                              name={option.value}
-                              value={option.value}
-                              checked={selectedVariables.includes(option.value)}
-                              onChange={handleCheckboxChangeVariables}
-                              className="peer hidden" // hide the checkbox but still functional
-                            />
-                            
-                            {/* Custom styled checkbox */}
-                            <div className="w-5 h-5 border-2 border-gray-400 rounded-md flex items-center justify-center 
-                                            peer-checked:border-secondary peer-checked:bg-primary">
-                              <div className="w-3 h-3 bg-white rounded-sm opacity-0 peer-checked:opacity-100"></div>
-                            </div>
-                            
-                            {/* Option label */}
-                            <span className="ml-2 text-gray-700">{option.label}</span>
-                          </label>
-                        </div>
-                      ))}
-                  </div>
-
-
-                <button
-                  onClick={handleToggleSelectAllVariables}
-                  className="mt-2 px-4 py-2 bg-primary text-white text-sm rounded flex items-center space-x-2"
+            <div className="w-full mx-auto bg-white">
+              {/* Tab Header */}
+              <div className="flex w-full">
+                <div
+                  onClick={() => setActiveTab(1)}
+                  className={`${
+                    activeTab === 1 ? "bg-primary" : "bg-gray-200"
+                  } flex-1 py-0.5`}
                 >
-                  {selectedVariables.length === optionsVariables.length ? (
-                    <MdOutlineIndeterminateCheckBox />
-                  ) : (
-                    <MdOutlineCheckBox />
-                  )}
-                  <span>{selectedVariables.length === optionsVariables.length ? "Deselect All Commodity" : "Select All Commodity"}</span>
-                </button>
-
-
-                <div className="mt-3">
-                  <strong>Selected Commodity:</strong>
-                  <div>{selectedVariables.join(", ")}</div>
+                </div>
+                <div
+                  onClick={() => setActiveTab(2)}
+                  className={`${
+                    activeTab === 2 ? "bg-primary" : "bg-gray-200"
+                  } flex-1 py-0.5`}
+                >
                 </div>
               </div>
-
-              {/* Multi-Select for Year */}
-              <div className="my-4">
-                <div className="text-sm font-medium mb-2">Select Years:</div>
-                  <div
-                        className="w-full max-h-[250px] min-h-[250px] overflow-y-auto border p-2"
-                        style={{ borderRadius: "8px", borderColor: "#ddd" }}
-                      >
-                        {optionsYear.map((option) => (
-                          <div key={option.value} className="flex items-center mt-2">
-                            <label htmlFor={`option-${option.value}`} className="flex items-center cursor-pointer">
-                              {/* Hidden checkbox input */}
-                              <input
-                                type="checkbox"
-                                id={`option-${option.value}`}
-                                name={option.value}
-                                value={option.value}
-                                checked={selectedYears.includes(option.value)}
-                                onChange={handleCheckboxChangeYears}
-                                className="peer hidden" // hide the checkbox but still functional
-                              />
-                              
-                              {/* Custom styled checkbox */}
-                              <div className="w-5 h-5 border-2 border-gray-400 rounded-md flex items-center justify-center 
-                                              peer-checked:border-secondary peer-checked:bg-primary">
-                                <div className="w-3 h-3 bg-white rounded-sm opacity-0 peer-checked:opacity-100"></div>
+      
+              <div className="flex w-full justify-between my-3">
+                {activeTab > 1 && (
+                  <button
+                    onClick={() => setActiveTab(1)}
+                    className="flex items-center space-x-2 bg-primary text-white py-2 px-4 rounded-lg shadow-md hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-primary-400 transition-all duration-300 ease-in-out"
+                  >
+                    <FaAngleLeft />
+                    <span>Back</span>
+                  </button>
+                )}
+              </div>
+      
+      
+              
+      
+              {/* Tab Content */}
+              <div className="p-4 bg-white rounded-b-lg">
+                {activeTab === 1 && (
+                  <div>
+                  <h2 className="text-2xl font-bold">{dataSet?.title}</h2>
+      
+                  <div className="flex items-center justify-end py-1 mx-1">
+                  <span className="text-lg mr-3">Select Variable:</span>
+                    <div className="flex items-center justify-end py-1 mx-1 border-gray-300 w-full md:w-[400px]">             
+                      <Select
+                        id="SelectProduction"
+                        placeholder="Select Production"
+                        options={optionsProduction}
+                        value={optionsProduction.find((option) => option.value === selectedProd) || null}
+                        onChange={(selected) => setSelectedProd(selected?.value ?? 0)}
+                        className="text-sm w-full z-5"
+                        styles={{
+                          control: (provided) => ({
+                            ...provided,
+                            maxHeight: "72px",
+                            overflowY: "auto",
+                          }),
+                          menu: (provided) => ({
+                            ...provided,
+                            zIndex: 9999,
+                          }),
+                        }}
+                      />
+                    </div>
+                    <button
+                      onClick={() => setActiveTab(2)}
+                      className="flex items-center space-x-2 bg-primary text-white py-2 px-4 rounded-lg shadow-md hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-primary-400 transition-all duration-300 ease-in-out"
+                    >
+                      <span>Continue</span>
+                      <FaAngleRight />
+                    </button>
+                  </div>
+      
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 py-2 mx-1">
+      
+                                {/* Multi-Select for Variables */}
+                                <div className="my-4">
+                      <div className="text-sm font-medium mb-2">Select Commodity:</div>
+                        <div
+                          className="w-full max-h-[250px] min-h-[250px] overflow-y-auto border p-2"
+                          style={{ borderRadius: "8px", borderColor: "#ddd" }}>
+                            {optionsVariables.map((option) => (
+                              <div key={option.value} className="flex items-center mt-2">
+                                <label htmlFor={`option-${option.value}`} className="flex items-center cursor-pointer">
+                                  {/* Hidden checkbox input */}
+                                  <input
+                                    type="checkbox"
+                                    id={`option-${option.value}`}
+                                    name={option.value}
+                                    value={option.value}
+                                    checked={selectedVariables.includes(option.value)}
+                                    onChange={handleCheckboxChangeVariables}
+                                    className="peer hidden" // hide the checkbox but still functional
+                                  />
+                                  
+                                  {/* Custom styled checkbox */}
+                                  <div className="w-5 h-5 border-2 border-gray-400 rounded-md flex items-center justify-center 
+                                                  peer-checked:border-secondary peer-checked:bg-primary">
+                                    <div className="w-3 h-3 bg-white rounded-sm opacity-0 peer-checked:opacity-100"></div>
+                                  </div>
+                                  
+                                  {/* Option label */}
+                                  <span className="ml-2 text-gray-700">{option.label}</span>
+                                </label>
                               </div>
-                              
-                              {/* Option label */}
-                              <span className="ml-2 text-gray-700">{option.label}</span>
-                            </label>
-                          </div>
-                        ))}
+                            ))}
+                        </div>
+      
+      
+                      <button
+                        onClick={handleToggleSelectAllVariables}
+                        className="mt-2 px-4 py-2 bg-primary text-white text-sm rounded flex items-center space-x-2"
+                      >
+                        {selectedVariables.length === optionsVariables.length ? (
+                          <MdOutlineIndeterminateCheckBox />
+                        ) : (
+                          <MdOutlineCheckBox />
+                        )}
+                        <span>{selectedVariables.length === optionsVariables.length ? "Deselect All Commodity" : "Select All Commodity"}</span>
+                      </button>
+      
+      
+                      <div className="mt-3">
+                        <strong>Selected Commodity:</strong>
+                        <div>{selectedVariables.join(", ")}</div>
+                      </div>
+                    </div>
+      
+                    {/* Multi-Select for Year */}
+                    <div className="my-4">
+                      <div className="text-sm font-medium mb-2">Select Years:</div>
+                        <div
+                              className="w-full max-h-[250px] min-h-[250px] overflow-y-auto border p-2"
+                              style={{ borderRadius: "8px", borderColor: "#ddd" }}
+                            >
+                              {optionsYear.map((option) => (
+                                <div key={option.value} className="flex items-center mt-2">
+                                  <label htmlFor={`option-${option.value}`} className="flex items-center cursor-pointer">
+                                    {/* Hidden checkbox input */}
+                                    <input
+                                      type="checkbox"
+                                      id={`option-${option.value}`}
+                                      name={option.value}
+                                      value={option.value}
+                                      checked={selectedYears.includes(option.value)}
+                                      onChange={handleCheckboxChangeYears}
+                                      className="peer hidden" // hide the checkbox but still functional
+                                    />
+                                    
+                                    {/* Custom styled checkbox */}
+                                    <div className="w-5 h-5 border-2 border-gray-400 rounded-md flex items-center justify-center 
+                                                    peer-checked:border-secondary peer-checked:bg-primary">
+                                      <div className="w-3 h-3 bg-white rounded-sm opacity-0 peer-checked:opacity-100"></div>
+                                    </div>
+                                    
+                                    {/* Option label */}
+                                    <span className="ml-2 text-gray-700">{option.label}</span>
+                                  </label>
+                                </div>
+                              ))}
+                        </div>
+                      <button
+                        onClick={handleToggleSelectAllYears}
+                        className="mt-2 px-4 py-2 bg-primary text-white text-sm rounded flex items-center space-x-2"
+                      >
+                          {selectedYears.length === optionsYear.length ? (
+                              <MdOutlineIndeterminateCheckBox />
+                            ) : (
+                              <MdOutlineCheckBox />
+                            )}
+                        <span>{selectedYears.length === optionsYear.length ? "Deselect All Years" : "Select All Years"}</span>
+                      </button>
+      
+                      <div className="mt-3">
+                        <strong>Selected Years:</strong>
+                        <div>{selectedYears.join(", ")}</div>
+                      </div>
+                    </div>
+      
+      
                   </div>
-                <button
-                  onClick={handleToggleSelectAllYears}
-                  className="mt-2 px-4 py-2 bg-primary text-white text-sm rounded flex items-center space-x-2"
-                >
-                    {selectedYears.length === optionsYear.length ? (
-                        <MdOutlineIndeterminateCheckBox />
-                      ) : (
-                        <MdOutlineCheckBox />
-                      )}
-                  <span>{selectedYears.length === optionsYear.length ? "Deselect All Years" : "Select All Years"}</span>
-                </button>
-
-                <div className="mt-3">
-                  <strong>Selected Years:</strong>
-                  <div>{selectedYears.join(", ")}</div>
                 </div>
+      
+                )}
+                
+                {activeTab === 2 && (
+                  <div>
+                      <h2 className="text-2xl font-bold">{dataSet?.title}</h2>
+      
+                      <div className="flex items-center justify-end py-1 mx-1 border-b border-gray-300">
+                      <div className="flex items-center justify-end py-1 mx-1 border-gray-300">
+                      <Select
+                        id="SelectProduction"
+                        placeholder="Select Production"
+                        options={optionsProduction}
+                        value={optionsProduction.find((option) => option.value === selectedProd) || null}
+                        onChange={(selected) => setSelectedProd(selected?.value ?? 0)}
+                        className="text-sm w-full z-5"
+                        styles={{
+                          control: (provided) => ({
+                            ...provided,
+                            maxHeight: "72px",
+                            overflowY: "auto",
+                          }),
+                          menu: (provided) => ({
+                            ...provided,
+                            zIndex: 9999,
+                          }),
+                        }}
+                      />
+                      </div>
+                      <div>
+                          <div className="flex items-center justify-end py-1 mx-1 border-gray-300">
+                          <Select
+                            id="SelectChart"
+                            placeholder="Select Chart"
+                            value={chartOptions.find((option) => option.value === chart)}
+                            onChange={(selectedOption) => setChart(selectedOption?.value || "line")}
+                            options={chartOptions}
+                            isClearable={true}
+                            className="text-sm w-full md:w-auto"
+                            styles={{
+                              control: (provided) => ({
+                                ...provided,
+                                maxHeight: "72px",
+                                overflowY: "auto",
+                              }),
+                              menu: (provided) => ({
+                                ...provided,
+                                zIndex: 9999,
+                              }),
+                            }}
+                          />
+                        </div>
+                      </div>
+                    </div>
+      
+                              {/* Render Chart Dynamically */}
+                    <div className="w-full mx-auto bg-white lg:mt-10 z-1">
+                      {settedChart}
+                    </div>
+      
+      
+                      <div className="lg:py-10 lg:px-4">
+                        <h3>Description</h3>
+                        <p>{dataSet?.dataGroup[selectedProd]?.description}</p>
+                      </div>
+                  </div>
+                )}
               </div>
-
-
             </div>
-          </div>
-
-          )}
-          
-          {activeTab === 2 && (
-            <div>
-                <h2 className="text-2xl font-bold">{dataSet?.title}</h2>
-
-                <div className="flex items-center justify-end py-1 mx-1 border-b border-gray-300">
-                <div className="flex items-center justify-end py-1 mx-1 border-gray-300">
-                <Select
-                  id="SelectProduction"
-                  placeholder="Select Production"
-                  options={optionsProduction}
-                  value={optionsProduction.find((option) => option.value === selectedProd) || null}
-                  onChange={(selected) => setSelectedProd(selected?.value ?? 0)}
-                  className="text-sm w-full z-5"
-                  styles={{
-                    control: (provided) => ({
-                      ...provided,
-                      maxHeight: "72px",
-                      overflowY: "auto",
-                    }),
-                    menu: (provided) => ({
-                      ...provided,
-                      zIndex: 9999,
-                    }),
-                  }}
-                />
-                </div>
+      
+      
+      
+      
+      
+      
+                {/* Chart Type Selection */}
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
                 <div>
-                    <div className="flex items-center justify-end py-1 mx-1 border-gray-300">
-                    <Select
-                      id="SelectChart"
-                      placeholder="Select Chart"
-                      value={chartOptions.find((option) => option.value === chart)}
-                      onChange={(selectedOption) => setChart(selectedOption?.value || "line")}
-                      options={chartOptions}
-                      isClearable={true}
-                      className="text-sm w-full md:w-auto"
-                      styles={{
-                        control: (provided) => ({
-                          ...provided,
-                          maxHeight: "72px",
-                          overflowY: "auto",
-                        }),
-                        menu: (provided) => ({
-                          ...provided,
-                          zIndex: 9999,
-                        }),
-                      }}
-                    />
-                  </div>
+      
                 </div>
-              </div>
-
-                        {/* ✅ Render Chart Dynamically */}
-              <div className="w-full mx-auto bg-white lg:mt-10 z-1">
-                {settedChart}
-              </div>
-
-
-                <div className="lg:py-10 lg:px-4">
-                  <h3>Description</h3>
-                  <p>{dataSet?.dataGroup[selectedProd]?.description}</p>
-                </div>
+      
+      
+      
             </div>
-          )}
-        </div>
-      </div>
-
-
-
-
-
-
-          {/* Chart Type Selection */}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-          <div>
-
-          </div>
-
-
-
-        </div>
+           )
+      )
+    }
     </>
   );
 }
