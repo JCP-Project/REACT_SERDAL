@@ -100,3 +100,29 @@ React and Tailwind are two popular technologies that have taken the web developm
 
 - Initial release of TailAdmin React.
 "# REACT_SERDAL" 
+
+
+dev script
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+
+
+gh-Page
+npm install react-router-dom
+npm run build
+npm run deploy
+
+
+"scripts": {
+  "dev": "vite",
+  "build": "vite build",
+  "preview": "vite preview",
+  "predeploy": "npm run build",
+  "deploy": "gh-pages -d dist"
+}
+
+
+
