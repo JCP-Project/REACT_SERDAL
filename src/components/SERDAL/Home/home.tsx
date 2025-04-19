@@ -29,10 +29,17 @@ function Home()
                     {data?.Maincontent}
                 </div>
                 <div className="flex-1 p-5 order-1 md:order-2">
-                <video width="100%" controls autoPlay muted>
+                <iframe
+                    src="https://drive.google.com/file/d/1yP27vjTSB8ygsCZva_NFmcic8KMdJ0cu/preview"
+                    className="w-full h-full md:h-[355px] rounded shadow-2xl"
+                    allow="autoplay"
+                    title="SERDAL Video"
+                ></iframe>      
+
+                {/* <video width="100%" controls autoPlay muted>
                     <source src="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4" type="video/mp4" />
                     browser does not support the video.
-                </video>
+                </video> */}
                 </div>
             </div>
         </div>

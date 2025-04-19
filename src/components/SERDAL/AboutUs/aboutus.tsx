@@ -7,6 +7,7 @@ import titleHeader from "../components/titleHeader";
 
 import aboutUsData from "../Resources/AboutUs/aboutData";
 import partnersLogo from "../Resources/AboutUs/partners";
+import SERDALVideo from "../Resources/AboutUs/videoContent";
 
 import SERDALlogo from '../Resources/logo.png'
 
@@ -30,15 +31,24 @@ interface parteners {
     pinLocation: string;
 }
 
+interface iSERDALVideo {
+    id: number;
+    title: string;
+    vid: string;
+}
+
+
 function AboutUs () {
     const [data, setData] = useState<data[]>([])
     const [partners, setPartners] = useState<parteners[]>([])
+    const [videoData, setVideoData] = useState<iSERDALVideo[]>([])
 
     const location = useLocation();
   
     useEffect(() =>{
         setData(aboutUsData);
         setPartners(partnersLogo);
+        setVideoData(SERDALVideo);
     },[])
 
     useEffect(() => {
@@ -74,7 +84,7 @@ function AboutUs () {
                     </div>
 
                     <div id="" className="flex items-center justify-center md:px-20 flex-col md:flex-row bg-primary text-white">
-                        <div className="basis-[30%] h-full flex items-center justify-center px-1 text-xl order-2 lg:order-2">
+                        <div className="basis-[30%] h-full flex items-center justify-center p-5 md:p-1 text-xl order-2 lg:order-2">
                             {data[1].summary}
                         </div>
                         <div className="basis-[70%] flex justify-center">
@@ -108,72 +118,30 @@ function AboutUs () {
                                     ))
                                 }
 
-
-                                {/* <div className="group absolute flex flex-col items-center justify-center top-[12%] left-[4%] w-[30%] aspect-square text-center">
-                                    <label className="text-white font-bold">{partners[2]?.name}</label>
-                                    <a href={partners[2]?.link} target="_blank"
-                                        rel="noopener noreferrer"
-                                        title="Logo 1" className="block w-15 h-15"
-                                    >
-                                        
-                                        <img src={partners[2]?.img} alt="SERDAL Logo"
-                                        className="w-full h-full object-contain rounded-full group-hover:scale-110 transition-transform"
-                                        />
-                                    </a>
-
-                                    <div className="absolute top-[108%] left-[200%]  flex items-center p-1 justify-center aspect-square rounded-full bg-black-2 group-hover:scale-110 transition-transform duration-300 ease-in-out">
-                                        <MdLocationPin className="relative font-bold h-10 w-10 text-secondary" />                
-                                    </div>
-                                </div> */}
-
                             </div>
                         </div>
 
 
                     </div>
 
-
-                <div className="hidden">
-                    <div className="text-left md:text-justify text-lg px-5 md:px-20 py-10">
-                        {data[1].summary}
-
-                            <a
-                                href="https://link-for-logo-1.com"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="absolute top-[20%] left-[15%] bg-red w-[50px] h-[50px] rounded-full hover:scale-110 transition-transform"
-                                title="Logo 1"
-                            ></a>
-                    </div>
-
-                    <div>
-                        <div className="relative w-full max-w-[800px] mx-auto">
-                            <img src={data[1].img} alt="NetworkMap" className="w-full h-auto" />
-
-                            {/* Clickable logo 1 */}
-                            <a
-                                href="https://link-for-logo-1.com"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="absolute top-[20%] left-[15%] bg-red w-[50px] h-[50px] rounded-full hover:scale-110 transition-transform"
-                                title="Logo 1"
-                            >
-                                {/* Optional: Add hover effect or transparent div */}
-                            </a>
-
-                            {/* Clickable logo 2 */}
-                            <a
-                                href="https://link-for-logo-2.com"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="absolute top-[40%] left-[30%] w-[50px] h-[50px] rounded-full hover:scale-110 transition-transform"
-                                title="Logo 2"
-                            />
-
-                            {/* Add more logo zones similarly */}
+                    <div className="py-5 md:py-10">
+                        <h1 className="font-optima text-3xl font-bold py-5 text-center">SERDAL Videos</h1>
+                        <div id="" className="flex items-center justify-center md:px-10 flex-col md:flex-row">
+                            {
+                                videoData.map((v) => (
+                                    <div key={`K-${v.id}`} id={`ID-${v.id}`} className="w-full flex-1 flex items-center justify-center p-2 order-1 lg:order-2">
+                                        <iframe
+                                            src={v.vid}
+                                            className="w-full h-[200px] md:h-[255px] rounded shadow-lg"
+                                            allow="autoplay"
+                                            title={v.title}
+                                        ></iframe>
+                                    </div>
+                                ))
+                            }
                         </div>
                     </div>
-                </div>   
+
 
                 </div>
             )
