@@ -7,12 +7,14 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist"
   },
   "author": {
     "name": "John Carlo M. Perez",
     "email": "johncarloperez100@gmail.com",
-    "url": "https://tailadmin.com"
+    "url": "https://jcp-project.github.io/JCPerez"
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",
