@@ -383,7 +383,7 @@ const ApproveRequest = async (bodyData: UpdateStatus, actionText:string) => {
           animate={{ x: 0 }}
           transition={{ type: 'spring', stiffness: 100 }}
         >
-                  <h1 className={`text-2xl font-bold text-left text-white ${adminStatus ? 'lg:px-5' : 'lg:px-40'}`}>Publications</h1>
+                  <h1 className={`text-2xl font-bold text-left text-white ml-3 ${adminStatus ? 'lg:px-5' : 'lg:px-40'}`}>Publications</h1>
         </motion.div>
       </div>
     <Card className="h-full w-full px-2 rounded-lg px-1 md:px-5">
