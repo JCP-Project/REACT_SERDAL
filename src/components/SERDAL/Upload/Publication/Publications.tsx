@@ -310,6 +310,12 @@ function Publications()
         setSuggestions([]); // Clear suggestions if search term is too short
         return;
       }
+
+      if (searchTerm.length >= 30) {
+        setErrorMessage("");
+        setSuggestions([]);
+        return;
+      }
     
       // For longer search terms
       const timer = setTimeout(() => {
@@ -382,9 +388,6 @@ function Publications()
       <div className="px-0 lg:px-40 ">
         <div className="flex items-center justify-center">
         {
-          loading ? (
-              <div><Loader /></div> // Show loader while loading
-          ) : (
               <div className="flex w-screen ">
 
                 <div className="w-full lg:w-[100%]">
@@ -460,33 +463,28 @@ function Publications()
                       {
                         !!!hideFilter && (
                           <motion.div
-                          // initial={{ y: -5 }}
-                          // animate={{ y: 0 }}
-                          // transition={{ type: 'spring', stiffness: 500 }}
                           className="w-full md:flex md:justify-between px-1">
                             <div className="flex items-center justify-center py-1 md:mx-2 md:flex-grow">
-                              {/* <label htmlFor="KeywordsID" className="text-sm"><span className="lg:block hidden">Keywords:</span></label> */}
                               <Select
                                 id="KeywordsID"
                                 placeholder="Select Keywords"
                                 options={keywordsOptions}
                                 value={selectedKeywords}
                                 onChange={handleChangeKeywords}
-                                className="text-sm w-full sm:w-[200px] md:flex md:flex-grow"  // Full width on mobile, 200px on larger screens, auto on desktop
+                                className="text-sm w-full sm:w-[200px] md:flex md:flex-grow"
                                 styles={customStyles}
                                 isClearable ={true}
                               />
                             </div>
   
                             <div className="flex items-center justify-center py-1 md:flex-grow">
-                              {/* <label htmlFor="University" className="text-sm"><span className="lg:block hidden">University:</span></label> */}
                               <Select
                                 id="University"
                                 placeholder="Select Institution"
                                 options={universityOptions}
                                 value={selectedUniversity}
                                 onChange={handleChangeUniversity}
-                                className="text-sm w-full sm:w-[200px] md:flex md:flex-grow"  // Full width on mobile, 200px on larger screens, auto on desktop
+                                className="text-sm w-full sm:w-[200px] md:flex md:flex-grow"
                                 styles={customStyles}
                                 isClearable ={true}
                                 isMulti
@@ -499,7 +497,10 @@ function Publications()
                   </div>
 
                       {              
-                        loading && <div><Loader /></div>
+                        loading ? (<div><Loader /></div>):
+                        (
+                            <PublicationList data={publications} university={university} />
+                        )
                       }
 
                       {
@@ -510,7 +511,8 @@ function Publications()
                         )
                       }
 
-                      <PublicationList data={publications} university={university} />
+
+                      
 
 
                     {
@@ -560,8 +562,6 @@ function Publications()
                 
                            
               </div>
-
-          )
         }
         </div>
       </div>

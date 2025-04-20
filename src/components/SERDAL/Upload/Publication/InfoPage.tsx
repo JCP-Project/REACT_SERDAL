@@ -331,14 +331,14 @@ const getUniversity =  (id:number) =>{
         </div>
 
         <div className="py-1 text-xs lg:text-lg text-primary leading-relaxed flex justify-center items-center">
-          <div><h5><span className="font-bold"></span>{data?.citation}</h5></div>
+          <div><h5 className="font-optima font-bold">{data?.citation}</h5></div>
         </div>
 
         <div className="py-2 text-xs lg:text-4xl font-bold leading-relaxed flex justify-center items-center">
-          <div><h5><span className="font-bold"></span>{data?.journal}</h5></div>
+          <div><h5 className="font-bold">{data?.journal}</h5></div>
         </div>
 
-        <div className="text-left py-2 md:py-10"><h1 className="text-sm lg:text-3xl md:text-4xl leading-relaxed text-primary">  {data?.title} </h1></div>
+        <div className="text-left py-2 md:py-10"><h1 className="font-optima font-bold text-sm lg:text-3xl md:text-4xl leading-relaxed text-primary">  {data?.title} </h1></div>
 
         <div className="py-2 text-xs lg:text-lg leading-relaxed">
           <div><h5><span className="font-bold">Authors: </span>{data?.author}</h5></div>

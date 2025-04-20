@@ -7,8 +7,12 @@ import { useParams } from "react-router-dom";
 import { MdOutlineCheckBox, MdOutlineIndeterminateCheckBox } from "react-icons/md";
 import { FaAngleLeft,FaAngleRight  } from "react-icons/fa";
 import Loader from "../../../../common/Loader";
-import Loader2 from "../../../../common/Loader/Loader2";
 
+
+interface iData {
+    datasetResult: DataSets;
+    variableResult: variables[];
+}
 
 interface DataSets {
   title: string;
@@ -28,8 +32,8 @@ interface Series {
   data: number[];
 }
 
-interface OptionType {
-  value: string;
+interface variables {
+  value: number;
   label: string;
 }
 
@@ -77,6 +81,10 @@ function GenerateChart() {
   const [selectedYears, setSelectedYears] = useState<string[]>([]);
   const [selectedVariables, setSelectedVariables] = useState<string[]>([]);
   const [settedChart, setSettedChart] = useState<JSX.Element | null>(null);
+
+
+  const [variableOtions, setVariableOtions] = useState<variables[]>([]);
+  const [selectedvariableOtions, setselectedvariableOtions] = useState<number>(0)
 
   const [FilteredYears, setFilterYears] = useState<string[]>([]);
 
@@ -180,8 +188,19 @@ const formattedSeries1 = () => {
     try {
       const response = await fetch(`${apiUrl}/api/Dataset/DataById/${Id}`);
       if (response.ok) {
-        const jsonData: DataSets = await response.json();
-        setDataSet(jsonData);
+        const jsonData: iData = await response.json();
+        console.log(jsonData);
+
+        setDataSet(jsonData.datasetResult);
+
+        const options = Object.entries(jsonData.variableResult).map(([key, value]) => ({
+          value: Number(key),
+          label: value,
+        }));
+        console.log(options);
+        setVariableOtions(options);
+        
+
       } else {
         console.error("Error fetching data");
         seterrorMessage("Failed to fetch Data from the server.");
@@ -190,9 +209,45 @@ const formattedSeries1 = () => {
       console.error("Error fetching data:", error);
       seterrorMessage("Failed to fetch Data from the server.");
     } finally {
-      setLoading(false);     
+      setLoading(false); 
+       
     }
   };
+
+  const fetchDatasetBySelectedVariable = async (variable : number) => {
+    const [chartId] = dataset.split('-');
+    console.log("Chart ID", Number(chartId), variable);
+    setLoading(true);
+    seterrorMessage("");
+    try {
+      const response = await fetch(`${apiUrl}/api/Dataset/DataByVariables?Id=${Number(chartId)}&variableId=${variable}`);
+      if (response.ok) {
+        const jsonData: DataSets = await response.json();
+        console.log(jsonData);
+
+       setDataSet(jsonData);
+        
+      } else {
+        console.error("Error fetching data");
+        seterrorMessage("Failed to fetch Data from the server.");
+      }
+    } catch (error) {
+      console.error("Error fetching data:", error);
+      seterrorMessage("Failed to fetch Data from the server.");
+    } finally {
+      setLoading(false); 
+       
+    }
+  };
+
+  const ChangeVariableOptions = (selected: any) =>
+  {
+      setselectedvariableOtions(selected?.value ?? 0)
+      fetchDatasetBySelectedVariable(selected?.value);
+      setSelectedYears([]);
+      setSelectedVariables([]);
+  }
+
 
   const formattedSeries = () => {
     if (!dataSet || !dataSet?.dataGroup[selectedProd]?.series) {
@@ -213,15 +268,13 @@ const formattedSeries1 = () => {
       .map((s) => ({
         name: s.name ?? "No Data",
         data: filterYears.map((index) => ({
-          x: dataSet?.dataGroup[selectedProd].dataYear[index], // ✅ Corrected reference
+          x: dataSet?.dataGroup[selectedProd].dataYear[index], // Corrected reference
           y: s.data[index],
           z: Math.random() * 100,
         })),
       }));
   };
   
-  
-
   
   // Generate multi-select options for Year & Variables
   const optionsYear = dataSet?.dataGroup[selectedProd].dataYear.map((year) => ({
@@ -236,7 +289,7 @@ const formattedSeries1 = () => {
 
   const optionsProduction = dataSet?.dataGroup.map((s, index) => ({
     value: index,
-    label: s.production || "Unnamed Production", // ✅ Correct key
+    label: s.production || "Unnamed Production", // Correct key
   })) || [];
 
   // Get min & max values from the dataset dynamically
@@ -244,14 +297,14 @@ const formattedSeries1 = () => {
     const yaxisConfig = {
       labels: {
         show: true,
-        formatter: (value) => value.toLocaleString(), // ✅ Format numbers with commas
+        formatter: (value) => value.toLocaleString(), // Format numbers with commas
         style: {
           fontSize: "12px",
           fontWeight: "bold",
         },
       },
-      tickAmount: 15, // ✅ Ensure proper scaling (adjust if needed)
-      forceNiceScale: true, // ✅ Helps keep axis labels evenly spaced
+      tickAmount: 15, // Ensure proper scaling (adjust if needed)
+      forceNiceScale: true, // Helps keep axis labels evenly spaced
     };
 
 
@@ -317,8 +370,7 @@ const formattedSeries1 = () => {
       markers: { size: 4 }, // Keep the size of the markers (but it won't show in the tooltip)
       dataLabels: { enabled: false },
     };
-
-    
+ 
       const lineBarChart = {
         ...baseChartOptions,
         stroke: {
@@ -338,7 +390,6 @@ const formattedSeries1 = () => {
         },
       };
   
-
       const radarChart = {
         ...baseChartOptions,
         //title: { text:  dataSet?.title },
@@ -356,7 +407,6 @@ const formattedSeries1 = () => {
         },
       };
   
-
       const barChart = {
         ...baseChartOptions,
         //title: { text: dataSet?.title },
@@ -460,12 +510,13 @@ const formattedSeries1 = () => {
     }
   
     setSettedChart(newChart);
-  }, [chart, dataSet, selectedYears, selectedVariables, selectedProd]);
+  }, [chart, dataSet, selectedYears, selectedVariables]);
 
-  useEffect(() => {
-  setSelectedYears([]); // ✅ Reset years when production changes
-  setSelectedVariables([]); // ✅ Reset selected variables
-}, [selectedProd]);
+//   useEffect(() => {
+//     fetchDatasetBySelectedVariable();
+//     setSelectedYears([]);
+//     setSelectedVariables([]);
+// }, [selectedvariableOtions]);
 
 const handleBackClick = () => {
   window.history.back(); // This will navigate to the previous page in the browser's history
@@ -529,39 +580,7 @@ const handleToggleSelectAllVariables = () => {
 
     {
       loading ? (
-        <div className="w-full  h-screen w-full flex items-center flex-col">
-          
-          <div className="absolute z-50 h-full w-full flex inset-0"><Loader2 /></div>
-          <div className="md:space-y-6 w-[100%] md:w-[90%]">
-          <div className="animate-pulse py-10 px-10">
-            <h2 className="text-2xl font-bold h-10 w-70 bg-gray-300 "></h2>
-      
-            <div className="flex items-center justify-end py-1 mx-1">
-              <span className="text-lg mr-3 bg-gray-200 rounded w-40 h-10"></span>
-              <div className="flex items-center justify-end py-1 mx-1 border-gray-300 bg-gray-200 rounded h-10 w-40 md:w-[400px]"></div>
-              <button className="h-10 w-20 bg-gray-300 rounded"></button>
-            </div>
-      
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 py-2 mx-1">
-              <div className="my-4">
-                  <div className="mb-2 h-10 w-70 bg-gray-300 rounded"></div>
-                  <div className="w-full max-h-[250px] min-h-[250px] overflow-y-auto border p-2 bg-gray-200 rounded"></div>        
-                  <button className="mt-2 px-4 py-2 h-10 w-50 bg-gray-300 rounded"></button>
-                  <div className="mt-3 h-10 w-40 bg-gray-200 rounded"></div>
-              </div>
-        
-                      {/* Multi-Select for Year */}
-              <div className="my-4">
-                <div className="mb-2 h-10 w-70 bg-gray-300 rounded"></div>
-                <div className="w-full max-h-[250px] min-h-[250px] overflow-y-auto border p-2 bg-gray-200 rounded"></div>
-                <button className="mt-2 px-4 py-2 h-10 w-50 bg-gray-300 rounded"></button>
-                <div className="mt-3 h-10 w-40 bg-gray-200 rounded"></div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-      </div>
+        <div className="w-full"><Loader /></div>
       ) : (
 
         errorMessage ? (
@@ -618,9 +637,9 @@ const handleToggleSelectAllVariables = () => {
                       <Select
                         id="SelectProduction"
                         placeholder="Select Production"
-                        options={optionsProduction}
-                        value={optionsProduction.find((option) => option.value === selectedProd) || null}
-                        onChange={(selected) => setSelectedProd(selected?.value ?? 0)}
+                        options={variableOtions}
+                        value={variableOtions.find((option) => option.value === selectedvariableOtions) ||  (variableOtions.length > 0 ? variableOtions[0] : null)}
+                        onChange={(selected) => ChangeVariableOptions(selected)}
                         className="text-sm w-full z-5"
                         styles={{
                           control: (provided) => ({

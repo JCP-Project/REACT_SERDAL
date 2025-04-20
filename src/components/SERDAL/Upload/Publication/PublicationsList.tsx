@@ -118,11 +118,7 @@ const PublicationsList: React.FC<datas> = ({data, university}) =>{
                         </div>
 
                         <h5 className="text-lg font-bold uppercase text-primary py-2 text-left">
-                            <Link      to={`/Publication/Info/${post.id}`} // Ensure this is the correct route
-                                onClick={(e) => {
-                                  e.preventDefault(); // Prevent React Router's default navigation behavior
-                                  window.location.href = `/Publication/Info/${post.id}-${encodeURIComponent(post.title)}`; // Force a full page reload
-                                }}
+                            <Link to={`/publication/Info/${post.id}`}
                                 className="hover:underline"
                               >
                                 {
@@ -162,8 +158,10 @@ const PublicationsList: React.FC<datas> = ({data, university}) =>{
                             )
                           }
 
-                          <div className="flex items-center text-sm mx-2">
-                            <label><FontAwesomeIcon icon={faDownload} className="" /> <span className="">{post.download}</span></label>
+                          <div className="flex items-center text-sm mx-2 cursor-pointer">
+                            <a href={post.pdfFile} target="_blank" onClick={() =>DownloadClick(post.id)}>
+                              <label><FontAwesomeIcon icon={faDownload} className="cursor-pointer" /> <span className="cursor-pointer">{post.download}</span></label>
+                            </a> 
                           </div>
 
 

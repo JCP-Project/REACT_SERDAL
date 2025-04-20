@@ -479,7 +479,7 @@ const ApproveRequest = async (bodyData: UpdateStatus, actionText:string) => {
                       <td className={classes}>
                         <div className="flex items-center gap-3">
                           <div className="flex flex-col">
-                          <Link to={`/Publication/Info/${id}`}>
+                          <Link to={`/publication/Info/${id}`}>
                             <Typography  color="blue-gray" className="text-md" >
                             {truncateTitle(title)}
                             </Typography>
@@ -534,7 +534,7 @@ const ApproveRequest = async (bodyData: UpdateStatus, actionText:string) => {
                       </td>
                       <td className={`${classes} text-center z-40`}>
                         <span>
-                          <Link to={`/Publication/Info/${id}`}>
+                          <Link to={`/publication/Info/${id}`}>
                           <button 
                           className="md:m-0 bg-primary text-white rounded-md hover:bg-secondary text-md px-2 py-0 md:px-2">
                             <FontAwesomeIcon icon={faEye} />

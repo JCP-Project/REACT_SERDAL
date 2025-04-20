@@ -89,7 +89,7 @@ function Header2() {
   return (
     <>
 
-    <div className="w-full flex items-center justify-between md:justify-center bg-black-2">
+    <div className="w-full flex items-center justify-between md:justify-center bg-black-2 px-2 md:px-0 py-5 md:py-0">
           {
             !isAdmin && (
               <div>

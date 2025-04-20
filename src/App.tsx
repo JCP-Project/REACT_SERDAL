@@ -172,7 +172,7 @@ function App() {
         <Route path="/trainings" element={<> <PageTitle title="Training" /> <Training /> </>} />
         <Route path="/trainings/Info/:infopage" element={<> <PageTitle title="Trainings Info" /> <TrainingInfo /> </>} />
         
-        <Route path="/Publication/Info/:infopage" element={<> <PageTitle title="Publication Info" /> <Info /> </>} />
+        <Route path="/publication/Info/:infopage" element={<> <PageTitle title="Publication Info" /> <Info /> </>} />
 
         <Route path="/survey/answer/:answerpage" element={<> <PageTitle title="Answer Survey" /> <AnswerSurvey /> </>} />
         <Route path="/datasets/generatechart/:dataset" element={<> <PageTitle title="Survey" /> <GenerateChart /> </>} />
