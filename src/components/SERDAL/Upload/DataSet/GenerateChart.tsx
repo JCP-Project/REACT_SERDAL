@@ -780,45 +780,20 @@ const handleToggleSelectAllVariables = () => {
                       {settedChart}
                     </div>
       
-      
-                      <div className="lg:py-10 lg:px-4">
-                        <h3>Description</h3>
-                        <p>{dataSet?.dataGroup[selectedProd]?.description}</p>
-                      </div>
+                      {
+                        dataSet?.dataGroup[selectedProd]?.description && (
+                          <div className="lg:py-10 lg:px-4">
+                          <h3>Description</h3>
+                          <p>{dataSet?.dataGroup[selectedProd]?.description}</p>
+                        </div>
+                        )
+                      }
+
                   </div>
                 )}
               </div>
             </div>
-      
-      
-      
-      
-      
-      
-                {/* Chart Type Selection */}
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-                <div>
-      
-                </div>
-      
-      
-      
+    
             </div>
            )
       )

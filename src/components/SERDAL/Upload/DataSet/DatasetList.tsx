@@ -153,7 +153,6 @@ const DatasetList: React.FC<DatasetListProps> = ({ dataSets, fetchDataSets }) =>
       }
     };
       //#endregion
-    useEffect(() =>{console.log(dataSets);},[])
       
 
   return (

@@ -1,6 +1,8 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {Card,CardHeader,Typography,CardBody,Chip,CardFooter,Tabs,TabsHeader,Tab,} from "@material-tailwind/react";
-import { faCancel, faCheck, faClose, faEye, faSearch, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faCancel, faCheck, faClose, faDeleteLeft, faEye, faSearch, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { FaTrashCan } from "react-icons/fa6";
+
 import { useEffect, useState } from "react";
 import { Link } from 'react-router-dom';
 import Swal from 'sweetalert2';
@@ -89,7 +91,7 @@ export default function PublicationRequest() {
       setLoading(true);
       seterrorMessage("");
       const response = await fetch(`${apiUrl}/api/Publication`, {
-        method: "GET", // Use GET to fetch data
+        method: "GET",
       });
 
       if (response.ok) {
@@ -113,7 +115,7 @@ export default function PublicationRequest() {
 const ApproveRequest = async (bodyData: UpdateStatus, actionText:string) => {
   try {
     const response = await fetch(`${apiUrl}/api/Publication/UpdateStatus`, {
-      method: "POST",  // Correct method spelling
+      method: "POST", 
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${token}`,
@@ -123,7 +125,7 @@ const ApproveRequest = async (bodyData: UpdateStatus, actionText:string) => {
 
     if (response.ok) {   
       fetchData();
-      // Success Alert with Tailwind CSS classes
+
       const swalWithTailwindButtons = Swal.mixin({
         customClass: {
           confirmButton: "bg-primary text-white py-2 px-4 rounded-md focus:outline-none",
@@ -172,8 +174,7 @@ const ApproveRequest = async (bodyData: UpdateStatus, actionText:string) => {
       icon: "error",
     });
   } finally {
-    // You can stop loading spinner here if you have one
-    // setLoading(false);
+
   }
 };
   //#endregion
@@ -217,41 +218,154 @@ const ApproveRequest = async (bodyData: UpdateStatus, actionText:string) => {
         if (result.isConfirmed) {
           // Trigger the API call
           ApproveRequest(updateStatus, actionText);
-        } else if (result.dismiss === Swal.DismissReason.cancel) {
-          swalWithTailwindButtons.fire({
-            title: "Cancelled",
-            text: "Change status cancelled",
-            icon: "error",
-          });
         }
       });
   };
-  
-  
 
-  // Filter and sort rows based on the active tab and search query
-  const filteredRows = data
-    .filter((row) => {
-      // First filter by active tab (status)
-      if (activeTab !== "all" && row.status.toString() !== activeTab) {
-        return false; // Exclude the row if it doesn't match the selected tab
+
+  //#region Delete
+  const DeleteConfirmation = async (id: number) => {
+      Swal.fire({
+        title: "Delete Publication",
+        text: `Please type 'DELETE' to proceed`,
+        input: "text",
+        confirmButtonColor: '#2591DE',
+        inputAttributes: {
+          autocapitalize: "off",
+        },
+        showCancelButton: true,
+        confirmButtonText: "Confirm",
+        showLoaderOnConfirm: true,
+        customClass: {
+          confirmButton: 'swal-button-verify',
+          input: 'swal-input-verify',
+        },
+        preConfirm: async (inputDelete) => {
+  
+          const del = String(inputDelete).trim();
+
+          if ("DELETE" === del) {
+           // publicationDelete(id)
+           console.log("Delete");
+          } else {
+            const inputElement = Swal.getInput();
+            if (inputElement) {
+              inputElement.style.borderColor = "red";
+            }
+            // Show validation message
+            return Swal.showValidationMessage("Invalid command! Please try again.");
+          }
+        },
+        allowOutsideClick: false,
+        didClose: () => {
+          const inputElement = Swal.getInput();
+          if (inputElement) {
+            inputElement.style.borderColor = "";
+          }
+        },
+        timer: 30 * 60 * 1000,
+      });
+  };
+
+  //DELETE 
+  const publicationDelete = async (id: number) => {
+      try {
+      const userId = Number(localStorage.getItem('id'));
+
+      const bodyData = {
+        Id: id,
+        ModifiedBy: userId,
+      };
+
+      const response = await fetch(`${apiUrl}/api/Publication/Delete`, {
+        method: "DELETE", 
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,
+        },
+        body: JSON.stringify(bodyData),
+      });
+  
+      if (response.ok) {   
+        fetchData();
+  
+        const swalWithTailwindButtons = Swal.mixin({
+          customClass: {
+            confirmButton: "bg-primary text-white py-2 px-4 rounded-md focus:outline-none",
+            cancelButton: "bg-gray-500 text-white py-2 px-4 rounded-md  focus:outline-none",
+          },
+          buttonsStyling: false,
+        });
+  
+        swalWithTailwindButtons.fire({
+          title: "Deleted",
+          text: `Publication deleted successfully`,
+          icon: "success",
+        });
+      } else {
+        const errorResponse = await response.json();
+        console.error("Error message", errorResponse.message || "Unknown error");
+  
+        const swalWithTailwindButtons = Swal.mixin({
+          customClass: {
+            confirmButton: "bg-green-500 text-white py-2 px-4 rounded-md focus:outline-none",
+            cancelButton: "bg-gray-500 text-white py-2 px-4 rounded-md focus:outline-none", 
+          },
+          buttonsStyling: false,
+        });
+  
+        swalWithTailwindButtons.fire({
+          title: "Failed to Delete!",
+          text: errorResponse.message || "An error occurred while updating.",
+          icon: "error",
+        });
       }
-      // Then filter by the search query (title, author, or status)
-      return (
-        row.title.toLowerCase().includes(filter.toLowerCase()) ||
-        row.author.toLowerCase().includes(filter.toLowerCase()) ||
-        statusMap[row.status].includes(filter.toLowerCase())
-      );
-    })
-    .sort((a, b) => {
-      // First, sort by status
-      const statusComparison = a.status - b.status;
-      if (statusComparison !== 0) return statusComparison; // If status is different, return the result of status comparison
+    } catch (error) {
+      console.error("Error fetching publication data:", error);
+  
+      const swalWithTailwindButtons = Swal.mixin({
+        customClass: {
+          confirmButton: "bg-green-500 text-white py-2 px-4 rounded-md focus:outline-none",
+          cancelButton: "bg-gray-500 text-white py-2 px-4 rounded-md focus:outline-none",
+        },
+        buttonsStyling: false,
+      });
+  
+      swalWithTailwindButtons.fire({
+        title: "Network Error!",
+        text: "There was an issue connecting to the server.",
+        icon: "error",
+      });
+    } finally {
+  
+    }
+  }
+  //#endregion
+  
+  
+  //#region  Filter and sort rows based on the active tab and search query
+    const filteredRows = data
+      .filter((row) => {
+        // First filter by active tab (status)
+        if (activeTab !== "all" && row.status.toString() !== activeTab) {
+          return false; // Exclude the row if it doesn't match the selected tab
+        }
+        // Then filter by the search query (title, author, or status)
+        return (
+          row.title.toLowerCase().includes(filter.toLowerCase()) ||
+          row.author.toLowerCase().includes(filter.toLowerCase()) ||
+          statusMap[row.status].includes(filter.toLowerCase())
+        );
+      })
+      .sort((a, b) => {
+        // First, sort by status
+        const statusComparison = a.status - b.status;
+        if (statusComparison !== 0) return statusComparison; // If status is different, return the result of status comparison
 
-      // If status is the same, then sort by upload date
-      return new Date(a.createdDate).getTime() - new Date(b.createdDate).getTime();
-    });
-
+        // If status is the same, then sort by upload date
+        return new Date(a.createdDate).getTime() - new Date(b.createdDate).getTime();
+      });
+  //#endregion
 
 
     const truncateTitle = (title: string): string => {
@@ -422,9 +536,7 @@ const ApproveRequest = async (bodyData: UpdateStatus, actionText:string) => {
                         <span>
                           <Link to={`/Publication/Info/${id}`}>
                           <button 
-                          className="md:m-0 bg-primary text-white rounded-md hover:bg-secondary text-md px-2 py-0 md:px-2
-                                      hover:scale-110 transition-transform duration-200 ease-in-out
-                          ">
+                          className="md:m-0 bg-primary text-white rounded-md hover:bg-secondary text-md px-2 py-0 md:px-2">
                             <FontAwesomeIcon icon={faEye} />
                             <span className=""></span>
                           </button>
@@ -435,9 +547,8 @@ const ApproveRequest = async (bodyData: UpdateStatus, actionText:string) => {
                           <button 
                             onClick={() => handleStatus(id, 1, 0)} 
                             disabled={status === 1} // Disable button if status is 1
-                            className={`mx-1 text-white rounded-md text-md px-2 py-0 md:px-2
+                            className={`mx-1 text-white rounded-md text-md px-2 py-0 md:px-2 hover:scale-110 transition-transform duration-200 ease-in-out
                               ${status === 1 ? 'bg-green-400 cursor-not-allowed' : 'bg-green-600 hover:bg-green-500'} 
-                              ${status === 1 ? '' : 'hover:scale-110 transition-transform duration-200 ease-in-out'}
                             `}
                           >
                             <FontAwesomeIcon icon={faCheck} />
@@ -449,15 +560,25 @@ const ApproveRequest = async (bodyData: UpdateStatus, actionText:string) => {
                           <button 
                             onClick={() => handleStatus(id, 2, 0)} 
                             disabled={status === 2} // Disable button if status is 2
-                            className={`md:m-0 text-white rounded-md text-md px-2 py-0 md:px-2
+                            className={`md:m-0 text-white rounded-md text-md px-2 py-0 md:px-2 hover:scale-110 transition-transform duration-200 ease-in-out
                               ${status === 2 ? 'bg-red-400 cursor-not-allowed' : 'bg-red-600 hover:bg-gray-500'} 
-                              ${status === 2 ? '' : 'hover:scale-110 transition-transform duration-200 ease-in-out'}
                             `}
                           >
                             <FontAwesomeIcon icon={faClose} />
                             <span></span>
                           </button>
                         </span>
+
+
+                        {/* <span>
+                          <button 
+                            onClick={() => DeleteConfirmation(id)} 
+                            className={`md:m-2 text-center text-red-500 rounded-md text-md px-2 md:px-2 hover:scale-110 transition-transform duration-200 ease-in-out
+                            `}
+                          >
+                            <FontAwesomeIcon icon={faTrash} />
+                          </button>
+                        </span> */}
 
                       </td>
                     </tr>
@@ -471,8 +592,6 @@ const ApproveRequest = async (bodyData: UpdateStatus, actionText:string) => {
         ))}
 
     </CardBody>
-
-
 
       <CardFooter className="flex items-center justify-between border-t border-blue-gray-50 p-3 z-50">
         <div className="flex gap-2">

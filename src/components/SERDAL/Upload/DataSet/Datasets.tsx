@@ -55,7 +55,7 @@ function Datasets() {
 
   const [loading, setLoading] = useState<boolean>(false);
   const [file, setFile] = useState<File | null>(null);
-  const [fileName, setFileName] = useState("Select Excel file");
+  const [fileName, setFileName] = useState<string>("Select Excel file");
   const [image, setImage] = useState<File | null>(null);
   const [preview, setPreview] = useState<string | null>(null);
 
@@ -75,6 +75,9 @@ function Datasets() {
     setFile(null);
     setImage(null);
     setPreview(null);
+
+    setSelectedCategory(null);
+    setFileName("Select Excel file");
  }
 
 
@@ -149,14 +152,14 @@ function Datasets() {
   }, [sort, dataSet]);
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (event.target.files && event.target.files[0]) {
-      const selectedFile = event.target.files[0];
-      const file = event.target.files[0];
+    const file = event.target.files?.[0];
+    if (file) {
       setFileName(file.name);
-      setFile(selectedFile);
-    }else {
+      setFile(file);
+    } else {
       setFileName("Select Excel file");
     }
+    event.target.value = "";
   };
 
   const isExist = async () => {
@@ -379,7 +382,7 @@ function Datasets() {
               <button
                 className="flex items-center gap-3 bg-primary text-white px-4 py-2 rounded-md hover:bg-[#139B99]"
                 //onClick={() => document.getElementById('fileInput')?.click()}
-                onClick={() => openModal(true)}
+                onClick={() => openModal()}
               >
                 Upload
               </button>

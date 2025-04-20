@@ -72,21 +72,13 @@ const handleSubmit = async (e: React.FormEvent) => {
 
         e.preventDefault();
         setErrorMessage("");
-  
-        if (isSubmitting)
-        {
-          console.log("disabled", isSubmitting);
-          return;
-        } 
-        setIsSubmitting(true);
-  
+        setIsLoading(true);
+    
         const data = {
           ID: 0,
           Email: formData.email,
           Password: formData.password,
-        };
-        
-        console.log(data);
+        };     
 
         try {
           const response = await fetch(`${apiUrl}/api/Users/login`, {
@@ -124,16 +116,13 @@ const handleSubmit = async (e: React.FormEvent) => {
             localStorage.setItem('university', returnedUser.university.toString());
             localStorage.setItem('isLoggedIn', 'true');
             localStorage.setItem('APIToken', Token.toString());
-
-            setIsLoading(true);
-            setTimeout(() => {
+           
             setIsLoading(false);
 
                 if (returnedUser.role.toLowerCase() == "admin") {
                   localStorage.setItem('isAdmin', 'true');
                   navigate('/');
-                  window.location.reload();
-                  
+                  window.location.reload();                 
                 }
                 else
                 {
@@ -146,20 +135,13 @@ const handleSubmit = async (e: React.FormEvent) => {
                   }
                   else{
                     navigate('/');
-                  }
-
-
-                  
+                  }           
                 }
         
                window.location.reload();
 
-
-            }, 500);
-
-  
             } else {
-
+              setIsLoading(false);
               if (response.status === 400) {
                 const errorResponse = await response.json();
                 return Swal.fire({
@@ -180,6 +162,7 @@ const handleSubmit = async (e: React.FormEvent) => {
 
           }
         } catch (error) {
+          setIsLoading(false);
           console.error("Error Login:", error);
           Swal.fire({
             icon: 'error',
@@ -188,7 +171,7 @@ const handleSubmit = async (e: React.FormEvent) => {
             confirmButtonColor: '#2591DE',
           });
         } finally {
-          setIsSubmitting(false);
+          setIsLoading(false);
         }
     };
 
@@ -199,7 +182,7 @@ const handleSubmit = async (e: React.FormEvent) => {
       {/* <Breadcrumb pageName="Sign In" /> */}
       {
         Loading && (
-          <div className="flex h-screen items-center justify-center bg-white">
+          <div className="absolute inset-0 flex h-full items-center justify-center bg-white z-[999] bg-opacity-30">
             <div className="h-16 w-16 animate-spin rounded-full border-4 border-solid border-primary border-t-transparent"></div>
           </div>
         )
