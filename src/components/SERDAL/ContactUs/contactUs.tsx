@@ -33,9 +33,9 @@ function ContactUs() {
                 <div className={`flex flex-col md:flex-row items-center justify-center px-6 md:px-[200px]`}
                     >
                     <div
-                        className={`w-full md:flex-1 flex items-center justify-center mb-6 md:mb-0`}
+                        className={`relative w-full md:flex-1 flex items-center justify-center mb-6 md:mb-0 overflow-hidden`}
                     >
-                        <img src={data?.img} alt="Contact Us" className="h-[250px] md:h-[500px] lg:h-[700px] object-contain" />
+                        <img src={data?.img} alt="Contact Us" className="h-[250px] md:h-[500px] object-contain" />
                     </div>
 
                     <div  className={`w-full md:flex-1 px-3 md:px-5 lg:text-2xl`}>
