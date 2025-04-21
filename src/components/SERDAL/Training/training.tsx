@@ -32,7 +32,7 @@ function Training ()
     return(
         <>
         <div className="w-full">
-            {titleHeader("Trainings")}
+            {titleHeader("Events & Highlights")}
 
             <div>
             {data.map((t, index) => (
@@ -71,16 +71,16 @@ function Training ()
     >
       <div>
         <div
-          className={`font-bold text-xl md:text-2xl pb-4 hover:underline ${
+          className={`font-optima font-bold text-xl md:text-[30px] pb-4 hover:underline ${
             index % 2 === 0 ? 'text-black' : 'text-primary'
           }`}
         >
           <Link
             to={`/trainings/Info/${t.id}`}
-            onClick={(e) => {
-              e.preventDefault();
-              window.location.href = `/trainings/Info/${t.id}-${encodeURIComponent(t.title)}`;
-            }}
+            // onClick={(e) => {
+            //   e.preventDefault();
+            //   window.location.href = `/trainings/Info/${t.id}-${encodeURIComponent(t.title)}`;
+            // }}
             className="hover:underline"
           >
             {t.title}
@@ -92,10 +92,10 @@ function Training ()
         <div className="text-lg">
           <Link
             to={`/trainings/Info/${t.id}`}
-            onClick={(e) => {
-              e.preventDefault();
-              window.location.href = `/trainings/Info/${t.id}-${encodeURIComponent(t.title)}`;
-            }}
+            // onClick={(e) => {
+            //   e.preventDefault();
+            //   window.location.href = `/trainings/Info/${t.id}-${encodeURIComponent(t.title)}`;
+            // }}
           >
             <motion.button
               whileHover={{ scale: 1.05 }}

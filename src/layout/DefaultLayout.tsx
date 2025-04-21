@@ -124,23 +124,23 @@ const DefaultLayout: React.FC<{ children: ReactNode }> = ({ children }) => {
               {
                 !isAdmin && (
                   <div>
-                        {isIndexPage ? ( 
-                        <div className="w-full bg-black-2 ">
-                          <div  className='hidden md:flex items-center justify-between py-3 '>
+                        {isIndexPage && ( 
+                        <div className="w-full bg-black-2">
+                          <div  className='hidden md:flex items-center justify-between md:py-3'>
                             <div className="px-3">
                               <Link to="https://uplb.edu.ph/" target='_'>
-                                <img src={UP} alt='UPLB Logo' className="h-15" />
+                                <img src={UP} alt='UPLB Logo' className=" max-w-[200px] max-h-15 w-auto h-auto" />
                               </Link>
                             </div>
-                            <div className="flex space-x-5 px-3">
+                            <div className="flex md:mr-3">
                               <div>
                                 <Link to="https://cem.uplb.edu.ph/" target='_'>
-                                <img src={CEM} alt='CEM Logo' className="h-15" />
+                                <img src={CEM} alt='CEM Logo' className="md:ml-3 max-w-[200px] max-h-15 w-auto h-auto" />
                                 </Link>
                               </div>
                               <div>
-                                <Link to="https://uplb.edu.ph/" target='_'>
-                                  <img src={UPLB} alt='SERDAL Logo' className="h-15" />
+                                <Link to="/">
+                                  <img src={UPLB} alt='SERDAL Logo' className="md:ml-3 max-w-[200px] max-h-15 w-auto h-auto" />
                                 </Link>
                               </div>
                             </div>
@@ -150,19 +150,19 @@ const DefaultLayout: React.FC<{ children: ReactNode }> = ({ children }) => {
                           <div  className='flex items-center justify-between py-3 '>
                             <div className="px-3">
                               <Link to="https://uplb.edu.ph/" target='_'>
-                                <img src={UP} alt='UPLB Logo' className="h-15" />
+                                <img src={UP} alt='UPLB Logo' className=" max-w-[200px] max-h-10 w-auto h-auto" />
                               </Link>
                             </div>
-                            {header}
+                            {<div className="sticky top-0 z-50"> {header} </div>}
                             <div className="flex space-x-5 px-3">
                               <div>
                                 <Link to="https://cem.uplb.edu.ph/" target='_'>
-                                <img src={CEM} alt='CEM Logo' className="h-15" />
+                                <img src={CEM} alt='CEM Logo' className=" max-w-[200px] max-h-10 w-auto h-auto" />
                                 </Link>
                               </div>
                               <div>
-                                <Link to="https://uplb.edu.ph/" target='_'>
-                                  <img src={UPLB} alt='SERDAL Logo' className="h-15" />
+                                <Link to="/">
+                                  <img src={UPLB} alt='SERDAL Logo' className="max-w-[200px] max-h-10 w-auto h-auto" />
                                 </Link>
                               </div>
                             </div>
@@ -170,10 +170,8 @@ const DefaultLayout: React.FC<{ children: ReactNode }> = ({ children }) => {
                             
                           </div>
 
-                          <div className="font-optima text-3xl font-bold text-center py-10 text-white bg-primary">Socio-Economics Research and Data Analytics Laboratory,</div>
-                        </div>):(
-                          <div className="">{header}</div>
-                        )}
+                          <div className="font-optima text-3xl md:text-[50px] font-bold text-center py-10 md:py-15 text-white bg-primary">Socio-Economics Research and Data Analytics Laboratory</div>
+                        </div>)}
                   </div>
                 )
               }
@@ -181,7 +179,11 @@ const DefaultLayout: React.FC<{ children: ReactNode }> = ({ children }) => {
               <div id="sticky-trigger" className="h-0"></div>
 
               {
-                !isAdmin && isIndexPage  && (<div className="hidden md:block">{header}</div>)
+                !isAdmin && isIndexPage  && (<div className="hidden md:block sticky top-0 z-50">{header}</div>)
+              }
+
+              {
+                !isAdmin && !isIndexPage  && (<div className="block md:hiidden sticky top-0 z-50">{header}</div>)
               }
 
               {

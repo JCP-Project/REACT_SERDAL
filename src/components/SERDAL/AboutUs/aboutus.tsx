@@ -72,10 +72,10 @@ function AboutUs () {
             ):
             (
                 <div className="w-full">
-                    {titleHeader("Data-Driven. Purpose-Led")}
+                    {titleHeader("Data-Driven. Purpose-Led.")}
 
                     <div id="" className="flex items-center justify-center md:px-20 flex-col md:flex-row">
-                        <div className="w-full flex-1 flex items-center justify-center p-5 text-xl order-2 md:text-2xl lg:order-1">
+                        <div className="w-full flex-1 flex items-center justify-center p-5 text-xl order-2 md:text-3xl lg:order-1">
                             {data[0].summary}
                         </div>
                         <div className="w-full flex-1 flex items-center justify-center p-5 order-1 lg:order-2">
@@ -84,16 +84,16 @@ function AboutUs () {
                     </div>
 
                     <div id="" className="flex items-center justify-center md:px-20 flex-col md:flex-row bg-primary text-white">
-                        <div className="basis-[30%] h-full flex items-center justify-center p-5 md:p-1 text-xl order-2 lg:order-2">
+                        <div className="basis-[60%] h-full flex items-center justify-center  p-5 md:p-1 text-xl md:text-3xl order-2 lg:order-2">
                             {data[1].summary}
                         </div>
-                        <div className="basis-[70%] flex justify-center">
+                        <div className="basis-[50%] flex justify-center">
                             <div className="relative w-full max-w-[500px] my-20">
                                 {/* MAIN IMAGE */}
                                 <img
                                 src={data[1].img}
                                 alt="Main visual"
-                                className="w-full object-cover my-10"
+                                className="w-[400px] object-cover my-10"
                                 />
 
                                 {/* OVERLAY LOGO (scales with image) */}

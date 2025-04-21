@@ -69,11 +69,14 @@ function TrainingInfo ()
                     key={t.id}
                     className={`flex flex-col items-center justify-center max-h-full py-10 px-6 md:px-[200px]`}
                     >
-                        <div className="text-center text-4xl font-bold py-5">{t.title}</div>
+                        
                         <div>
-                            <img src={t.img} alt={t.title} className="h-[700px]"/>
+                            <img src={t.img} alt={t.title} className="h-[500px]"/>
                         </div>
-                        <div className="text-lg py-10">{t.summary}</div>
+
+                        <div className="text-center text-2xl font-bold py-5 mt-10">{t.title}</div>
+
+                        <div className="text-lg pb-5 text-justify">{t.summary}</div>
                     </div>
 
                 ))          

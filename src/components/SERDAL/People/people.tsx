@@ -41,7 +41,7 @@ function People () {
                         {
                             data.filter(x => x.title === "Phase 1").map(person => (
                             <div id={`ID-${person.id}`} key={person.id} className="group min-h-20 w-full text-black bg-gray-100 my-3 rounded-sm hover:bg-Tertiary">
-                                <div className="relative overflow-hidden max-h-[400px]">
+                                <div className="relative overflow-hidden max-h-[480px]">
                                     <div className="group-hover:scale-110 transition-transform duration-500 ease-in-out">
                                         <img src={person.img} alt={person.name} 
                                         />
@@ -67,7 +67,7 @@ function People () {
                         {
                             data.filter(x => x.title === "Phase 2").map(person => (
                             <div id={`ID-${person.id}`} key={person.id} className="group min-h-20 text-black bg-gray-100 my-3 hover:bg-Tertiary">
-                                <div className="relative overflow-hidden max-h-[420px]">
+                                <div className="relative overflow-hidden max-h-[480px]">
                                     <div className="group-hover:scale-110 transition-transform duration-500 ease-in-out">
                                         <img src={person.img} alt={person.name} />
                                     </div>

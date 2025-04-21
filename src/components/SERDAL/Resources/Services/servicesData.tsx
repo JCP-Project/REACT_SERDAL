@@ -7,7 +7,7 @@ const servicesData = [
     {   
         id: 0,
         title: "Capacity Building",
-        summary: "Enhancing research capabilities through tailored training sessions and workshops designed to equip individuals and organizations with the skills to excel in socio-economics research.",
+        summary:(<div>Enhancing research capabilities through tailored training sessions and workshops designed to equip individuals and organizations with the skills to excel in socio-economics research.<br/><br/> Key focus areas include: Data Management, Meta-Analysis, Impact Assessment, Futures Thinking, Time Series Analysis Using STATA, Short Course on STATA, Introduction to R Programming, Productivity and Efficiency Analysis Using STATA, Multivariate and Nonparametric Analysis in Socio-Economics Research Using SPSS and XLStat, Financial Analysis, and Forecasting.</div>),
         img: capacityBuilding
     },
     {   

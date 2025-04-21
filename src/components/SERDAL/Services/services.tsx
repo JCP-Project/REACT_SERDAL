@@ -9,7 +9,7 @@ import titleHeader from "../components/titleHeader";
 interface data {
     id: number;
     title: string;
-    summary: string;
+    summary: any;
     img: string;  
 }
 
@@ -94,11 +94,11 @@ useEffect(() => {
                 >
                   <div>
                     <div
-                      className={`font-bold text-black text-2xl md:text-3xl pb-4 hover:underline uppercase ${
+                      className={`font-bold text-black text-2xl md:text-[40px] pb-4 hover:underline uppercase ${
                         index % 2 === 0 ? 'text-black' : 'text-primary'
                       }`}
                     >
-                      <Link
+                      {/* <Link
                         to={`/trainings/Info/${t.id}`}
                         onClick={(e) => {
                           e.preventDefault();
@@ -106,10 +106,10 @@ useEffect(() => {
                             t.title
                           )}`;
                         }}
-                        className="hover:underline"
-                      >
+                        className="hover:underline font-optima"
+                      > */}
                         {t.title}
-                      </Link>
+                      {/* </Link> */}
                     </div>
                     <div className="text-2xl">{t.summary}</div>
                   </div>

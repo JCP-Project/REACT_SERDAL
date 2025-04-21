@@ -9,14 +9,14 @@ import Arapoc  from '../People/Jefferson A. Arapoc.webp'
 import Abueg from '../People/Luisito C. Abueg.webp'
 import Lapiña from '../People/Geny F. Lapiña.webp'
 import Maghirang from '../People/Paul Kenneth B. Maghirang.webp'
-import Cuevas from '../People/Danilo J. Mercado.png'
-import Bolaños from '../People/Danilo J. Mercado.png'
-import Biguelme from '../People/Danilo J. Mercado.png'
+import Cuevas from '../People/../People/Agham C. Cuevas.webp'
+import Bolaños from '../People/../People/Leslie G. Bolaños.png'
+import Biguelme from '../People/Michael B. Biguelme.png'
 import Quilantang from '../People/Myrr Roselyn M. Quilantang.jpg'
 import Gamala from '../People/Dan Joseph G. Gamala.jpg'
 import Parducho from '../People/June Carlo D. Parducho.jpg'
 
-//Phase 2
+
 
 const peopleData = 
 	[{

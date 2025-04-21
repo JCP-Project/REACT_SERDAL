@@ -1,11 +1,14 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHouse, faMessage, faPhone } from "@fortawesome/free-solid-svg-icons";
-import { FaFacebook } from "react-icons/fa6";
+import { FaFacebook, FaFacebookF, FaLinkedin, FaTwitter, FaX, FaXTwitter, FaYoutube } from "react-icons/fa6";
 import { Link } from "react-router-dom";
 import contactUsData from '../Resources/ContactUs/contactData'
 import { ReactNode, useEffect, useState } from "react";
 
+import { SocialIcon } from 'react-social-icons'
+
 import UPLB from '../Resources/logo.png'
+import { FaInstagram } from "react-icons/fa";
 
 interface ContactData {
     address: ReactNode;
@@ -28,7 +31,7 @@ function footer() {
 
                 <div className="max-w-100 max:h-50 text-justify">
                     <div className="w-auto h-50 flex items-center justify-center"><img src={UPLB} className="w-auto h-50"></img></div>
-                    <div className="py-2">Advancing Socio-Economics Research through Data Analytics</div>
+                    <div className="py-2">Building Capacity, Shaping Data-Driven Futures.</div>
                 </div>
 
                 <div className="max-w-100">
@@ -49,12 +52,24 @@ function footer() {
                         <FontAwesomeIcon icon={faMessage}  className="text-xl pr-3"/>               
                         {data?.email}
                     </div>
-                    <div className="flex items-center text-white text-sm py-3">
+                    <div className="flex items-center text-white text-sm py-3 space-x-3">
                         <Link to={data?.fb ?? ""} target="_">
-                            <div className="bg-[#1877F2] h-9 w-9 flex items-center justify-center  rounded-full">
-                            <FaFacebook className="h-5 w-5" />
-                            </div>     
-                        </Link>          
+                        <div className="bg-[#1877F2] text-white p-2  rounded-full hover:opacity-80">
+                            <FaFacebook size={15} />
+                        </div>  
+                        </Link>
+                        <div className="bg-[#E1306C] text-white p-2 rounded-full hover:opacity-80">
+                            <FaInstagram size={15} />
+                        </div>
+                        <div className="bg-[#000000] text-white p-2 rounded-full hover:opacity-80">
+                            <FaXTwitter size={15} />
+                        </div>
+                        <div className="bg-[#FF0000] text-white p-2 rounded-full hover:opacity-80">
+                            <FaYoutube size={15} />
+                        </div>
+                        <div className="bg-[#0A66C2] text-white p-2 rounded-full hover:opacity-80">
+                            <FaLinkedin size={15} />
+                        </div>         
                     </div>
 
 

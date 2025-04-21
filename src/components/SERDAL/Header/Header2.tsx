@@ -73,7 +73,7 @@ function Header2() {
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.97 }}
           transition={{ type: "spring", stiffness: 300 }}
-          className="min-w-[100px] bg-black-2 border-2 border-primary text-primary py-3 md:py-1 px-10 md:px-5 rounded-lg hover:text-white hover:bg-gray-700 hover:border-secondary text-xl md:text-sm"
+          className="min-w-[100px] bg-black-2 border-2 border-primary text-primary py-3 md:py-0 px-10 md:px-5 rounded-lg hover:text-white hover:bg-gray-700 hover:border-secondary text-xl md:text-sm"
         >
         Sign in
       </motion.button>
@@ -89,7 +89,7 @@ function Header2() {
   return (
     <>
 
-    <div className="w-full flex items-center justify-between md:justify-center bg-black-2 px-2 md:px-0 py-5 md:py-0">
+    <div className="w-full flex items-center justify-between md:justify-center bg-black-2 px-3 md:px-0 py-5 md:py-0">
           {
             !isAdmin && (
               <div>
@@ -97,7 +97,7 @@ function Header2() {
                       !isIndexPage && 
                     <div className="w-full">
                       <Link className="block flex-shrink-0" to="https://uplb.edu.ph/" target='_'>
-                        <img src={UP} alt="UPLB Logo" className='md:ml-3 max-w-[200px] max-h-[50px] w-auto h-auto'/>
+                        <img src={UP} alt="UPLB Logo" className='md:ml-3 max-h-10 md:max-w-[200px] md:max-h-15 w-auto h-auto'/>
                       </Link>
                     </div>
                     }
@@ -121,7 +121,7 @@ function Header2() {
                 <div className={`bg-black-2 ${ menuOpen ? "block min-h-screen w-full fixed top-0 left-0 z-50" : "hidden" } md:hidden`} >
                   <FontAwesomeIcon icon={menuOpen ? faTimes : faBars} onClick={toggleMenu} className="absolute top-4 right-4 cursor-pointer text-3xl" />
 
-                  <ul className="h-screen flex flex-col bg-black w-full py-20 my-15 gap-2 text-white text-2xl items-center z-50">
+                  <ul className="h-screen flex flex-col bg-black w-full py-20 my-15 gap-2 text-white text-[20px] items-center z-50">
                     <li>
                       <Link to="/" className="block px-4 py-2 hover:text-primary" onClick={toggleMenu}>
                         Home
@@ -174,7 +174,7 @@ function Header2() {
                     </li>
                     <li>
                       <Link to="/datasets" className="block px-4 py-2 hover:text-primary" onClick={toggleMenu}>
-                        Dataset
+                        Datasets
                       </Link>
                     </li>
 
@@ -224,7 +224,7 @@ function Header2() {
                 </div>
 
                 {/* Desktop Menu */}
-                <div className="hidden md:flex w-full justify-center py-5">
+                <div className="hidden md:flex w-full justify-center py-8 text-[17px] font-bold">
                   <ul className="flex md:flex-row md:items-center gap-8">
                     <li className="">
                       <Link to="/" className="text-white text-md hover:text-primary"> Home </Link>
@@ -255,7 +255,7 @@ function Header2() {
                       <Link to="/publication" className="text-white text-md hover:text-primary"> Publications </Link>
                     </li>
                     <li className="flex">
-                      <Link to="/datasets" className="text-white text-md hover:text-primary"> Dataset </Link>
+                      <Link to="/datasets" className="text-white text-md hover:text-primary"> Datasets </Link>
                     </li>
 
                     <li className="relative group">
@@ -277,7 +277,7 @@ function Header2() {
                     </li>
 
                     <li className="">
-                      <Link to="/trainings" className="text-white text-md hover:text-primary"> Trainings</Link>
+                      <Link to="/trainings" className="text-white text-md hover:text-primary"> Events & Highlights</Link>
                     </li>
 
                     <li className="">
@@ -296,16 +296,16 @@ function Header2() {
               <div>
                     {
                       !isIndexPage && 
-                    <div className="md:mr-3 w-full bg-black-2 flex">
-                      <div className="mx-2">
+                    <div className="flex md:mr-3">
+                      <div>
                         <Link className="block flex-shrink-0" to="https://cem.uplb.edu.ph/" target='_'>
-                            <img src={CEM} alt="CEM Logo" className="max-w-[100px] max-h-[50px] w-auto h-auto"/>
+                            <img src={CEM} alt="CEM Logo" className="ml-3 md:ml-3 max-h-10 md:max-w-[200px] md:max-h-15 w-auto h-auto"/>
                         </Link>
                       </div>
 
-                      <div className="mx-2">
+                      <div>
                         <Link className="block flex-shrink-0" to="/" >
-                            <img src={UPLB} alt="SERDAL Logo" className="max-w-[100px] max-h-[50px] w-auto h-auto"/>
+                            <img src={UPLB} alt="SERDAL Logo" className="ml-3 md:ml-3 max-h-10 md:max-w-[200px] md:max-h-15 w-auto h-auto"/>
                         </Link>
                       </div>
                     </div>
