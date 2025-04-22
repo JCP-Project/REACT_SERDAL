@@ -99,7 +99,7 @@ function AboutUs () {
                                         {
                                            ![7,6].includes(p.id) && (
                                             <Link to={p?.link} className="z-50 cursor-pointer" >
-                                                <label className={`text-white font-bold z-10 hover:underline cursor-pointer ${p.id == 0 ? "mb-2":"mb-0"}`}>{p.name}</label>
+                                                <label className={`text-white font-bold z-10 hover:underline cursor-pointer`}>{p.name}</label>
                                            </Link>
                                         )
                                         }                                        
@@ -110,9 +110,9 @@ function AboutUs () {
                                             
                                             <motion.img
                                             src={p?.img}
-                                            alt="SERDAL Logo"
+                                            alt="Logo"
                                             className="w-full h-full object-contain rounded-full"
-                                            animate={{ scale: p.id === 0 ? 1.3 : 1 }}
+                                            animate={{ scale: p.id === 0 ? 1.1 : .9 }}
                                             whileHover={{ scale: p.id === 0 ? 1.5 : 1.2 }}
                                             transition={{ type: "spring", stiffness: 500, damping: 10 }}
                                             />
