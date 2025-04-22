@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react';
 import Select, { StylesConfig } from 'react-select';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
+import Maintenance from '../Maintenance';
 
 type AnswerType = 'Short Text' | 'Long Text' | 'Radio' | 'Checkbox' | 'Number';
 
@@ -169,8 +170,8 @@ function Form () {
 
     return(
         <>
-
-        <div className="bg-white lg:max-h-[90vh]">
+        <Maintenance/>
+        <div className="bg-white lg:max-h-[90vh] hidden">
             <div className="bg-primary text-left py-8">
                 <motion.div
                 initial={{ x: -300 }}

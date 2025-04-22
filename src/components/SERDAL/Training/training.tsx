@@ -38,7 +38,7 @@ function Training ()
             {data.map((t, index) => (
   <div
     key={t.id}
-    className={`flex flex-col md:flex-row items-center justify-center min-h-screen py-10 px-6 md:px-[200px] ${
+    className={`flex flex-col md:flex-row items-center justify-center min-h-screen py-10 px-6 md:px-[120px] ${
       index % 2 === 0 ? 'bg-primary text-white' : ''
     }`}
   >
@@ -48,14 +48,14 @@ function Training ()
       whileInView={{ x: 0, opacity: 1 }}
       transition={{ duration: 1, ease: "easeOut" }}
       viewport={{ once: true, amount: 0.4 }}
-      className={`w-full md:flex-1 flex items-center justify-center mb-6 md:mb-0 ${
+      className={`w-full  flex items-center justify-center mb-6 md:mb-0 ${
         index % 2 === 0 ? '' : 'md:order-2'
       }`}
     >
       <img
         src={t.img}
         alt={t.title}
-        className="h-[250px] md:h-[400px] lg:h-[600px] object-contain"
+        className="h-[250px] md:h-[350px] w-auto object-contain"
       />
     </motion.div>
 
@@ -65,7 +65,7 @@ function Training ()
       whileInView={{ x: 0, opacity: 1 }}
       transition={{ duration: 1, ease: "easeOut" }}
       viewport={{ once: true, amount: 0.4 }}
-      className={`w-full md:flex-1 px-3 md:px-5 ${
+      className={`w-full  px-3 md:px-5 ${
         index % 2 === 0 ? '' : 'md:order-1'
       }`}
     >

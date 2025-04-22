@@ -2,7 +2,8 @@ import DataManagement from '../Training/Data Management.png'
 import OpenData from '../Training/Open Data.png'
 import MetaAnalysis from '../Training/Meta-analysis.png'
 import ImpactAssesment from '../Training/Impact Assessment.png'
-import Nvivo from '../Training/Qualitative Data Analysis Using NVivo.png'
+import Nvivo from '../Training/NVivo.png'
+import FuturesThinking from '../Training/Futures Thinking.png'
 
 
 const trainingData =[
@@ -136,7 +137,7 @@ const trainingData =[
                   </p>
                 </div>
               ),
-            img: Nvivo,
+            img: FuturesThinking,
             images: [],
         },
 

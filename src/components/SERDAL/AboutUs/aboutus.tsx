@@ -1,7 +1,6 @@
 import { ReactNode, useEffect, useState } from "react";
-import peopleData from "../Resources/People/peopleData";
 import { motion } from 'framer-motion';
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import Loader2 from "../../../common/Loader/Loader2";
 import titleHeader from "../components/titleHeader";
 
@@ -9,9 +8,6 @@ import aboutUsData from "../Resources/AboutUs/aboutData";
 import partnersLogo from "../Resources/AboutUs/partners";
 import SERDALVideo from "../Resources/AboutUs/videoContent";
 
-import SERDALlogo from '../Resources/logo.png'
-
-import { SlLocationPin } from "react-icons/sl";
 import { MdLocationPin } from "react-icons/md";
 
 interface data {
@@ -99,20 +95,57 @@ function AboutUs () {
                                 {/* OVERLAY LOGO (scales with image) */}
                                 {
                                     partners.map((p) => (
-                                    <div key={`key${p.id}`} id={`id${p.id}`} className={`group absolute flex flex-col items-center justify-center w-[30%] aspect-square text-center ${p.logolocation}`}>
-                                        <label className="text-white font-bold">{p.name}</label>
-                                        <a href={p?.link} target="_blank"
+                                    <div key={`key${p.id}`} id={`id${p.id}`} className={`absolute flex flex-col items-center justify-center w-[30%] aspect-square text-center ${p.logolocation}`}>
+                                        {
+                                           ![7,6].includes(p.id) && (
+                                            <Link to={p?.link} className="z-50 cursor-pointer" >
+                                                <label className={`text-white font-bold z-10 hover:underline cursor-pointer ${p.id == 0 ? "mb-2":"mb-0"}`}>{p.name}</label>
+                                           </Link>
+                                        )
+                                        }                                        
+                                        <a href={p?.link} target={p?.id == 0 ? undefined:"_blank"}
                                             rel="noopener noreferrer"
-                                            title="Logo 1" className={`block ${p.imgsize}`}
+                                             className={`block ${p.imgsize} z-10`}
                                         >
                                             
-                                            <img src={p?.img} alt="SERDAL Logo"
-                                            className="w-full h-full object-contain rounded-full group-hover:scale-110 transition-transform"
+                                            <motion.img
+                                            src={p?.img}
+                                            alt="SERDAL Logo"
+                                            className="w-full h-full object-contain rounded-full"
+                                            animate={{ scale: p.id === 0 ? 1.3 : 1 }}
+                                            whileHover={{ scale: p.id === 0 ? 1.5 : 1.2 }}
+                                            transition={{ type: "spring", stiffness: 500, damping: 10 }}
                                             />
                                         </a>
+                                        {
+                                           [7,6].includes(p.id) && (
+                                            <Link to={p?.link} className="z-50" >
+                                                <label className="text-white font-bold z-10 hover:underline cursor-pointer">{p.name}</label>
+                                           </Link>)
+                                        }
 
-                                        <div className={`absolute  flex items-center p-1 justify-center aspect-square rounded-full bg-black-2 group-hover:scale-110 transition-transform duration-300 ease-in-out ${p.pinLocation}`}>
-                                            <MdLocationPin className="relative font-bold h-10 w-10 text-secondary" />                
+                                        <motion.div
+                                        className="hidden absolute top-20 left-0 md:flex w-[200vw] h-32 z-1"
+                                        initial={{ x: "-100vw" }}
+                                        animate={{ x: "0vw" }}
+                                        transition={{
+                                            duration: 10,
+                                            repeat: Infinity,
+                                            ease: "linear",
+                                        }}
+                                        >
+                                        
+                                        <Cloud />
+                                        <Cloud />
+                                        </motion.div>
+
+                                        <div className={`absolute  flex items-center p-1 justify-center aspect-square rounded-full bg-black-2 group-hover:scale-110 transition-transform duration-300 ease-in-out ${p.pinLocation} z-10`}>
+                                            {
+                                                p?.id == 0 ?(
+                                                <MdLocationPin className="relative font-bold h-8 w-8" />  
+                                                ):( <MdLocationPin className="relative font-bold h-4 w-4 group-hover:text-primary" />  )
+                                            }
+                                                         
                                         </div>
                                     </div>
                                     ))
@@ -150,5 +183,23 @@ function AboutUs () {
         </>
     );
 }
+
+
+const Cloud = () => {
+  return (
+    <div className="relative w-[100vw] h-full">
+      {/* Core puff */}
+      <div className="absolute w-72 h-5 bg-white/80 rounded-full blur-2xl top-2 left-12 shadow-white/30 shadow-md" />
+
+      {/* Side fluff */}
+      <div className="absolute w-44 h-5 bg-white/70 rounded-full blur-2xl top-4 opacity-5 left-[-200px]" />
+      <div className="absolute w-40 h-5 bg-white/70 rounded-full blur-2xl top-6 opacity-5  right-0" />
+
+      {/* Extra softness */}
+      <div className="absolute w-32 h-5 bg-white/60 rounded-full blur-2xl top-10  opacity-5 left-54" />
+      <div className="absolute w-28 h-5 bg-white/50 rounded-full blur-2xl top-12 opacity-5  left-[-100px]" />
+    </div>
+  );
+};
 
 export default AboutUs;

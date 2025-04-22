@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import DropdownUser from './DropdownUser';
+import UPLB from '../Resources/logo.png'
 
 
 const Header = (props: {
@@ -7,7 +8,7 @@ const Header = (props: {
   setSidebarOpen: (arg0: boolean) => void;
 }) => {
   return (
-    <header className="sticky top-0  flex w-full bg-white drop-shadow-1">
+    <header className="sticky top-0  flex w-full bg-white drop-shadow-1 z-50">
       <div className="flex flex-grow items-center justify-between px-4 py-4 shadow-2 md:px-6 2xl:px-11">
         <div className="flex items-center gap-2 sm:gap-4 lg:hidden">
           {/* <!-- Hamburger Toggle BTN --> */}
@@ -54,7 +55,7 @@ const Header = (props: {
           {/* <!-- Hamburger Toggle BTN --> */}
 
           <Link className="block flex-shrink-0 h-10 w-10 lg:hidden" to="/">
-            <img src="/logo.png" alt="Logo" />
+            <img src={UPLB} alt="Logo" />
           </Link>
         </div>
 
@@ -63,7 +64,7 @@ const Header = (props: {
         </div>
 
         <div className="flex items-center gap-3 2xsm:gap-7">
-          <ul className="flex items-center gap-2 2xsm:gap-4">
+          <ul className="flex items-center gap-2 2xsm:gap-4 ">
             {/* <!-- Dark Mode Toggler --> */}
             {/* <DarkModeSwitcher /> */}
             {/* <!-- Dark Mode Toggler --> */}

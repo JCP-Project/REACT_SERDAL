@@ -413,15 +413,14 @@ const handleSubmit = async (e: React.FormEvent) => {
 
                 <div className='mb-6 font-bold flex justify-end'>
                   
-                  <button  onClick={() => navigate('/auth/resetpassword')}>Forgot Password</button>
+                  <button type="button"  onClick={() => navigate('/auth/resetpassword')}>Forgot Password</button>
                 </div>
 
                 <div className="mb-5">
-                  <input
+                  <button
                     type="submit"
-                    value="Sign In"
                     className="w-full cursor-pointer rounded-lg border border-primary bg-primary p-4 text-white transition hover:bg-opacity-90"
-                  />
+                  >Sign In</button>
                 </div>
 
                 {/* <Login /> */}

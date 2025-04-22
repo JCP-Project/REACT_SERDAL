@@ -71,12 +71,12 @@ function TrainingInfo ()
                     >
                         
                         <div>
-                            <img src={t.img} alt={t.title} className="h-[500px]"/>
+                            <img src={t.img} alt={t.title} className="md:h-[500px] w-auto object-contain"/>
                         </div>
 
-                        <div className="text-center text-2xl font-bold py-5 mt-10">{t.title}</div>
+                        <div className="text-center text-xl md:text-2xl font-bold py-5 md:mt-10">{t.title}</div>
 
-                        <div className="text-lg pb-5 text-justify">{t.summary}</div>
+                        <div className="text-md md:text-lg pb-5 text-justify">{t.summary}</div>
                     </div>
 
                 ))          

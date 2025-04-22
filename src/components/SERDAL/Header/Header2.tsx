@@ -97,7 +97,7 @@ function Header2() {
                       !isIndexPage && 
                     <div className="w-full">
                       <Link className="block flex-shrink-0" to="https://uplb.edu.ph/" target='_'>
-                        <img src={UP} alt="UPLB Logo" className='md:ml-3 max-h-10 md:max-w-[200px] md:max-h-15 w-auto h-auto'/>
+                        <img src={UP} alt="UPLB Logo" className='ml-1 max-h-10 md:max-w-[200px] md:max-h-15 w-auto h-auto'/>
                       </Link>
                     </div>
                     }
@@ -115,7 +115,7 @@ function Header2() {
 
 
 
-          <div className={`sm:block ${menuOpen ? 'block' : 'hidden'} text-white font-medium z-50 w-full`}>
+          <div className={`font-optima sm:block ${menuOpen ? 'block' : 'hidden'} text-white font-medium z-50 w-full md:px-2`}>
             <nav className={`${ menuOpen ? "block" : "hidden" } absolute md:static top-0 left-0 w-full md:flex md:items-center md:w-auto z-50`}>
                 {/* Full-Screen Mobile Menu */}
                 <div className={`bg-black-2 ${ menuOpen ? "block min-h-screen w-full fixed top-0 left-0 z-50" : "hidden" } md:hidden`} >
@@ -132,7 +132,6 @@ function Header2() {
                         About Us
                       </Link>
                     </li>
-
                     <li>
                       <button
                         className="w-full text-left px-4 py-2 hover:text-primary"
@@ -209,7 +208,7 @@ function Header2() {
                     </li>
                     <li>
                       <Link to="/trainings" className="block px-4 py-2 hover:text-primary" onClick={toggleMenu}>
-                        Trainings
+                        Events & Highlights
                       </Link>
                     </li>
                     <li>
@@ -224,17 +223,17 @@ function Header2() {
                 </div>
 
                 {/* Desktop Menu */}
-                <div className="hidden md:flex w-full justify-center py-8 text-[17px] font-bold">
+                <div className="hidden md:flex w-full justify-center py-8 md:text-sm lg:text-lg font-bold">
                   <ul className="flex md:flex-row md:items-center gap-8">
                     <li className="">
-                      <Link to="/" className="text-white text-md hover:text-primary"> Home </Link>
+                      <Link to="/" className=" hover:text-primary"> Home </Link>
                     </li>
                     <li className="">
-                      <Link to="/about" className="text-white text-md hover:text-primary"> About Us </Link>
+                      <Link to="/about" className=" hover:text-primary"> About Us </Link>
                     </li>
                     
                     <li className="relative group">
-                      <Link to="/people" className="text-white text-md hover:text-primary"
+                      <Link to="/people" className=" hover:text-primary"
                       >People</Link>
 
                       {/* Dropdown menu */}
@@ -252,14 +251,14 @@ function Header2() {
                     </li>
 
                     <li className="flex">
-                      <Link to="/publication" className="text-white text-md hover:text-primary"> Publications </Link>
+                      <Link to="/publication" className="hover:text-primary"> Publications </Link>
                     </li>
                     <li className="flex">
-                      <Link to="/datasets" className="text-white text-md hover:text-primary"> Datasets </Link>
+                      <Link to="/datasets" className="hover:text-primary"> Datasets </Link>
                     </li>
 
                     <li className="relative group">
-                      <Link to="/services" className="text-white text-md hover:text-primary"> Services</Link>
+                      <Link to="/services" className="hover:text-primary"> Services</Link>
                       {/* Dropdown menu */}
                       <ul className="absolute top-full hidden group-hover:flex flex-col bg-black border border-1 border-gray-800 text-white p-2 rounded-md shadow-sm z-50 min-w-[260px]">
                         {
@@ -273,15 +272,15 @@ function Header2() {
                     </li>
 
                     <li className="">
-                      <Link to="/toolbox" className="text-white text-center text-md hover:text-primary"> SERDAL Toolbox </Link>
+                      <Link to="/toolbox" className="hover:text-primary"> SERDAL Toolbox </Link>
                     </li>
 
                     <li className="">
-                      <Link to="/trainings" className="text-white text-md hover:text-primary"> Events & Highlights</Link>
+                      <Link to="/trainings" className="hover:text-primary">Events & Highlights</Link>
                     </li>
 
                     <li className="">
-                      <Link to="/contact" className="text-white text-md hover:text-primary"> Contact Us </Link>
+                      <Link to="/contact" className="hover:text-primary"> Contact Us </Link>
                     </li>
                     
                     <li>{user}</li>
@@ -299,13 +298,13 @@ function Header2() {
                     <div className="flex md:mr-3">
                       <div>
                         <Link className="block flex-shrink-0" to="https://cem.uplb.edu.ph/" target='_'>
-                            <img src={CEM} alt="CEM Logo" className="ml-3 md:ml-3 max-h-10 md:max-w-[200px] md:max-h-15 w-auto h-auto"/>
+                            <img src={CEM} alt="CEM Logo" className="ml-1 max-h-10 md:max-w-[200px] md:max-h-15 w-auto h-auto"/>
                         </Link>
                       </div>
 
                       <div>
                         <Link className="block flex-shrink-0" to="/" >
-                            <img src={UPLB} alt="SERDAL Logo" className="ml-3 md:ml-3 max-h-10 md:max-w-[200px] md:max-h-15 w-auto h-auto"/>
+                            <img src={UPLB} alt="SERDAL Logo" className="ml-1 max-h-10 md:max-w-[200px] md:max-h-15 w-auto h-auto"/>
                         </Link>
                       </div>
                     </div>

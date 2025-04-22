@@ -47,8 +47,8 @@ function People () {
                                         />
                                     </div>
                                 </div>
-                                <div className="flex flex-col justify-center py-3 pl-3">
-                                    <h3>{person.name}</h3>
+                                <div className="flex flex-col text-center justify-center py-3 pl-3">
+                                    <h3 className="uppercase">{person.name}</h3>
                                     <h4>{person.position}</h4>
                                 </div>
                             </div>
@@ -72,8 +72,8 @@ function People () {
                                         <img src={person.img} alt={person.name} />
                                     </div>
                                 </div>
-                                <div className="flex flex-col justify-center py-3 pl-3">
-                                    <h3>{person.name}</h3>
+                                <div className="flex flex-col text-center justify-center py-3 pl-3">
+                                    <h3 className="uppercase">{person.name}</h3>
                                     <h4>{person.position}</h4>
                                 </div>
                             </div>
