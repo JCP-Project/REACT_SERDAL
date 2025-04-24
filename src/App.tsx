@@ -158,35 +158,35 @@ function App() {
 
       <Routes>
       <Route path="/404Notfound" element={<> <PageTitle title="404" /> <NotFound /> </>} />
-      <Route path="/Maintenance" element={<> <PageTitle title="Maintenance" /> <Maintenance /> </>} />
+      <Route path="/Maintenance" element={<> <PageTitle title="SERDAL | Maintenance" /> <Maintenance /> </>} />
 
-        <Route path="/publication" element={<> <PageTitle title="Publications" /> <Publications /> </>} />
-        <Route path="/about" element={<> <PageTitle title="About Us" /> <AboutUs /> </>} />
-        <Route path="/people" element={<> <PageTitle title="People" /> <People /> </>} />
-        <Route path="/UploadPublication" element={<> <PageTitle title="Upload Publication" /> <UploadPublication /> </>} />
-        <Route path="/createpost" element={<> <PageTitle title="Upload" /> <CreatePublication /> </>} />
-        <Route path="/datasets" element={<> <PageTitle title="Datasets" /> <DatasetsPage /> </>} />
-        <Route path="/contact" element={<> <PageTitle title="Contact Us" /> <ContactUs /> </>} />
-        <Route path="/services" element={<> <PageTitle title="Services" /> <Services /> </>} />
+        <Route path="/publication" element={<> <PageTitle title="SERDAL | Publications" /> <Publications /> </>} />
+        <Route path="/about" element={<> <PageTitle title="SERDAL | About Us" /> <AboutUs /> </>} />
+        <Route path="/people" element={<> <PageTitle title="SERDAL | People" /> <People /> </>} />
+        <Route path="/UploadPublication" element={<> <PageTitle title="SERDAL | Upload Publication" /> <UploadPublication /> </>} />
+        <Route path="/createpost" element={<> <PageTitle title="SERDAL | Upload" /> <CreatePublication /> </>} />
+        <Route path="/datasets" element={<> <PageTitle title="SERDAL | Datasets" /> <DatasetsPage /> </>} />
+        <Route path="/contact" element={<> <PageTitle title="SERDAL | Contact Us" /> <ContactUs /> </>} />
+        <Route path="/services" element={<> <PageTitle title="SERDAL | Services" /> <Services /> </>} />
 
-        <Route path="/trainings" element={<> <PageTitle title="Training" /> <Training /> </>} />
-        <Route path="/trainings/Info/:infopage" element={<> <PageTitle title="Trainings Info" /> <TrainingInfo /> </>} />
+        <Route path="/trainings" element={<> <PageTitle title="SERDAL | Training" /> <Training /> </>} />
+        <Route path="/trainings/Info/:infopage" element={<> <PageTitle title="SERDAL | Trainings Info" /> <TrainingInfo /> </>} />
         
-        <Route path="/publication/Info/:infopage" element={<> <PageTitle title="Publication Info" /> <Info /> </>} />
+        <Route path="/publication/Info/:infopage" element={<> <PageTitle title="SERDAL | Publication Info" /> <Info /> </>} />
 
-        <Route path="/survey/answer/:answerpage" element={<> <PageTitle title="Answer Survey" /> <AnswerSurvey /> </>} />
-        <Route path="/datasets/generatechart/:dataset" element={<> <PageTitle title="Survey" /> <GenerateChart /> </>} />
+        <Route path="/survey/answer/:answerpage" element={<> <PageTitle title="SERDAL | Answer Survey" /> <AnswerSurvey /> </>} />
+        <Route path="/datasets/generatechart/:dataset" element={<> <PageTitle title="SERDAL | Survey" /> <GenerateChart /> </>} />
 
-        <Route path="/generatechart" element={<> <PageTitle title="Survey" /> <GenerateChart /> </>} />
+        <Route path="/generatechart" element={<> <PageTitle title="SERDAL | Survey" /> <GenerateChart /> </>} />
 
-        <Route path="/auth/signin" element={<> <PageTitle title="Signin" /> <SignIn /> </>} />
-        <Route path="/auth/signup" element={<> <PageTitle title="Signup" /> <SignUp /> </>} />
-        <Route path="/auth/resetpassword" element={<> <PageTitle title="Reset Password" /> <ResetPassword /> </>} />
+        <Route path="/auth/signin" element={<> <PageTitle title="SERDAL | Signin" /> <SignIn /> </>} />
+        <Route path="/auth/signup" element={<> <PageTitle title="SERDAL | Signup" /> <SignUp /> </>} />
+        <Route path="/auth/resetpassword" element={<> <PageTitle title="SERDAL | Reset Password" /> <ResetPassword /> </>} />
 
-        <Route path="/toolbox" element={<> <PageTitle title="SERDAL Toolbox" /> <Survey /> </>} />
+        <Route path="/toolbox" element={<> <PageTitle title="SERDAL | SERDAL Toolbox" /> <Survey /> </>} />
 
         
-        <Route path="/createpublication" element={<> <PageTitle title="Add Publication" /> <CreatePublication /> </>} />
+        <Route path="/createpublication" element={<> <PageTitle title="SERDAL | Add Publication" /> <CreatePublication /> </>} />
         {isAdmin && isLoggedIn ? (
           <>
           <Route index element={<> <PageTitle title="SERDAL" /> <Dashboard2 /> </>} />  
