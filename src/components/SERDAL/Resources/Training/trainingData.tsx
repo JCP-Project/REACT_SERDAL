@@ -4,9 +4,38 @@ import MetaAnalysis from '../Training/Meta-analysis.png'
 import ImpactAssesment from '../Training/Impact Assessment.png'
 import Nvivo from '../Training/NVivo.png'
 import FuturesThinking from '../Training/Futures Thinking.png'
+import { ReactNode } from 'react'
 
 
-const trainingData =[
+//Event Photos
+import imgDataManagement1 from '../Training/Event Photos/Data Management 1.png'
+import imgDataManagement2 from '../Training/Event Photos/Data Management 2.png'
+import imgDataManagement3 from '../Training/Event Photos/Data Management 3.1.png'
+import imgDataManagement4 from '../Training/Event Photos/Data Management 3.2.png'
+import imgOpenData1 from '../Training/Event Photos/Open Data 1.png'
+import imgOpenData2 from '../Training/Event Photos/Open Data 2.png'
+import imgMetaAnalysis1 from '../Training/Event Photos/Meta-analysis 1.png'
+import imgMetaAnalysis2 from '../Training/Event Photos/Meta-analysis 2.png'
+import imgImpactAssesment1 from '../Training/Event Photos/Impact Assessment 1.png'
+import imgImpactAssesment2 from '../Training/Event Photos/Impact Assessment 2.png'
+import imgImpactAssesment3 from '../Training/Event Photos/ImpactAssessment3.png'
+import Nvivo1 from '../Training/Event Photos/NVivo1.jpg'
+import Nvivo2 from '../Training/Event Photos/NVivo2.png'
+import Nvivo3 from '../Training/Event Photos/NVivo3.jpg'
+import FuturesThinking1 from '../Training/Event Photos/Futures Thinking 1.jpg'
+import FuturesThinking2 from '../Training/Event Photos/Futures Thinking 2.jpg'
+import FuturesThinking3 from '../Training/Event Photos/Futures Thinking 3.jpg'
+
+export interface TrainingData {
+    id: number;
+    title: string;
+    info: string;
+    summary: ReactNode;
+    img: string;
+    eventPhotos: string[]
+  }
+
+const trainingData: TrainingData[] = [
     
         {
             id: 0,
@@ -34,7 +63,7 @@ const trainingData =[
                 </div>
               ),
             img: DataManagement,
-            images: [],
+            eventPhotos: [imgDataManagement1,imgDataManagement2,imgDataManagement3,imgDataManagement4],
         },
         {
             id: 1,
@@ -57,7 +86,7 @@ const trainingData =[
                 </div>
               ),
             img: OpenData,
-            images: [],
+            eventPhotos: [imgOpenData1,imgOpenData2],
         },
         {
             id: 2,
@@ -77,7 +106,7 @@ const trainingData =[
                 </div>
               ),
             img: MetaAnalysis,
-            images: [],
+            eventPhotos: [imgMetaAnalysis1,imgMetaAnalysis2],
         },
         {
             id: 3,
@@ -97,7 +126,7 @@ const trainingData =[
                 </div>
               ),
             img: ImpactAssesment,
-            images: [],
+            eventPhotos: [imgImpactAssesment1,imgImpactAssesment2,imgImpactAssesment3],
         },
         {
             id: 4,
@@ -115,7 +144,7 @@ const trainingData =[
               )
               ,
             img: Nvivo,
-            images: [],
+            eventPhotos: [Nvivo1,Nvivo2,Nvivo3],
         },
         {
             id: 5,
@@ -138,7 +167,7 @@ const trainingData =[
                 </div>
               ),
             img: FuturesThinking,
-            images: [],
+            eventPhotos: [FuturesThinking1,FuturesThinking2,FuturesThinking3],
         },
 
     ]

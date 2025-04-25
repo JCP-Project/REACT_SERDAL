@@ -1,7 +1,15 @@
 import contact from '../ContactUs/Contact us.svg'
 
+export interface ContactData {
+    address: React.ReactNode;
+    contact1: string;
+    contact2: string;
+    email: string;
+    fb: string;
+    img: string;
+}
 
-const contactUsData = {
+const contactUsData: ContactData = {
     address: (
         <>
           Room 14 & 15, ICOPED Building <br />

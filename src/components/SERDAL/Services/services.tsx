@@ -1,17 +1,10 @@
 import { useEffect, useState } from "react";
-import peopleData from "../Resources/People/peopleData";
 import { motion } from 'framer-motion';
-import { Link, useLocation } from "react-router-dom";
-import servicesData from "../Resources/Services/servicesData";
+import { useLocation } from "react-router-dom";
+import servicesData, {data} from "../Resources/Services/servicesData";
 import Loader2 from "../../../common/Loader/Loader2";
 import titleHeader from "../components/titleHeader";
 
-interface data {
-    id: number;
-    title: string;
-    summary: any;
-    img: string;  
-}
 
 function Services () {
     const [data, setData] = useState<data[]>([])

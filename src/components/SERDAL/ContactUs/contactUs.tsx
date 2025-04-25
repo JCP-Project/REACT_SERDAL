@@ -1,20 +1,11 @@
 import { ReactNode, useEffect, useState } from "react";
-import contactUsData from "../Resources/ContactUs/contactData";
+import contactUsData, { ContactData } from "../Resources/ContactUs/contactData";
 import titleHeader from "../components/titleHeader";
 import { FaMapLocationDot } from "react-icons/fa6";
 import { FaPhoneAlt } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
 import { FaFacebookSquare } from "react-icons/fa";
 import { Link } from "react-router-dom";
-
-interface ContactData {
-    address: ReactNode;
-    contact1: string;
-    contact2: string;
-    email: string;
-    fb: string;
-    img: string;
-}
 
 function ContactUs() {
     const [data, setData] = useState<ContactData>()
@@ -40,7 +31,7 @@ function ContactUs() {
 
                     <div  className={`w-full md:flex-1 px-3 md:px-5 lg:text-2xl`}>
                         <div className="flex items-center space-x-5 my-3">
-                            <div><FaMapLocationDot  size={30} className="text-primary" /></div>
+                            <div><FaMapLocationDot  size={20} className="text-primary" /></div>
                             <div>{ data?.address}</div>
                         </div>
                         <div className="flex items-center space-x-5 my-3">

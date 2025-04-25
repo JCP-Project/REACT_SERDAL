@@ -158,15 +158,24 @@ function App() {
 
       <Routes>
       <Route path="/404Notfound" element={<> <PageTitle title="404" /> <NotFound /> </>} />
-      <Route path="/Maintenance" element={<> <PageTitle title="SERDAL | Maintenance" /> <Maintenance /> </>} />
+
+        <Route path="/Maintenance" element={<> <PageTitle title="SERDAL | Maintenance" /> <Maintenance /> </>} />
 
         <Route path="/publication" element={<> <PageTitle title="SERDAL | Publications" /> <Publications /> </>} />
         <Route path="/about" element={<> <PageTitle title="SERDAL | About Us" /> <AboutUs /> </>} />
         <Route path="/people" element={<> <PageTitle title="SERDAL | People" /> <People /> </>} />
         <Route path="/UploadPublication" element={<> <PageTitle title="SERDAL | Upload Publication" /> <UploadPublication /> </>} />
         <Route path="/createpost" element={<> <PageTitle title="SERDAL | Upload" /> <CreatePublication /> </>} />
-        <Route path="/datasets" element={<> <PageTitle title="SERDAL | Datasets" /> <DatasetsPage /> </>} />
-        <Route path="/contact" element={<> <PageTitle title="SERDAL | Contact Us" /> <ContactUs /> </>} />
+
+        <Route path="/datasets" element={<>
+          <PageTitle title="SERDAL | Datasets" description="SERDAL Dataset for Agriculture, Aquatic, and Natural Resources (AANR) and Socio-Economics" keywords="Agriculture, Aquatic, and Natural Resources (AANR), Socio-Economics, Crops, Fisheries, Livestock and Poultry,Generate Chart Dataset" />
+          <DatasetsPage /> 
+         </>} />
+
+        <Route path="/contact" element={<>
+          <PageTitle title="SERDAL | Contact Us" />
+          <ContactUs /> 
+          </>} />
         <Route path="/services" element={<> <PageTitle title="SERDAL | Services" /> <Services /> </>} />
 
         <Route path="/trainings" element={<> <PageTitle title="SERDAL | Training" /> <Training /> </>} />
@@ -186,7 +195,7 @@ function App() {
         <Route path="/toolbox" element={<> <PageTitle title="SERDAL | SERDAL Toolbox" /> <Survey /> </>} />
 
         
-        <Route path="/createpublication" element={<> <PageTitle title="SERDAL | Add Publication" /> <CreatePublication /> </>} />
+        <Route path="/createpublication" element={<> <PageTitle title="SERDAL | Upload Publication" /> <CreatePublication /> </>} />
         {isAdmin && isLoggedIn ? (
           <>
           <Route index element={<> <PageTitle title="SERDAL" /> <Dashboard2 /> </>} />  

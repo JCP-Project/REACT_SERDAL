@@ -4,38 +4,16 @@ import { Link, useLocation } from "react-router-dom";
 import Loader2 from "../../../common/Loader/Loader2";
 import titleHeader from "../components/titleHeader";
 
-import aboutUsData from "../Resources/AboutUs/aboutData";
-import partnersLogo from "../Resources/AboutUs/partners";
-import SERDALVideo from "../Resources/AboutUs/videoContent";
+import aboutUsData, { AboutUsData } from "../Resources/AboutUs/aboutData";
+import partnersLogo, {parteners} from "../Resources/AboutUs/partners";
+import SERDALVideo, {iSERDALVideo} from "../Resources/AboutUs/videoContent";
 
 import { MdLocationPin } from "react-icons/md";
 
-interface data {
-    id: number;
-    title: string;
-    summary: string;
-    img: string;  
-}
-interface parteners {
-    id: number;
-    name: ReactNode;
-    link: string;
-    img: string;
-    imgsize:string;
-    pin:string;
-    logolocation: string;
-    pinLocation: string;
-}
-
-interface iSERDALVideo {
-    id: number;
-    title: string;
-    vid: string;
-}
 
 
 function AboutUs () {
-    const [data, setData] = useState<data[]>([])
+    const [data, setData] = useState<AboutUsData[]>([])
     const [partners, setPartners] = useState<parteners[]>([])
     const [videoData, setVideoData] = useState<iSERDALVideo[]>([])
 
@@ -158,7 +136,7 @@ function AboutUs () {
                     </div>
 
                     <div className="py-5 md:py-10">
-                        <h1 className="font-optima text-3xl font-bold py-5 text-center">SERDAL Videos</h1>
+                        <h1 className="font-optima text-3xl font-bold py-5 text-center">check our videos</h1>
                         <div id="" className="flex items-center justify-center md:px-10 flex-col md:flex-row">
                             {
                                 videoData.map((v) => (

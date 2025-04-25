@@ -1,16 +1,6 @@
-import { ReactNode, useEffect, useState } from "react";
-import { motion } from 'framer-motion';
-import trainingData from "../Resources/Training/trainingData";
-import { Link, useParams } from "react-router-dom";
-
-interface TrainingData {
-    id: number;
-    title: string;
-    info: string;
-    summary: ReactNode;
-    img: string;
-    images: string[];
-  }
+import { useEffect, useState } from "react";
+import trainingData, {TrainingData} from "../Resources/Training/trainingData";
+import {useParams } from "react-router-dom";
 
 
 function TrainingInfo ()
@@ -24,7 +14,6 @@ function TrainingInfo ()
     setData(trainingData);
 
     const [postId] = infopage.split('-');
-    console.log(postId);
     setDataID(Number(postId));
   },[]);
 
@@ -64,19 +53,28 @@ function TrainingInfo ()
 
             <div>
                 {   
-                data.filter(x => x.id == dataID ).map((t,index) => (
+                data.filter(x => x.id == dataID ).map((t) => (
                     <div
                     key={t.id}
-                    className={`flex flex-col items-center justify-center max-h-full py-10 px-6 md:px-[200px]`}
+                    className={`flex flex-col items-center justify-center max-h-full py-10 px-6 md:px-[100px]`}
                     >
                         
                         <div>
-                            <img src={t.img} alt={t.title} className="md:h-[500px] w-auto object-contain"/>
+                            <img src={t.img} alt={t.title} className="md:w-[1000px] h-auto object-contain py-5"/>
                         </div>
 
-                        <div className="text-center text-xl md:text-2xl font-bold py-5 md:mt-10">{t.title}</div>
+                        <div className="text-center text-xl md:text-2xl font-bold py-5 md:mt-10 md:w-[1000px]">{t.title}</div>
 
-                        <div className="text-md md:text-lg pb-5 text-justify">{t.summary}</div>
+                        <div className="text-md md:text-lg pb-5 text-justify md:w-[1000px]">{t.summary}</div>
+                        {
+                            t?.eventPhotos.map((photo) => (
+                                <div>
+                                    <img src={photo} alt={t.title} className="md:w-[1000px] h-auto object-contain py-5"/>
+                                </div>
+                            ))
+                        }
+                        
+
                     </div>
 
                 ))          

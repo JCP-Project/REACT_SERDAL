@@ -1,6 +1,14 @@
 import homeVideo from '../Home/HomeVideo.mp4'
 
-const homeData = 
+export interface Data {
+    id: number;
+    title: string;
+    Maincontent: string;
+    video: string;
+    img: string;
+}
+
+const homeData: Data = 
 	{
 		id: 1,
         title: 'Building Capacity, Shaping Data-Driven Futures.',

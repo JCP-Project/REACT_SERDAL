@@ -11,6 +11,7 @@ declare global {
 
 interface ImportMetaEnv {
   VITE_API_URL: string;
+  VITE_SERDAL_DOMAIN: string;
 }
 
 interface ImportMeta {

@@ -7,12 +7,23 @@ import UPV from '../AboutUs/Partners/Satellite SERDAC (UPV).png'
 import WMSU from '../AboutUs/Partners/Satellite SERDAC (WMSU).png'
 import USM from '../AboutUs/Partners/Satellite SERDAC (USM).png'
 import USEP from '../AboutUs/Partners/SERDAC-Min (USeP).png'
+import { ReactNode } from 'react'
 
 
+export interface parteners {
+    id: number;
+    name: ReactNode;
+    link: string;
+    address: string;
+    img: string;
+    imgsize:string;
+    pin:string;
+    logolocation: string;
+    pinLocation: string;
+}
 
 
-
-const partnersLogo = 
+const partnersLogo: parteners[] = 
     [{
         id: 0,
         name: (<div>SERDAL<br/>(UPLB)</div>),

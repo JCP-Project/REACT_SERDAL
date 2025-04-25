@@ -1,18 +1,10 @@
 import { useEffect, useState } from "react";
-import homeData from "../Resources/Home/homeData";
+import homeData, {Data} from "../Resources/Home/homeData";
 import { motion } from 'framer-motion';
 import titleHeader from "../components/titleHeader";
 import DOST from "../Resources/Home/DOST-PCAARRD.png"
 
 import vid from "../Resources/Home/HomeVideo.mp4"
-
-interface Data {
-    id: number;
-    title: string;
-    Maincontent: string;
-    video: string;
-    img: string;
-}
 
 function Home()
 {

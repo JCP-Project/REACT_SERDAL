@@ -1,17 +1,10 @@
-import { ReactNode, useEffect, useState } from "react";
+import {useEffect, useState } from "react";
 import { motion } from 'framer-motion';
-import trainingData from "../Resources/Training/trainingData";
+import trainingData, {TrainingData} from "../Resources/Training/trainingData";
 import { Link } from "react-router-dom";
 import titleHeader from "../components/titleHeader";
 
-interface TrainingData {
-    id: number;
-    title: string;
-    info: string;
-    summary: ReactNode;
-    img: string;
-    images: string[];
-  }
+
 
 
 function Training ()

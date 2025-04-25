@@ -3,7 +3,14 @@ import ConsultancyServices from '../Services/ConsultancyServices.svg'
 import DataPortal from '../Services/DataPortal.svg'
 import Facility from '../Services/Facility.svg'
 
-const servicesData = [
+export interface data {
+    id: number;
+    title: string;
+    summary: any;
+    img: string;  
+}
+
+const servicesData: data[] = [
     {   
         id: 0,
         title: "Capacity Building",

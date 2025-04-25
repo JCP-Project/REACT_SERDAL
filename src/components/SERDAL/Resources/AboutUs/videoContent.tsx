@@ -2,9 +2,13 @@
 import pic1 from '..//AboutUs/AboutUs.jpg'
 import pic2 from '../AboutUs/Network Map 3.png'
 
+export interface iSERDALVideo {
+    id: number;
+    title: string;
+    vid: string;
+}
 
-
-const SERDALVideo = 
+const SERDALVideo: iSERDALVideo[]  = 
 	[{
 		id: 0,
         title: 'SERDAL vid1',

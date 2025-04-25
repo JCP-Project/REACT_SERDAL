@@ -16,9 +16,15 @@ import Quilantang from '../People/Myrr Roselyn M. Quilantang.jpg'
 import Gamala from '../People/Dan Joseph G. Gamala.jpg'
 import Parducho from '../People/June Carlo D. Parducho.jpg'
 
+export interface Data {
+    id: number;
+    title: string;
+    name: string;
+    position: string;
+    img: string;  
+}
 
-
-const peopleData = 
+const peopleData: Data[] = 
 	[{
 		id: 0,
         title: 'Phase 1',

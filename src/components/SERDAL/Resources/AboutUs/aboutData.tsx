@@ -3,8 +3,14 @@ import pic1 from '..//AboutUs/AboutUs.jpg'
 import pic2 from '../AboutUs/Network Map 3.png'
 
 
+export interface AboutUsData {
+  id: number;
+  title: string;
+  summary: string;
+  img: string;
+}
 
-const aboutUsData = 
+const aboutUsData: AboutUsData[] = 
 	[{
 		id: 0,
         title: 'AboutUs',
