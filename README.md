@@ -2,6 +2,7 @@
 # REACT_SERDAL
 
 ## Developemt
+npm run dev
 dev script
   "scripts": {
     "dev": "vite",
