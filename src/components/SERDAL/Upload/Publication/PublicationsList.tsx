@@ -118,7 +118,7 @@ const PublicationsList: React.FC<datas> = ({data, university}) =>{
                         </div>
 
                         <h5 className="text-lg font-bold uppercase text-primary py-2 text-left">
-                            <Link to={`/publication/Info/${post.id}`}
+                            <Link to={`/publication/Info/${post.id}#${encodeURIComponent(post.title)}`}
                                 className="hover:underline"
                               >
                                 {

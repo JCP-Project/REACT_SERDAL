@@ -56,10 +56,6 @@ function App() {
    setLoading(false);
   }, []);
 
-
-  //localStorage.setItem('isLoggedIn', 'false');
-  //essionStorage.setItem('isAdmin', 'false');
-
   const isAdmin = localStorage.getItem('isAdmin') === 'true';
   const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
   const [seconds, setSeconds] = useState(0);
