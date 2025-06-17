@@ -1,3 +1,8 @@
+.env
+.env.*
+vite.config.*
+
+
 # Logs
 logs
 *.log
