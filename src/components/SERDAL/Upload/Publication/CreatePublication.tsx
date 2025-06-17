@@ -302,7 +302,7 @@ function CreatePublication() {
                 type="text"
                 id="citation"
                 name="citation"
-                placeholder="Citation"
+                placeholder="Bibliographic Citation"
                 value={formData.citation}
                 onChange={handleInputChange}
                 className="mt-4 w-full border-b-2 border-gray-300 bg-transparent focus:border-primary focus:outline-none"

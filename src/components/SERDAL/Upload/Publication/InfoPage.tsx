@@ -84,7 +84,7 @@ function Info() {
   }, [infopage]);  // Depend on `infopage` so it runs when it changes
 
   useEffect(() => {
-    const [postId] = infopage.split('-'); 
+    const [postId] = infopage.split('#s'); 
    fetchData(Number(postId));
   }, []); 
 
@@ -103,7 +103,7 @@ function Info() {
        const jsonData: APIData = await response.json();
       setData(jsonData.publication);     
       setUniversity(jsonData.university);
-      fetchRelatedArticle(jsonData.publication.keywords, jsonData.publication.university);
+      fetchRelatedArticle(jsonData.publication.keywords, jsonData.publication.institution);
      } else {
        console.error("Error fetching publication data");
      }
@@ -318,7 +318,7 @@ const getUniversity =  (id:number) =>{
       (
         <div className="bg-white min-h-screen px-4 md:px-[15%] pt-5 md:pt-10">
         <div>
-             <p className="text-black-980 text-black-800 text-xs md:text-sm mt-auto mb-3">
+             <p className="text-black-980 text-black-800 text-xs md:text-sm mt-auto mb-3 text-right">
                 <FontAwesomeIcon icon={faCalendarAlt} className="mr-1" />
                   <span>
                   {new Date(`${data?.publicationDate}Z`).toLocaleDateString('en-US', {
@@ -330,15 +330,7 @@ const getUniversity =  (id:number) =>{
               </p>            
         </div>
 
-        <div className="py-1 text-xs lg:text-lg text-primary leading-relaxed flex justify-center items-center">
-          <div><h5 className="font-optima font-bold">{data?.citation}</h5></div>
-        </div>
-
-        <div className="py-2 text-xs lg:text-4xl font-bold leading-relaxed flex justify-center items-center">
-          <div><h5 className="font-bold">{data?.journal}</h5></div>
-        </div>
-
-        <div className="text-left py-2 md:py-10"><h1 className="font-optima font-bold text-sm lg:text-3xl md:text-4xl leading-relaxed text-primary">  {data?.title} </h1></div>
+        <div className="text-left py-2 md:py-10"><h1 className="font-optima font-bold text-sm lg:text-3xl md:text-4xl leading-relaxed text-primary text-center">  {data?.title} </h1></div>
 
         <div className="py-2 text-xs lg:text-lg leading-relaxed">
           <div><h5><span className="font-bold">Authors: </span>{data?.author}</h5></div>
@@ -348,6 +340,34 @@ const getUniversity =  (id:number) =>{
           <div><h5><span className="font-bold">Institutions: </span>{data?.publication_Institutions}</h5></div>
         </div>
 
+        <div className="yp-2 lg:py-5 text-xs md:text-lg leading-relaxed">
+          <div className="py-1"><h5><span className="font-bold">Abstract:</span></h5></div>
+          <div><p className="text-left lg:text-justify ">{data?.summary}</p></div>
+        </div>
+
+        <div className="py-4 lg:py-5 text-xs lg:text-lg leading-relaxed">
+          <div><h5><span className="font-bold">Keywords: </span>{data?.keywords}</h5></div>
+        </div>
+
+        <div className="py-4 lg:py-5 text-xs lg:text-lg leading-relaxed">
+          <div><h5><span className="font-bold">Bibliographic Citation: </span><span className="text-primary">{data?.citation}</span></h5></div>
+        </div>
+
+        {/* <div className="py-1 text-xs lg:text-lg text-primary leading-relaxed flex justify-center items-center">
+          <div><h5 className="font-optima font-bold">{data?.citation}</h5></div>
+        </div> */}
+
+
+        {/* <div className="py-2 text-xs lg:text-4xl font-bold leading-relaxed flex justify-center items-center">
+          <div><h5 className="font-bold">{data?.journal}</h5></div>
+        </div> */}
+
+        
+
+
+
+
+
         {
           data?.imgPath && data.imgPath.trim() !== "" ? (
               <div>
@@ -355,14 +375,9 @@ const getUniversity =  (id:number) =>{
               </div>
             ) : null
           }
-        <div className="yp-2 lg:py-5 text-xs md:text-lg leading-relaxed">
-          <div className="py-1"><h5><span className="font-bold">Abstract:</span></h5></div>
-          <div><p className="text-left lg:text-justify ">{data?.summary}</p></div>
-        </div>
 
-        <div className="py-4 lg:py-10 text-xs lg:text-lg leading-relaxed">
-          <div><h5><span className="font-bold">Keywords: </span>{data?.keywords}</h5></div>
-        </div>
+
+
 
 
         <div className="py-1 text-xs lg:text-lg lg:py-5">
@@ -395,7 +410,7 @@ const getUniversity =  (id:number) =>{
             <div className={`${adminStatus ? 'hidden' : 'block'}`}> 
             <div className="border-b-2 border-dashed border-gray-500 h-10 mb-5"></div>          
             <div>
-              <h1 className="text-black text-sm lg:text-3xl pb-10">RELATED ARTICLES</h1>
+              <h1 className="text-black text-sm lg:text-3xl pb-5">RELATED ARTICLES</h1>
             </div>
 
             <div className="flex items-center justify-center flex-wrap">
@@ -405,19 +420,19 @@ const getUniversity =  (id:number) =>{
                   {relatedArticle.map(({id, title, summary, pdfFile, pdfLink, createdDate, institution}) => (
 
                       <div key={id} id={`relatedArticleId-${id}`} className="flex flex-col px-4 py-2 border-b">
-                        <Link
+                      <Link
                             key={id}
                             to={`/Publication/Info/${id}`}
                             onClick={(e) => {
                               e.preventDefault(); // Prevent default navigation behavior
-                              window.location.href = `/Publication/Info/${id}`; // Navigate and reload
+                              window.location.href = `/Publication/Info/${id}#${encodeURIComponent(title)}`; // Navigate and reload
                             }}
                           >
-                        <div className=" flex items-center justify-between text-xs my-3">
+                        <div className=" flex items-center justify-between text-xs">
                         {/* <div><h5 className="font-bold">{getUniversity(institution)}</h5></div> */}
 
                             <div>
-                                  <p className="text-black-980 text-black-800 text-xs md:text-xs mt-auto mb-3">
+                              <p className="text-black-980 text-black-800 text-xs md:text-xs mt-auto mb-3">
                                 <FontAwesomeIcon icon={faCalendarAlt} className="mr-1" />
                                   <span>
                                   {new Date(`${createdDate}Z`).toLocaleDateString('en-US', {
@@ -438,8 +453,8 @@ const getUniversity =  (id:number) =>{
                         <div className="text-xs lg:text-sm text-justify">
                           <p>{truncateTitle(summary.trim())}</p>
                         </div>
-                        </Link>
-                        <div className="mt-4 flex">
+                      </Link>
+                        {/* <div className="mt-4 flex">
                           {
                             pdfFile &&(
                               <div>
@@ -465,7 +480,7 @@ const getUniversity =  (id:number) =>{
                             </div>
                             )
                           }
-                        </div>
+                        </div> */}
                       </div>
 
                   ))}

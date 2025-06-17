@@ -25,7 +25,7 @@ function People() {
 
     return (
         <div className="w-full">
-            {titleHeader("Who are we")}
+            {titleHeader("SERDAL Team")}
             
             {/* Phase 1 */}
             <div id="phase1" className="min-h-screen flex justify-center">

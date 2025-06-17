@@ -66,13 +66,17 @@ function TrainingInfo ()
                         <div className="text-center text-xl md:text-2xl font-bold py-5 md:mt-10 md:w-[1000px]">{t.title}</div>
 
                         <div className="text-md md:text-lg pb-5 text-justify md:w-[1000px]">{t.summary}</div>
+                        <div className="flex">
                         {
+                            
                             t?.eventPhotos.map((photo) => (
                                 <div>
-                                    <img src={photo} alt={t.title} className="md:w-[1000px] h-auto object-contain py-5"/>
+                                    <img src={photo} alt={t.title} className="md:w-[300px] h-auto object-contain py-5 px-2"/>
                                 </div>
                             ))
+                            
                         }
+                        </div>
                         
 
                     </div>

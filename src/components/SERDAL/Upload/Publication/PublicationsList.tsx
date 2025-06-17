@@ -8,6 +8,7 @@ import { Link } from "react-router-dom";
 
 interface ApiData {
     id: number;
+    citation: string;
     title: string;
     author: string;
     summary: string;
@@ -118,7 +119,7 @@ const PublicationsList: React.FC<datas> = ({data, university}) =>{
                         </div>
 
                         <h5 className="text-lg font-bold uppercase text-primary py-2 text-left">
-                            <Link to={`/publication/Info/${post.id}`}
+                            <Link to={`/publication/Info/${post.id}#${encodeURIComponent(post.title)}`}
                                 className="hover:underline"
                               >
                                 {
@@ -128,7 +129,7 @@ const PublicationsList: React.FC<datas> = ({data, university}) =>{
                         </h5>
 
                         <div className="text-sm text-justify">
-                            <p>{truncateTitle(post.summary)}</p>
+                            <p>{truncateTitle(post.citation)}</p>
                         </div>
 
                         <div className="mt-4 flex">

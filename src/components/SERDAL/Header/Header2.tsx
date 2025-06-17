@@ -203,7 +203,7 @@ function Header2() {
 
                     <li>
                       <Link to="/toolbox" className="block px-4 py-2 hover:text-primary" onClick={toggleMenu}>
-                        SERDAL Toolbox
+                        Quick Response
                       </Link>
                     </li>
                     <li>
@@ -271,9 +271,25 @@ function Header2() {
                       </ul>
                     </li>
 
-                    <li className="">
-                      <Link to="/toolbox" className="hover:text-primary"> SERDAL Toolbox </Link>
+                    {/* <li className="">
+                      <Link to="/toolbox" className="hover:text-primary"> Quick Response </Link>
+                    </li> */}
+
+                    <li className="relative group">
+                      <Link to="/toolbox" className=" hover:text-primary"
+                      >Quick Response</Link>
+
+                      {/* Dropdown menu */}
+                      <ul className="absolute top-full hidden group-hover:flex flex-col bg-black border border-1 border-gray-800 text-white p-2 rounded-md shadow-sm z-50 min-w-[160px]">
+                        <li>
+                          <Link to="/toolbox" className="block px-4 py-2 hover:bg-gray-700 rounded">Discussion Paper Series</Link>
+                        </li>
+                      </ul>
                     </li>
+
+
+
+
 
                     <li className="">
                       <Link to="/trainings" className="hover:text-primary">Events & Highlights</Link>
