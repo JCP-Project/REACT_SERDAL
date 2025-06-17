@@ -31,7 +31,7 @@ function footer() {
 
                 <div className="max-w-100 max:h-50 text-justify">
                     <div className="w-auto h-50 flex items-center justify-center"><img src={UPLB} className="w-auto h-50"></img></div>
-                    <div className="py-2">Building Capacity, Shaping Data-Driven Futures.</div>
+                    <div className="py-2 italic">Building Capacity, Shaping Data-Driven Futures.</div>
                 </div>
 
                 <div className="max-w-100">
