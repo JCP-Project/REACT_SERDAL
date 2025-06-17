@@ -1,7 +1,7 @@
 # Environment variables
 .env
 .env.*
-
+vite.config.*
 
 # Logs
 logs
