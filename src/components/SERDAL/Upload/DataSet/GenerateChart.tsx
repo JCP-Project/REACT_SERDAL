@@ -260,7 +260,18 @@ const formattedSeries1 = () => {
         type: chart,
         height: 400,
         width: "95%",
-        toolbar: { show: false },
+                toolbar: {
+          show: true, // ✅ Enable toolbar
+          tools: {
+            download: true, // ✅ Enable download icon
+            selection: false,
+            zoom: false,
+            zoomin: false,
+            zoomout: false,
+            pan: false,
+            reset: false,
+          },
+        },
         zoom: { enabled: false }, // ✅ Disable zooming
         pan: { enabled: false }, // ✅ Disable panning
       },
