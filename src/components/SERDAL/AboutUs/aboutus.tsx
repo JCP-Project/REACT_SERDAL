@@ -136,20 +136,20 @@ function AboutUs () {
                     </div>
 
                     <div className="py-5 md:py-10">
-                        <h1 className="font-optima text-3xl font-bold py-5 text-center">check our videos</h1>
-                        <div id="" className="flex items-center justify-center md:px-10 flex-col md:flex-row">
-                            {
-                                videoData.map((v) => (
-                                    <div key={`K-${v.id}`} id={`ID-${v.id}`} className="w-full flex-1 flex items-center justify-center p-2 order-1 lg:order-2">
-                                        <iframe
-                                            src={v.vid}
-                                            className="w-full h-[200px] md:h-[255px] rounded shadow-lg"
-                                            allow="autoplay"
-                                            title={v.title}
-                                        ></iframe>
-                                    </div>
-                                ))
-                            }
+                        <h1 className="font-optima text-3xl font-bold py-5 text-center">SERDAL in Action</h1>
+                        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-3 px-4 md:px-10">
+                        {
+                            videoData.map((v) => (
+                            <div key={`K-${v.id}`} id={`ID-${v.id}`} className="w-full">
+                                <iframe
+                                src={v.vid}
+                                className="w-full h-[200px] md:h-[255px] rounded shadow-lg"
+                                allow="autoplay"
+                                title={v.title}
+                                ></iframe>
+                            </div>
+                            ))
+                        }
                         </div>
                     </div>
 

@@ -260,7 +260,7 @@ const formattedSeries1 = () => {
         type: chart,
         height: 400,
         width: "95%",
-                toolbar: {
+        toolbar: {
           show: true, // ✅ Enable toolbar
           tools: {
             download: true, // ✅ Enable download icon
@@ -271,9 +271,16 @@ const formattedSeries1 = () => {
             pan: false,
             reset: false,
           },
+          export: {
+            csv: {
+              filename: dataSet?.title, // ✅ custom file name without extension
+            },
+          },
         },
+        
         zoom: { enabled: false }, // ✅ Disable zooming
         pan: { enabled: false }, // ✅ Disable panning
+        
       },
       legend: {
         showForSingleSeries: true, 
@@ -286,7 +293,7 @@ const formattedSeries1 = () => {
       },
       colors: chartColors,
       title: { 
-       // text: `${dataSet?.title?.toUpperCase()} - ${dataSet?.dataGroup[selectedProd]?.production.toLowerCase() || "Subtitle Here"}`,
+       //text: `${dataSet?.title?.toUpperCase()} - ${dataSet?.dataGroup[selectedProd]?.production.toLocaleUpperCase() || "Subtitle Here"}`,
         align: "left",
         style: { fontSize: "18px", fontWeight: "bold" }
       },
@@ -328,6 +335,7 @@ const formattedSeries1 = () => {
       markers: { size: 4 }, // Keep the size of the markers (but it won't show in the tooltip)
       dataLabels: { enabled: false },
     };
+
 
     
       const lineBarChart = {

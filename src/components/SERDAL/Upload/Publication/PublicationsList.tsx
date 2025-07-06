@@ -26,6 +26,7 @@ interface ApiData {
     download: number;
     isDeleted: number;
     publicationDate: string;
+    publicationYear: number;
   }
   
 
@@ -114,7 +115,10 @@ const PublicationsList: React.FC<datas> = ({data, university}) =>{
 
                         <div className=" flex items-center justify-between text-sm my-3">
                             <div><h5 className="font-bold">{post.publication_Institutions}</h5></div>
-                            <div><h5>{formatDateTime(post.publicationDate)}</h5></div>
+                            <div><h5>
+                              {/* {formatDateTime(post.publicationDate)} */}
+                              {post.publicationYear}
+                              </h5></div>
                             
                         </div>
 
@@ -149,8 +153,8 @@ const PublicationsList: React.FC<datas> = ({data, university}) =>{
                           {
                             post.pdfLink &&(
                               <div className="mx-2">
-                                <a href={post.pdfLink} target="_blank">
-                                  <button className="md:m-0 flex items-center bg-red-600 text-white rounded-lg hover:bg-red-700 text-[10px] px-2 lg:px-2">
+                                <a href={post.pdfLink} target="_blank" onClick={() =>DownloadClick(post.id)}>
+                                  <button className="md:m-0 flex items-center bg-red-600 text-white rounded-sm hover:bg-red-700 text-sm px-2 lg:px-2 py-1">
                                     <FontAwesomeIcon icon={faFilePdf} />
                                     <span className="pl-2">PDF</span>
                                   </button> 

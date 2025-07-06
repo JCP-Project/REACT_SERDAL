@@ -19,7 +19,7 @@ const servicesData: data[] = [
     },
     {   
         id: 1,
-        title: "Consultancy Services",
+        title: "Technical Assistance",
         summary: "Providing expert insights and tailored solutions to navigate the socio-economic landscape and drive informed decision-making.",
         img: ConsultancyServices
     },

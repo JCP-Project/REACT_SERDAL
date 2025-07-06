@@ -13,6 +13,21 @@ interface Institution {
   isDeleted: number;
 }
 
+interface FormData {
+  citation: string;
+  journal: string;
+  title: string;
+  author: string;
+  fundingAgency: string;
+  abstract: string;
+  CreatedBy: number;
+  keywords: string;
+  pdfLink: string;
+  publicationYear: number;
+  Img: File | null;
+  file: File | null;
+}
+
 
 function CreatePublication() {
   const apiUrl = import.meta.env.VITE_API_URL;
@@ -30,25 +45,34 @@ function CreatePublication() {
 
   const [fileName, setFileName] = useState<string | null>(null);
 
-  const [formData, setFormData] = useState({
-    citation: "",
-    journal: "",
-    title: "",
-    author: "",
-    fundingAgency: "",
-    abstract: "",
-    CreatedBy: 0, 
-    keywords: "",
-    pdfLink: "",
-    publicationDate: Date.now.toString(),
-    Img: null as File | null,
-    file: null as File | null,
-  });
 
+const [formData, setFormData] = useState<FormData>({
+  citation: "",
+  journal: "",
+  title: "",
+  author: "",
+  fundingAgency: "",
+  abstract: "",
+  CreatedBy: 0,
+  keywords: "",
+  pdfLink: "",
+  publicationYear: new Date().getFullYear(),
+  Img: null,
+  file: null,
+});
 
   useEffect(() => {    
     fetchInstitution();
   }, []);
+
+
+
+const currentYear = new Date().getFullYear();
+ const [selectedYear, setSelectedYear] = useState<Number | null>(currentYear);
+const YearOptions = Array.from({ length: currentYear - 1900 + 1 }, (_, i) => {
+  const year = currentYear - i;
+  return { value: year, label: year.toString() };
+});
 
 
   const handleChangeInstitution = (selectedOption: any) => {
@@ -75,8 +99,8 @@ function CreatePublication() {
               setErrorMessage(errorResponse.message);
           }
           } catch (error) {
-              console.error("Error fetching publication data:", error);
-              setErrorMessage("Error fetching publication data");
+              console.error("Instutution list failed to load:", error);
+              setErrorMessage("Instutution list failed to load");
           } finally {
 
             }
@@ -113,7 +137,18 @@ function CreatePublication() {
       data.append("summary", formData.abstract);
       data.append("pdflink", formData.pdfLink);
       data.append("keywords", formData.keywords);
-      data.append("publicationDate", formData.publicationDate);
+      //data.append("publicationDate", formData.publicationDate);
+      if (formData.publicationYear !== null) {
+        data.append("publicationYear", formData.publicationYear.toString());
+      } else {
+            Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Please select publication year',
+          });
+          setIsSubmitting(false);
+          return;
+      }
       data.append("publication_Institutions", selectedOption.map(option => option.value));
 
     const id = localStorage.getItem('id');
@@ -173,7 +208,8 @@ function CreatePublication() {
             CreatedBy: 0,
             keywords: "",
             pdfLink: "",
-            publicationDate: Date.now.toString(),
+            //publicationDate: Date.now.toString(),
+            publicationYear: new Date().getFullYear(),
             Img: null,
             file: null,
           });
@@ -315,7 +351,7 @@ function CreatePublication() {
                 type="text"
                 id="journal"
                 name="journal"
-                placeholder="Journal"
+                placeholder="Journal/Publisher"
                 value={formData.journal}
                 onChange={handleInputChange}
                 className="mt-4 w-full border-b-2 border-gray-300 bg-transparent focus:border-primary focus:outline-none"
@@ -378,7 +414,7 @@ function CreatePublication() {
           </div>
 
           <div className="my-5">
-              <input
+              {/* <input
                 type="date"
                 id="publicationDate"
                 name="publicationDate"
@@ -386,6 +422,19 @@ function CreatePublication() {
                 onChange={handleInputChange}
                 max={todayDate}
                 className="mt-4 w-full border-b-2 border-gray-300 bg-transparent focus:border-primary focus:outline-none"
+              /> */}
+
+              <Select
+                id="year"
+                placeholder="Select Publication Year"
+                value={selectedYear}
+                onChange={(e) => setSelectedYear(e)}
+                options={YearOptions}
+                styles={customStyles}
+                className="!text-lg"
+                name="year"
+                required
+                //isClearable
               />
             </div>
 
@@ -433,32 +482,32 @@ function CreatePublication() {
 
             <div>
               <div className="flex flex-col mb-6 mt-10">
-                <label className="block text-lg ml-2">PDF File</label>
+                {/* <label className="block text-lg ml-2">PDF File</label>
                   <label
                     htmlFor="file"
                     className="w-full cursor-pointer rounded-lg border-2 border-gray-300 bg-transparent focus:border-primary focus:outline-none 
                             flex justify-center items-center text-gray-700 text-lg font-medium hover:bg-primary hover:text-white"
-                  >
-                    {!fileName && (
+                  > */}
+                    {/* {!fileName && (
                       <span>Choose PDF file</span>
                     )}
 
                     {fileName && (
                       <span >{fileName}</span>
-                    )}
+                    )} */}
 
-                    <input
+                    {/* <input
                       id="file"
                       type="file"
                       onChange={handleFileChange}
                       className="hidden"
                     />
-                  </label>
+                  </label> */}
 
                   {/* Display error message */}
-                  {pdfError && (
+                  {/* {pdfError && (
                     <p className="text-red-500 text-lg mt-[-10px]">{pdfError}</p>
-                  )}
+                  )} */}
               </div>
             </div>        
             

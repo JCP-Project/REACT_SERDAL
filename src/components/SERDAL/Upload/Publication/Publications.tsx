@@ -35,6 +35,7 @@ interface Publication {
   download: number;
   isDeleted: number;
   publicationDate: string;
+  publicationYear: number;
 }
 
 interface University {
@@ -213,8 +214,8 @@ function Publications()
    const optionSort = [
     { label: 'Title (A-Z)', value: 'Title_ASC' },
     { label: 'Title (Z-A)', value: 'Title_DESC' },
-    { label: 'Publication Date Most Recent', value: 'PublicationDate_MostRecent' },
-    { label: 'Publication Date Oldest First', value: 'PublicationDate_OldestFirst' },
+    { label: 'Most Recent', value: 'PublicationDate_MostRecent' },
+    { label: 'Oldest First', value: 'PublicationDate_OldestFirst' },
   ];
 
 
