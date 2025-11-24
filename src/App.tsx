@@ -38,6 +38,8 @@ import Maintenance from './components/SERDAL/Maintenance';
 import DatasetsPage from './components/SERDAL/Upload/DataSet/DatasetsPage';
 import { motion } from "framer-motion";
 import ScrollToTop from './components/SERDAL/components/scrolltop';
+import QuickResponseInfo from './components/SERDAL/QuickResponse/QuickResponseInfo';
+import QuickResponse from './components/SERDAL/QuickResponse/QuickResponse';
 
 
 
@@ -188,7 +190,8 @@ function App() {
         <Route path="/auth/signup" element={<> <PageTitle title="SERDAL | Signup" /> <SignUp /> </>} />
         <Route path="/auth/resetpassword" element={<> <PageTitle title="SERDAL | Reset Password" /> <ResetPassword /> </>} />
 
-        <Route path="/toolbox" element={<> <PageTitle title="SERDAL | SERDAL Toolbox" /> <Survey /> </>} />
+        <Route path="/toolbox" element={<> <PageTitle title="SERDAL | SERDAL Toolbox" /> <QuickResponse /> </>} />
+         <Route path="/QuickResponse/Info/:infopage" element={<><PageTitle title="Quick Response Info" /><QuickResponseInfo /></>} />
 
         
         <Route path="/createpublication" element={<> <PageTitle title="SERDAL | Upload Publication" /> <CreatePublication /> </>} />
