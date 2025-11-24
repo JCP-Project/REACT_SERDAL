@@ -377,7 +377,7 @@ const YearOptions = Array.from({ length: currentYear - 1900 + 1 }, (_, i) => {
                 type="text"
                 id="author"
                 name="author"
-                placeholder="Author"
+                placeholder="Author/s"
                 value={formData.author}
                 onChange={handleInputChange}
                 className="mt-4 w-full border-b-2 border-gray-300 bg-transparent focus:border-primary focus:outline-none"
@@ -400,7 +400,7 @@ const YearOptions = Array.from({ length: currentYear - 1900 + 1 }, (_, i) => {
             <div className="relative">
                 <Select
                     id="Institution"
-                    placeholder = "Select Institution"                                      
+                    placeholder = "Select Institution/s"                                      
                     value={selectedOption}
                     onChange={(e) => setSelectedOption(e)}
                     options={InstitutionOptions}
@@ -473,10 +473,11 @@ const YearOptions = Array.from({ length: currentYear - 1900 + 1 }, (_, i) => {
                 type="text"
                 id="pdfLink"
                 name="pdfLink"
-                placeholder="PDF Link (Optional)"
+                placeholder="PDF Link"
                 value={formData.pdfLink}
                 onChange={handleInputChange}
                 className="mt-4 w-full border-b-2 border-gray-300 bg-transparent focus:border-primary focus:outline-none"
+                required
               />
             </div>
 

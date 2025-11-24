@@ -438,7 +438,7 @@ export default function UploadPublication() {
                           </span>
 
                           <button
-                              disabled={status !== 0} // Disable button when status is not 0
+                              disabled={status !== 0}
                               onClick={() => handleStatus(id, 0, 1)}
                               className={`my-2 md:m-0 py-1 px-2 text-sm text-white rounded-lg lg:px-3 
                                 ${status !== 0 ? 'bg-red-400 cursor-not-allowed' : 'bg-red hover:bg-red-600'}`} // Apply hover styles only when enabled
