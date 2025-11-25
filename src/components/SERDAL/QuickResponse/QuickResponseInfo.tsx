@@ -1,7 +1,9 @@
 import { useParams } from "react-router-dom";
-import quickResponseData from "./Data/QuickResponseData";
+import quickResponseData from  "../Resources/QuickResponse/QuickResponseData";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowDown, faBuilding, faCalendarAlt, faPeopleArrowsLeftRight, faTag, faUsers } from "@fortawesome/free-solid-svg-icons";
+import ImagePreview from "../components/ImageView";
+
 
 const QuickResponseInfo = () => {
   const { infopage } = useParams();
@@ -23,29 +25,29 @@ const QuickResponseInfo = () => {
         <div className="p-6">
         
 
-          <p className="text-sm font-semibold text-gray-600 my-1"><span className="mr-2"><FontAwesomeIcon icon={faCalendarAlt}/></span> <strong>Publication Year:</strong>  {item.year}</p>
+          <p className="text-sm font-semibold text-gray-600 my-2"><span className="mr-2"><FontAwesomeIcon icon={faCalendarAlt}/></span> <strong>Publication Year:</strong>  {item.year}</p>
          
-          <p className="text-sm text-gray-700 my-1">
+          <p className="text-sm text-gray-700 my-2">
             <span className="mr-1"><FontAwesomeIcon icon={faUsers}/></span> <strong>Author(s):</strong> {item.Authors}
           </p>
 
-          <p className="text-sm text-gray-700 my-1">
+          <p className="text-sm text-gray-700 my-2">
              <span className="mr-1"><FontAwesomeIcon icon={faBuilding}/></span> <strong>Institution:</strong> {item.Institution}
           </p>
 
-          <p className="text-sm text-gray-700 my-1">
+          <p className="text-sm text-gray-700 my-2">
            <span className="mr-1"><FontAwesomeIcon icon={faTag}/></span>  <strong>Keywords:</strong> {item.Keywords}
           </p>
             <br/>
-          <div><strong>Abstract:</strong></div>
-          <div className="mt-4 text-gray-700">{item.Abstract}</div>
+          <div className="text-sm text-gray-700"><strong>Abstract:</strong></div>
+          <div className="mt-4 text-gray-700 text-justify">{item.Abstract}</div>
         </div>
 
         <div className="p-6 flex flex-col items-center">
-          <img
+          <ImagePreview
             src={item.img}
             alt={item.title}
-            className="w-full h-auto object-cover rounded-md mb-4 shadow"
+            className="w-full h-auto object-cover rounded-sm mb-4 shadow"
           />
           <a
             href={item.PDF}

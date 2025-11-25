@@ -1,49 +1,11 @@
 
-import { faCalendar, faCalendarAlt, faDownload, faFilePdf } from "@fortawesome/free-solid-svg-icons";
+import { faCalendarAlt } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useEffect, useState } from "react";
+
 import { Link } from "react-router-dom";
 
-import quickResponseData from "./Data/QuickResponseData";
-import { QuickResponseData } from "./Data/QuickResponseData";
+import { QuickResponseData } from  "../Resources/QuickResponse/QuickResponseData";
 
-
-
-interface ApiData {
-    id: number;
-    citation: string;
-    title: string;
-    author: string;
-    summary: string;
-    createdDate: string;
-    createdBy: number;
-    status: number;
-    modifiedBy: number;
-    modifiedDate: string;
-    imgPath: string;
-    pdfLink: string;
-    pdfFile: string;
-    category: string;
-    institution:number;
-    publication_Institutions: string;
-    download: number;
-    isDeleted: number;
-    publicationDate: string;
-    publicationYear: number;
-  }
-  
-
-  interface University {
-    id: number;
-    value: string;
-    label: string;
-    isDeleted: number;
-  }
-
-  interface datas{
-    data: ApiData[];
-    university: University[];
-  }
 
   interface QuickResponseListProps {
   data: QuickResponseData[];
@@ -55,7 +17,7 @@ const QuickResponseList: React.FC<QuickResponseListProps> = ({data}) =>{
 
         const truncateTitle = (title: string): string => {
           if (title.length > 30) {
-            return `${title.slice(0, 50 - 5)}...`;
+            return `${title.slice(0, 70 - 5)}...`;
           }
           return title;
         };
@@ -80,7 +42,7 @@ const QuickResponseList: React.FC<QuickResponseListProps> = ({data}) =>{
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 m-2">
           {data.map((item) => (
             <div
-              className="group w-full border border-secondary rounded-md overflow-hidden shadow-sm hover:shadow-lg hover:bg-gray-200 transition-shadow duration-300"
+              className="group w-full border border-gray-300 rounded-sm overflow-hidden shadow-sm hover:shadow-lg hover:bg-gray-200 transition-shadow duration-300"
             >
                <Link to={`/QuickResponse/Info/${item.id}`}>
               <div className="overflow-hidden">
@@ -91,7 +53,7 @@ const QuickResponseList: React.FC<QuickResponseListProps> = ({data}) =>{
                 />
               </div>
 
-              <div className="p-4">
+              <div className="p-4 border-t-2 border-transparent group-hover:border-t-primary">
              
                 <h2 className="text-lg font-semibold text-gray-800 cursor-pointer hover:underline group-hover:text-primary">
                   {truncateTitle(item.title)}

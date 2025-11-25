@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
-import { HashRouter as Router } from 'react-router-dom';
-import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
+import { Route, Routes, useLocation } from 'react-router-dom';
 
 import Loader from './common/Loader';
 import PageTitle from './components/Template/PageTitle';
@@ -10,14 +9,14 @@ import SignUp from './components/SERDAL/Login/Authentication/SignUp';
 
 import DefaultLayout from './layout/DefaultLayout';
 import UploadPublication from './components/SERDAL/Upload/Publication/UploadPublication';
-import Publication from './components/SERDAL/Upload/Publication/Publications';
+
 import PublicationRequest from './components/SERDAL/Upload/Publication/PublicationRequest';
 import Dashboard2 from './components/SERDAL/Dashboard';
 import Users from './components/SERDAL/Users/Users';
 
 import CreatePublication from './components/SERDAL/Upload/Publication/CreatePublication';
 import Info from './components/SERDAL/Upload/Publication/InfoPage';
-import Survey from './components/SERDAL/Survey/Survey';
+
 import Datasets from './components/SERDAL/Upload/DataSet/Datasets';
 import CreateSurvey from './components/SERDAL/Survey/CreateSurvey';
 import Form from './components/SERDAL/Survey/Form';
@@ -36,18 +35,17 @@ import ContactUs from './components/SERDAL/ContactUs/contactUs';
 import NotFound from './components/SERDAL/Notfound';
 import Maintenance from './components/SERDAL/Maintenance';
 import DatasetsPage from './components/SERDAL/Upload/DataSet/DatasetsPage';
-import { motion } from "framer-motion";
+
 import ScrollToTop from './components/SERDAL/components/scrolltop';
 import QuickResponseInfo from './components/SERDAL/QuickResponse/QuickResponseInfo';
 import QuickResponse from './components/SERDAL/QuickResponse/QuickResponse';
+import useAutoLogout from './hooks/useAutoLogout';
 
 
 
 function App() {
   const [loading, setLoading] = useState<boolean>(true);
   const { pathname } = useLocation();
-  const navigate = useNavigate();
-  const [isActive, setIsActive] = useState(true);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -60,91 +58,8 @@ function App() {
 
   const isAdmin = localStorage.getItem('isAdmin') === 'true';
   const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
-  const [seconds, setSeconds] = useState(0);
-
-  const validateRoute = (pathname: string) => {
-    // List of valid base routes (without dynamic parameters)
-    const validRoutes = [
-      '/404Notfound','/Maintenance',
-      '/people',
-      '/about',
-      '/contact',
-      '/services',
-      '/trainings',
-      '/auth/signin', '/signup', 
-      '/tables', '/tableapproval','/chart', 
-      '/uploadpublication', 
-      '/publication','/createpublication','/createpost','/auth/signup','/datasets','/','/toolbox',
-      '/datasets/generatechart',
-      '/admin/users', '/admin/datasets','/admin/Management/Institution','/admin/toolbox/create','/admin/toolbox/form','/admin/publicationrequest',
-      '/auth/resetpassword',
-    ];
-
-
-    return validRoutes.some(route => {
-      // If route has dynamic parameters (e.g., /parent/childpage/:customName), match the base path
-      const baseRoute = route.split('/')[1]; // Get the base route part (e.g., 'parent' for /parent/...)
-      const pathParts = pathname.split('/');
-      const isValid = pathParts[1] === baseRoute;
-      return isValid;
-    });
-  };
-
- //#region Auto Logout
-    // Function to reset the timer
-    const resetTimer = () => {
-      setSeconds(0); // Reset the inactivity timer
-    };
   
-    useEffect(() => {
-      const pathname = location.pathname.toLowerCase();
-      if (!validateRoute(pathname)) {
-       //.. navigate('/'); // Redirect to '/publication' if invalid route
-      }
-    }, [location.pathname, navigate]);
-  
-    useEffect(() => {
-      // Set interval to update seconds every 1 second
-      const intervalId = setInterval(() => {
-        setSeconds(prevSeconds => prevSeconds + 1); // Increment seconds
-      }, 1000);
-  
-      // Cleanup the interval when the component unmounts
-      return () => clearInterval(intervalId);
-    }, []);
-  
-    useEffect(() => {
-      if (seconds >= 1000) {
-        localStorage.clear();
-        window.location.reload(); // Reload the page after clearing session storage
-        navigate('/');
-      }
-    }, [seconds]);
-  
-    // Detect user activity (mousemove, keydown, or click)
-    const handleActivity = () => {
-      setIsActive(true); // Set user as active
-      resetTimer(); // Reset the timer when activity is detected
-    };
-  
-    useEffect(() => {
-      // Set up event listeners for user activity
-      window.addEventListener('mousemove', handleActivity);
-      window.addEventListener('keydown', handleActivity);
-      window.addEventListener('click', handleActivity);
-  
-      // Cleanup event listeners when the component unmounts
-      return () => {
-        window.removeEventListener('mousemove', handleActivity);
-        window.removeEventListener('keydown', handleActivity);
-        window.removeEventListener('click', handleActivity);
-      };
-    }, []); // This only runs once when the component is mounted
- //#endregion
-
-
-
-
+  useAutoLogout(1000);
  
 
   return loading ? (
@@ -190,7 +105,7 @@ function App() {
         <Route path="/auth/signup" element={<> <PageTitle title="SERDAL | Signup" /> <SignUp /> </>} />
         <Route path="/auth/resetpassword" element={<> <PageTitle title="SERDAL | Reset Password" /> <ResetPassword /> </>} />
 
-        <Route path="/toolbox" element={<> <PageTitle title="SERDAL | SERDAL Toolbox" /> <QuickResponse /> </>} />
+        <Route path="/QuickResponse" element={<> <PageTitle title="SERDAL | SERDAL Toolbox" /> <QuickResponse /> </>} />
          <Route path="/QuickResponse/Info/:infopage" element={<><PageTitle title="Quick Response Info" /><QuickResponseInfo /></>} />
 
         
@@ -212,10 +127,18 @@ function App() {
           </>
         ):
         (
-          // Site Index
-          <Route index element={<> <PageTitle title="Home" /> <Home /> </>} />
-          
+          <Route index element={<> <PageTitle title="Home" /> <Home /> </>} />          
         )}
+
+          <Route
+            path="*"
+            element={
+              <>
+                <PageTitle title="404" />
+                <NotFound />
+              </>
+            }
+          />
        
         
       </Routes>

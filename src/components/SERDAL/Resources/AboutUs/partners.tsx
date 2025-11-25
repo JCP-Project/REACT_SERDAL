@@ -32,8 +32,8 @@ const partnersLogo: parteners[] =
         img: UPLB,
         imgsize: "w-15 h-15",
         pin:"h-10 w-10",
-        logolocation: "top-[1.5%] left-[65%] md:top-[1.5%] md:left-[50%]",
-        pinLocation: "top-[114%] left-[-60%] md:top-[98%] md:left-[-40%] text-secondary",
+        logolocation: "top-[1.5%] left-[65%] md:top-[1.5%] md:left-[48%]",
+        pinLocation: "top-[114%] left-[-60%] md:top-[102%] md:left-[-34%] text-secondary",
     },
     {
         id: 1,
@@ -44,7 +44,7 @@ const partnersLogo: parteners[] =
         imgsize: "w-15 h-15",
         pin:"h-10 w-10",
         logolocation: "top-[-9.5%] left-[4%]",
-        pinLocation: "top-[131%] left-[126%] md:top-[126%] md:left-[99%]",
+        pinLocation: "top-[131%] left-[126%] md:top-[130%] md:left-[99%]",
     },
     {
         id: 2,
@@ -55,7 +55,7 @@ const partnersLogo: parteners[] =
         imgsize: "w-15 h-15",
         pin:"h-10 w-10",
         logolocation: "top-[14%] left-[-5%]",
-        pinLocation: "top-[94%] left-[235%] md:top-[92%] md:left-[193%]",
+        pinLocation: "top-[94%] left-[235%] md:top-[96%] md:left-[193%]",
     },
     {
         id: 3,
@@ -77,7 +77,7 @@ const partnersLogo: parteners[] =
         imgsize: "w-15 h-15",
         pin:"h-10 w-10",
         logolocation: "top-[37%] left-[-1%] md:top-[37%] md:left-[-3%]",
-        pinLocation: "top-[59%] left-[178%] md:top-[59%] md:left-[150%]",
+        pinLocation: "top-[59%] left-[178%] md:top-[64%] md:left-[150%]",
     },
     {
         id: 5,
@@ -88,7 +88,7 @@ const partnersLogo: parteners[] =
         imgsize: "w-15 h-15",
         pin:"h-10 w-10",
         logolocation: "top-[59%] left-[16%] md:top-[59%] md:left-[12%]",
-        pinLocation: "top-[66%] left-[112%] md:top-[66%] md:left-[92%]",
+        pinLocation: "top-[66%] left-[112%] md:top-[72%] md:left-[92%]",
     },
     {
         id: 6,
@@ -99,7 +99,7 @@ const partnersLogo: parteners[] =
         imgsize: "w-15 h-15",
         pin:"h-10 w-10",
         logolocation: "top-[81%] left-[22%] md:top-[78.5%] md:left-[15.5%]",
-        pinLocation: "top-[-35%] left-[184%] md:top-[-20%] md:left-[154%]",
+        pinLocation: "top-[-35%] left-[184%] md:top-[-13%] md:left-[154%]",
     },
     {
         id: 7,
@@ -110,7 +110,7 @@ const partnersLogo: parteners[] =
         imgsize: "w-15 h-15",
         pin:"h-10 w-10",
         logolocation: "top-[83.5%] left-[72%] md:top-[81%] md:left-[55%]",
-        pinLocation: "top-[-63%] left-[62%] md:top-[-47%] md:left-[58%]",
+        pinLocation: "top-[-63%] left-[62%] md:top-[-43%] md:left-[58%]",
     },
     
 

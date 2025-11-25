@@ -13,8 +13,8 @@ import { motion } from 'framer-motion';
 import { FaAngleDown, FaAngleUp } from "react-icons/fa";
 
 
-import { QuickResponseData } from "";
-import quickResponseData from "./Data/QuickResponseData";
+import { QuickResponseData } from "../Resources/QuickResponse/QuickResponseData";
+import quickResponseData from "../Resources/QuickResponse/QuickResponseData";
 
 import QuickResponseList from "./QuickResponseList";
 

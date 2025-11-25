@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import trainingData, {TrainingData} from "../Resources/Training/trainingData";
 import {useParams } from "react-router-dom";
-
+import ImagePreview from "../components/ImageView";
 
 function TrainingInfo ()
 {
@@ -71,7 +71,7 @@ function TrainingInfo ()
                             
                             t?.eventPhotos.map((photo) => (
                                 <div>
-                                    <img src={photo} alt={t.title} className="md:w-[300px] h-auto object-contain py-5 px-2"/>
+                                    <ImagePreview src={photo} alt={t.title} className="md:w-[300px] h-auto object-contain py-5 px-2"/>
                                 </div>
                             ))
                             

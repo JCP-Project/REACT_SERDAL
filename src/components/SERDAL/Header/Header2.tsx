@@ -202,7 +202,7 @@ function Header2() {
                     </li>
 
                     <li>
-                      <Link to="/toolbox" className="block px-4 py-2 hover:text-primary" onClick={toggleMenu}>
+                      <Link to="/QuickResponse" className="block px-4 py-2 hover:text-primary" onClick={toggleMenu}>
                         Quick Response
                       </Link>
                     </li>
@@ -276,13 +276,13 @@ function Header2() {
                     </li> */}
 
                     <li className="relative group">
-                      <Link to="/toolbox" className=" hover:text-primary"
+                      <Link to="/QuickResponse" className=" hover:text-primary"
                       >Quick Response</Link>
 
                       {/* Dropdown menu */}
                       <ul className="absolute top-full hidden group-hover:flex flex-col bg-black border border-1 border-gray-800 text-white p-2 rounded-md shadow-sm z-50 min-w-[160px]">
                         <li>
-                          <Link to="/toolbox" className="block px-4 py-2 hover:bg-gray-700 rounded">Discussion Paper Series</Link>
+                          <Link to="/QuickResponse" className="block px-4 py-2 hover:bg-gray-700 rounded">Discussion Paper Series</Link>
                         </li>
                       </ul>
                     </li>
