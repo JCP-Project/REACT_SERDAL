@@ -173,7 +173,7 @@ function Header2() {
                     </li>
                     <li>
                       <Link to="/datasets" className="block px-4 py-2 hover:text-primary" onClick={toggleMenu}>
-                        Datasets
+                        Dashboard
                       </Link>
                     </li>
 
@@ -254,7 +254,7 @@ function Header2() {
                       <Link to="/publication" className="hover:text-primary"> Publications </Link>
                     </li>
                     <li className="flex">
-                      <Link to="/datasets" className="hover:text-primary"> Datasets </Link>
+                      <Link to="/datasets" className="hover:text-primary"> Dashboard </Link>
                     </li>
 
                     <li className="relative group">

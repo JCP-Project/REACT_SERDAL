@@ -1,7 +1,7 @@
-import capacityBuilding from '../Services/Capacity Building.svg'
-import ConsultancyServices from '../Services/ConsultancyServices.svg'
-import DataPortal from '../Services/DataPortal.svg'
-import Facility from '../Services/Facility.svg'
+import capacityBuilding from '../Services/Capacity Building.jpg'
+import ConsultancyServices from '../Services/ConsultancyServices.jpg'
+import DataPortal from '../Services/DataPortal.jpg'
+import Facility from '../Services/Facility.jpg'
 
 export interface data {
     id: number;

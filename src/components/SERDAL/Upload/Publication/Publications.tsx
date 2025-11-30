@@ -7,6 +7,8 @@ import Loader from "../../../../common/Loader/Loader2";
 import Select, { StylesConfig } from 'react-select';
 import { motion } from 'framer-motion';
 import { FaAngleDown, FaAngleUp } from "react-icons/fa";
+import SlidingTitleHeader from "../../components/slidingTitleHeader";
+import sliderColor from "@material-tailwind/react/theme/components/slider/sliderColor";
 
 interface ApiData {
   publication: Publication[]; // Array of publications
@@ -375,16 +377,7 @@ function Publications()
 
     return(
     <div className="bg-white lg:min-h-[90vh]">
-      <div className="bg-primary text-left py-8">
-          <motion.div
-          initial={{ x: -300 }}
-          animate={{ x: 0 }}
-          transition={{ type: 'spring', stiffness: 100 }}
-        >
-                  <h1 className="text-2xl font-bold text-left text-white px-3 lg:px-40">Publications</h1>
-        </motion.div>
-      </div>
-
+      {SlidingTitleHeader("Publications")}
 
       <div className="px-0 lg:px-40 ">
         <div className="flex items-center justify-center">

@@ -17,6 +17,7 @@ import { QuickResponseData } from "../Resources/QuickResponse/QuickResponseData"
 import quickResponseData from "../Resources/QuickResponse/QuickResponseData";
 
 import QuickResponseList from "./QuickResponseList";
+import SlidingTitleHeader from "../components/slidingTitleHeader";
 
 
 
@@ -194,16 +195,7 @@ const handleSort = (selected: any) => {
 
     return(
     <div className="bg-white lg:min-h-[90vh]">
-      <div className="bg-primary text-left py-8">
-          <motion.div
-          initial={{ x: -300 }}
-          animate={{ x: 0 }}
-          transition={{ type: 'spring', stiffness: 100 }}
-        >
-                  <h1 className="text-2xl font-bold text-left text-white px-3 lg:px-40">Quick Response</h1>
-        </motion.div>
-      </div>
-
+      {SlidingTitleHeader("Quick Response")}
 
       <div className="px-0 lg:px-40 ">
         <div className="flex items-center justify-center">
