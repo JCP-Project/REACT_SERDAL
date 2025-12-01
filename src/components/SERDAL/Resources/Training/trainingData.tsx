@@ -38,6 +38,16 @@ import StrategicForesightandPlanning2 from '../Training/Event Photos/Strategic F
 import DataManagementforCDA1 from '../Training/Event Photos/CDA Data Management 1.jpg'
 import DataManagementforCDA2 from '../Training/Event Photos/CDA Data Management 2.jpg'
 
+import VCACover from '../Training/Event Photos/VCA_Cover.png'
+import VCA1 from '../Training/Event Photos/VCA1.png'
+import VCA2 from '../Training/Event Photos/VCA2.png'
+
+import SERDANCover from '../Training/Event Photos/SERDAN.png'
+import SERDAN1 from '../Training/Event Photos/SERDAN1.jpg'
+import SERDAN2 from '../Training/Event Photos/SERDAN2.jpg'
+import SERDAN3 from '../Training/Event Photos/SERDAN3.jpg'
+
+
 export interface TrainingData {
     id: number;
     title: string;
@@ -241,6 +251,46 @@ const trainingData: TrainingData[] = [
               ),
             img: DataManagementforCDA,
             eventPhotos: [DataManagementforCDA1,DataManagementforCDA2],
+        },
+        {
+            id: 9,
+            title: "UPLB SERDAL’s Value Chain Analysis Training for the Department of Agriculture – Bureau of Animal Industry: Enhancing Honey Value Chain Competitiveness",
+            info:"From August 11-13, 2025, UPLB SERDAL conducted a Value Chain Analysis Training for the Department of Agriculture – Bureau of Animal Industry. The training focused on strengthening participants’ understanding of the honey value chain, covering key topics such as value chain analysis concepts, development frameworks, analytical tools, and insights from the Beeconomy Initiative and Beeconomic Success.",
+            summary: (
+                <div>
+                  <p>
+                  From August 11-13, 2025, UPLB SERDAL conducted a Value Chain Analysis Training for the Department of Agriculture – Bureau of Animal Industry. The training focused on strengthening participants’ understanding of the honey value chain, covering key topics such as value chain analysis concepts, development frameworks, analytical tools, and insights from the Beeconomy Initiative and Beeconomic Success.,                    
+                  </p>
+                  <p className="mt-3">
+                   The training was enriched by seasoned VCA experts from CEM, Dr. Julieta A. Delos Reyes and Asst. Prof. Paul Joseph B. Ramirez, whose expertise guided participants through the intricacies of value chain analysis. Adding a special buzz to the event was Dr. Cleofas R. Cervancia, fondly known as the Queen Bee, along with Ms. Jessica B. Baroga-Barbecho, both from the UPLB Bee Program dedicated to advancing bee-related research and industry development.
+                  </p>
+                  <p className="mt-3">
+                  The training enabled participants to gain a deeper understanding of how value is created, added, and distributed across the honey value chain. It also supported them in identifying gaps, improving efficiency, and developing strategies that enhance competitiveness and benefit all stakeholders.
+                  </p>
+                </div>
+              ),
+            img: VCACover,
+            eventPhotos: [VCA1,VCA2],
+        },
+        {
+            id: 10,
+            title: "UPLB SERDAL’s Proposal Writing Workshop: Improvement of Strategies for the Harmonized Capacity Building and Data Repository of SERDAN",
+            info:"From October 20-22, 2025, UPLB SERDAL, in partnership with DOST-PCAARRD, conducted the SERDAN Workshop aimed at enhancing strategies for harmonizing the network’s capacity-building initiatives and data repository systems. The three-day workshop guided participants through the key components of project proposal development, including reviewing action plans, identifying collaboration opportunities, refining project objectives, outlining activities and timelines, planning budgets, and defining expected outputs.",
+            summary: (
+                <div>
+                  <p>
+                  From October 20-22, 2025, UPLB SERDAL, in partnership with DOST-PCAARRD, conducted the SERDAN Workshop aimed at enhancing strategies for harmonizing the network’s capacity-building initiatives and data repository systems. The three-day workshop guided participants through the key components of project proposal development, including reviewing action plans, identifying collaboration opportunities, refining project objectives, outlining activities and timelines, planning budgets, and defining expected outputs.                    
+                  </p>
+                  <p className="mt-3">
+                   The workshop gathered representatives from the Socio-Economics Research and Data Analytics Network, with participants from Central Luzon State University, Bicol University, Visayas State University, University of Southeastern Philippines, Western Mindanao State University, and University of Southern Mindanao.
+                  </p>
+                  <p className="mt-3">
+                  Participants were able to develop two concept notes—one on capacity building and another on data repository development—by collectively reviewing existing initiatives, identifying gaps, and formulating approaches for strengthened collaboration and standardization across the network. This effort supports the development of harmonized strategies that enhance coherence, efficiency, and shared direction within the network.
+                  </p>
+                </div>
+              ),
+            img: SERDANCover,
+            eventPhotos: [SERDAN1,SERDAN2, SERDAN3],
         },
         
 

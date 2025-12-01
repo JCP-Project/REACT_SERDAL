@@ -41,7 +41,7 @@ const QuickResponseList: React.FC<QuickResponseListProps> = ({data}) =>{
       <> 
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 m-2">
           {data.map((item) => (
-            <div
+            <div id={`QR-${item.id}`} key={item.id}
               className="group w-full border border-gray-300 rounded-sm overflow-hidden shadow-sm hover:shadow-lg hover:bg-gray-200 transition-shadow duration-300"
             >
                <Link to={`/QuickResponse/Info/${item.id}`}>
