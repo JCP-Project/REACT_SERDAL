@@ -171,7 +171,6 @@ function Datasets() {
     try {
 
       if (!token) {
-        console.error("No token found, ");
         return Swal.fire({
           icon: 'error',
           title: 'No token found',

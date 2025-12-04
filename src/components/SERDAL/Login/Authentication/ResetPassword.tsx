@@ -91,7 +91,6 @@ const ResetPassword: React.FC = () => {
         //setIsSubmitting(false);
         if (isSubmitting)
         {
-          console.log("disabled", isSubmitting);
           return;
         }
 
@@ -103,8 +102,6 @@ const ResetPassword: React.FC = () => {
         
         const resetidotp = localStorage.getItem('otp');
         const useremail = localStorage.getItem('userEmail');
-        console.log(resetidotp);
-        console.log(useremail);
 
         //setIsSubmitting(true);
 
@@ -149,7 +146,6 @@ const ResetPassword: React.FC = () => {
           }
         } catch (error) {
           swalLoading.close();
-          console.error("Error submitting OTP:", error);
           Swal.fire({
             icon: 'error',
             title: 'Unexpected Error',
@@ -213,7 +209,6 @@ const ResetPassword: React.FC = () => {
               }
               
               const responseData: UserInfo = await response.json();  
-              console.log(responseData);
               // Show success message for 2 seconds
               Swal.fire({
                 icon: 'success',

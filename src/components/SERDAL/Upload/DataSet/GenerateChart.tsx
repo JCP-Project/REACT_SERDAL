@@ -179,7 +179,6 @@ const formattedSeries1 = () => {
       if (response.ok) {
         const jsonData: DataSets = await response.json();
         setDataSet(jsonData);
-        console.log(dataSet?.dataGroup[selectedProd]);
       } else {
         console.error("Error fetching data");
         seterrorMessage("Failed to fetch Data from the server.");
