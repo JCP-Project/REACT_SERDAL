@@ -9,31 +9,31 @@ import USM from '../AboutUs/Partners/Satellite SERDAC (USM).png'
 import USEP from '../AboutUs/Partners/SERDAC-Min (USeP).png'
 import { ReactNode } from 'react'
 
-
 export interface parteners {
     id: number;
     name: ReactNode;
     link: string;
     address: string;
     img: string;
-    imgsize:string;
-    pin:string;
+    imgsize: string;
+    pin: string;
     logolocation: string;
     pinLocation: string;
 }
 
-
-const partnersLogo: parteners[] = 
-    [{
+const partnersLogo: parteners[] =
+[
+    {
         id: 0,
         name: (<div>SERDAL<br/>(UPLB)</div>),
         link: "/",
         address: "",
         img: UPLB,
         imgsize: "w-15 h-15",
-        pin:"h-10 w-10",
-        logolocation: "top-[1.5%] left-[65%] md:top-[1.5%] md:left-[48%]",
-        pinLocation: "top-[114%] left-[-60%] md:top-[102%] md:left-[-34%] text-secondary",
+        pin: "h-10 w-10",
+
+        logolocation: "top-[6.5%] left-[57%] md:top-[4.5%] md:left-[43%]",
+        pinLocation: "",
     },
     {
         id: 1,
@@ -42,9 +42,10 @@ const partnersLogo: parteners[] =
         address: "",
         img: CLSU,
         imgsize: "w-15 h-15",
-        pin:"h-10 w-10",
-        logolocation: "top-[-9.5%] left-[4%]",
-        pinLocation: "top-[131%] left-[126%] md:top-[130%] md:left-[99%]",
+        pin: "h-10 w-10",
+
+        logolocation: "top-[1%] left-[11%] md:top-[-2.5%] md:left-[7%]",
+        pinLocation: "",
     },
     {
         id: 2,
@@ -53,9 +54,10 @@ const partnersLogo: parteners[] =
         address: "",
         img: BU,
         imgsize: "w-15 h-15",
-        pin:"h-10 w-10",
-        logolocation: "top-[14%] left-[-5%]",
-        pinLocation: "top-[94%] left-[235%] md:top-[96%] md:left-[193%]",
+        pin: "h-10 w-10",
+
+        logolocation: "top-[14%] left-[5%] md:top-[16%] md:left-[2%]",
+        pinLocation: "",
     },
     {
         id: 3,
@@ -64,20 +66,22 @@ const partnersLogo: parteners[] =
         address: "",
         img: VSU,
         imgsize: "w-15 h-15",
-        pin:"h-10 w-10",
-        logolocation: "top-[26%] left-[73%] md:top-[29.5%] md:left-[62.5%]",
-        pinLocation: "top-[123%] left-[19%] md:top-[91%] md:left-[0%]",
+        pin: "h-10 w-10",
+
+        logolocation: "top-[28%] left-[70%] md:top-[26%] md:left-[53%]",
+        pinLocation: "",
     },
     {
         id: 4,
         name: (<div>Satellite SERDAC<br/>(UPV)</div>),
-        link: " https://www.facebook.com/SERDACUPV/",
+        link: "https://www.facebook.com/SERDACUPV/",
         address: "",
         img: UPV,
         imgsize: "w-15 h-15",
-        pin:"h-10 w-10",
-        logolocation: "top-[37%] left-[-1%] md:top-[37%] md:left-[-3%]",
-        pinLocation: "top-[59%] left-[178%] md:top-[64%] md:left-[150%]",
+        pin: "h-10 w-10",
+
+        logolocation: "top-[35%] left-[8%] md:top-[35%] md:left-[4%]",
+        pinLocation: "",
     },
     {
         id: 5,
@@ -86,9 +90,10 @@ const partnersLogo: parteners[] =
         address: "",
         img: WMSU,
         imgsize: "w-15 h-15",
-        pin:"h-10 w-10",
-        logolocation: "top-[59%] left-[16%] md:top-[59%] md:left-[12%]",
-        pinLocation: "top-[66%] left-[112%] md:top-[72%] md:left-[92%]",
+        pin: "h-10 w-10",
+
+        logolocation: "top-[56%] left-[23%] md:top-[57%] md:left-[16%]",
+        pinLocation: "",
     },
     {
         id: 6,
@@ -97,9 +102,10 @@ const partnersLogo: parteners[] =
         address: "",
         img: USM,
         imgsize: "w-15 h-15",
-        pin:"h-10 w-10",
-        logolocation: "top-[81%] left-[22%] md:top-[78.5%] md:left-[15.5%]",
-        pinLocation: "top-[-35%] left-[184%] md:top-[-13%] md:left-[154%]",
+        pin: "h-10 w-10",
+
+        logolocation: "top-[77%] left-[28%] md:top-[73%] md:left-[24%]",
+        pinLocation: "",
     },
     {
         id: 7,
@@ -108,15 +114,11 @@ const partnersLogo: parteners[] =
         address: "",
         img: USEP,
         imgsize: "w-15 h-15",
-        pin:"h-10 w-10",
-        logolocation: "top-[83.5%] left-[72%] md:top-[81%] md:left-[55%]",
-        pinLocation: "top-[-63%] left-[62%] md:top-[-43%] md:left-[58%]",
+        pin: "h-10 w-10",
+
+        logolocation: "top-[76.5%] left-[67%] md:top-[73.5%] md:left-[51%]",
+        pinLocation: "",
     },
-    
-
-
-
-
 ]
 
 export default partnersLogo;

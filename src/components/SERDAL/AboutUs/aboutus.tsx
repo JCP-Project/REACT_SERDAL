@@ -114,14 +114,14 @@ function AboutUs () {
                                         <Cloud />
                                         </motion.div>
 
-                                        <div className={`absolute  flex items-center p-1 justify-center aspect-square rounded-full bg-black-2 group-hover:scale-110 transition-transform duration-300 ease-in-out ${p.pinLocation} z-5`}>
+                                        {/* <div className={`absolute  flex items-center p-1 justify-center aspect-square rounded-full bg-black-2 group-hover:scale-110 transition-transform duration-300 ease-in-out ${p.pinLocation} z-5`}>
                                             {
                                                 p?.id == 0 ?(
                                                 <MdLocationPin className="relative font-bold h-8 w-8" />  
                                                 ):( <MdLocationPin className="relative font-bold h-4 w-4 group-hover:text-primary" />  )
                                             }
                                                          
-                                        </div>
+                                        </div> */}
                                     </div>
                                     ))
                                 }
