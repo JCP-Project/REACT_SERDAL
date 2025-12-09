@@ -136,11 +136,11 @@ const PublicationsList: React.FC<datas> = ({data, university}) =>{
                             <p>{truncateTitle(post.citation)}</p>
                         </div>
 
-                        <div className="mt-4 flex">
+                        {/* <div className="mt-4 flex">
                         {
                             post.pdfFile &&(
                               <div className="">
-                                <a href={post.pdfFile} target="_blank" onClick={() =>DownloadClick(post.id)}>
+                                <a href={post.pdfLink} target="_blank" onClick={() =>DownloadClick(post.id)}>
                                   <button className="md:m-0 flex items-center bg-red-600 text-white rounded-sm hover:bg-red-700 text-sm px-2 lg:px-2 py-1">
                                     <FontAwesomeIcon icon={faFilePdf} />
                                     <span className="pl-2">PDF</span>
@@ -164,14 +164,14 @@ const PublicationsList: React.FC<datas> = ({data, university}) =>{
                           }
 
                           <div className="flex items-center text-sm mx-2 cursor-pointer">
-                            <a href={post.pdfFile} target="_blank" onClick={() =>DownloadClick(post.id)}>
+                            <a href={post.pdfLink} target="_blank" onClick={() =>DownloadClick(post.id)}>
                               <label><FontAwesomeIcon icon={faDownload} className="cursor-pointer" /> <span className="cursor-pointer">{post.download}</span></label>
                             </a> 
                           </div>
 
 
                         </div>
- 
+  */}
                     </div>
                 ))}
 
