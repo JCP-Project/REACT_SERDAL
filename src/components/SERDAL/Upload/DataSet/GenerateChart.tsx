@@ -164,9 +164,6 @@ const formattedSeries1 = () => {
     },
   ];
 };
-
-
-
 //#endregion
 
   useEffect(() => {
@@ -236,7 +233,7 @@ const formattedSeries1 = () => {
 
   const optionsProduction = dataSet?.dataGroup.map((s, index) => ({
     value: index,
-    label: s.production || "Unnamed Production", // ✅ Correct key
+    label: s.production || "Unnamed Production",
   })) || [];
 
   // Get min & max values from the dataset dynamically
@@ -260,13 +257,31 @@ const formattedSeries1 = () => {
         type: chart,
         height: 400,
         width: "95%",
-        toolbar: { show: false },
-        zoom: { enabled: false }, // ✅ Disable zooming
-        pan: { enabled: false }, // ✅ Disable panning
+        toolbar: {
+          show: true, // Enable toolbar
+          tools: {
+            download: false, //Enable download icon
+            selection: false,
+            zoom: false,
+            zoomin: false,
+            zoomout: false,
+            pan: false,
+            reset: false,
+          },
+          export: {
+            csv: {
+              filename: dataSet?.title, // custom file name without extension
+            },
+          },
+        },
+        
+        zoom: { enabled: false }, // Disable zooming
+        pan: { enabled: false }, // Disable panning
+        
       },
       legend: {
         showForSingleSeries: true, 
-        show: true, // ✅ Force legend to show even with one series
+        show: true, // Force legend to show even with one series
           labels: {
             useSeriesColors: true
           },
@@ -275,7 +290,7 @@ const formattedSeries1 = () => {
       },
       colors: chartColors,
       title: { 
-       // text: `${dataSet?.title?.toUpperCase()} - ${dataSet?.dataGroup[selectedProd]?.production.toLowerCase() || "Subtitle Here"}`,
+       //text: `${dataSet?.title?.toUpperCase()} - ${dataSet?.dataGroup[selectedProd]?.production.toLocaleUpperCase() || "Subtitle Here"}`,
         align: "left",
         style: { fontSize: "18px", fontWeight: "bold" }
       },
@@ -317,6 +332,7 @@ const formattedSeries1 = () => {
       markers: { size: 4 }, // Keep the size of the markers (but it won't show in the tooltip)
       dataLabels: { enabled: false },
     };
+
 
     
       const lineBarChart = {
@@ -511,6 +527,54 @@ const handleToggleSelectAllVariables = () => {
     setSelectedVariables(optionsVariables.map((option) => option.value)); // Select all variables
   }
 };
+
+
+const downloadCSV = () => {
+  if (!dataSet) return;
+
+  const group = dataSet.dataGroup[selectedProd];
+
+  // Use only selected years (or all if none selected)
+  const years = selectedYears.length > 0 
+    ? selectedYears 
+    : group.dataYear;
+
+  // Use only selected variables (or all if none selected)
+  const visibleSeries = selectedVariables.length > 0 
+    ? group.series.filter(s => selectedVariables.includes(s.name))
+    : group.series;
+
+  // CSV Header
+  let csv = "Year," + visibleSeries.map(s => s.name).join(",") + "\n";
+
+  years.forEach(year => {
+    const yearIndex = group.dataYear.indexOf(year);
+
+    const row = [
+      year,
+      ...visibleSeries.map(s => s.data[yearIndex] ?? "")
+    ];
+
+    csv += row.join(",") + "\n";
+  });
+
+  csv += `Note: ${dataSet?.dataGroup[selectedProd]?.description}`
+
+  const selectedProdLabel =
+  optionsProduction.find(option => option.value === selectedProd)?.label || "data";
+
+
+  // Download logic
+  const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = `${dataSet.title}-${selectedProdLabel}.csv`;
+  a.click();
+  URL.revokeObjectURL(url);
+};
+
+
   return (
     <>
     {
@@ -529,7 +593,7 @@ const handleToggleSelectAllVariables = () => {
 
     {
       loading ? (
-        <div className="w-full  h-screen w-full flex items-center flex-col">
+        <div className="w-full  h-screen flex items-center flex-col">
           
           <div className="absolute z-50 h-full w-full flex inset-0"><Loader2 /></div>
           <div className="md:space-y-6 w-[100%] md:w-[90%]">
@@ -760,38 +824,16 @@ const handleToggleSelectAllVariables = () => {
                   <div>
                       <h2 className="text-2xl font-bold">{dataSet?.title}</h2>
       
-                      <div className="flex items-center justify-end py-1 mx-1 border-b border-gray-300">
-                      <div className="flex items-center justify-end py-1 mx-1 border-gray-300">
-                      <Select
-                        id="SelectProduction"
-                        placeholder="Select Production"
-                        options={optionsProduction}
-                        value={optionsProduction.find((option) => option.value === selectedProd) || null}
-                        onChange={(selected) => setSelectedProd(selected?.value ?? 0)}
-                        className="text-sm w-full z-5"
-                        styles={{
-                          control: (provided) => ({
-                            ...provided,
-                            maxHeight: "72px",
-                            overflowY: "auto",
-                          }),
-                          menu: (provided) => ({
-                            ...provided,
-                            zIndex: 9999,
-                          }),
-                        }}
-                      />
-                      </div>
-                      <div>
-                          <div className="flex items-center justify-end py-1 mx-1 border-gray-300">
+                      <div className="flex flex-col md:flex-row items-center md:justify-end gap-2 py-1 mx-1 border-b border-gray-300">
+
+                        <div className="w-full md:w-auto">
                           <Select
-                            id="SelectChart"
-                            placeholder="Select Chart"
-                            value={chartOptions.find((option) => option.value === chart)}
-                            onChange={(selectedOption) => setChart(selectedOption?.value || "line")}
-                            options={chartOptions}
-                            isClearable={true}
-                            className="text-sm w-full md:w-auto"
+                            id="SelectProduction"
+                            placeholder="Select Production"
+                            options={optionsProduction}
+                            value={optionsProduction.find((option) => option.value === selectedProd) || null}
+                            onChange={(selected) => setSelectedProd(selected?.value ?? 0)}
+                            className="text-sm w-full"
                             styles={{
                               control: (provided) => ({
                                 ...provided,
@@ -805,22 +847,70 @@ const handleToggleSelectAllVariables = () => {
                             }}
                           />
                         </div>
-                      </div>
-                    </div>
+
+                        <div className="w-full md:w-auto">
+                          <Select
+                            id="SelectChart"
+                            placeholder="Select Chart"
+                            value={chartOptions.find((option) => option.value === chart)}
+                            onChange={(selectedOption) => setChart(selectedOption?.value || "line")}
+                            options={chartOptions}
+                            isClearable={true}
+                            className="text-sm w-full"
+                            styles={{
+                              control: (provided) => ({
+                                ...provided,
+                                maxHeight: "72px",
+                                overflowY: "auto",
+                              }),
+                              menu: (provided) => ({
+                                ...provided,
+                                zIndex: 9999,
+                              }),
+                            }}
+                          />
+                        </div>
+
+                        <div className="w-full md:w-auto">
+                          <button
+                            onClick={downloadCSV}
+                            className="bg-primary text-white px-4 py-2 rounded hover:bg-primary-dark flex items-center gap-2 w-full md:w-auto"
+                          >
+                            <FontAwesomeIcon icon={faArrowCircleDown} />
+                            Download CSV
+                          </button>
+                        </div>
+
+                        </div>
+
       
-                              {/* Render Chart Dynamically */}
                     <div className="w-full mx-auto bg-white lg:mt-10 z-1">
                       {settedChart}
                     </div>
       
                       {
                         dataSet?.dataGroup[selectedProd]?.description && (
-                          <div className="lg:py-10 lg:px-4">
-                          <h3>Description</h3>
-                          <p>{dataSet?.dataGroup[selectedProd]?.description}</p>
-                        </div>
+                        <p className="py-4">
+                          <strong className="font-semibold">Note: </strong>
+                          {dataSet?.dataGroup[selectedProd]?.description}
+                        </p>
                         )
                       }
+
+
+                      <div>
+                        <p>
+                        <strong className="font-semibold">Source: </strong>
+                        <a 
+                          href="https://openstat.psa.gov.ph/?_gl=1*mylews*_ga*OTM4NzYyMjM2LjE3NTk5OTMyNzY.*_ga_EGEWF45N3M*czE3NjQzODUyOTQkbzIkZzEkdDE3NjQzODU0MzIkajYwJGwwJGgw" 
+                          target="_blank" 
+                          rel="noopener noreferrer"
+                          className="text-blue-600 underline hover:text-blue-800"
+                        >
+                          Philippine Statistics Authority
+                        </a>
+                      </p>
+                      </div>
 
                   </div>
                 )}

@@ -245,8 +245,6 @@ const ApproveRequest = async (bodyData: UpdateStatus, actionText:string) => {
           const del = String(inputDelete).trim();
 
           if ("DELETE" === del) {
-           // publicationDelete(id)
-           console.log("Delete");
           } else {
             const inputElement = Swal.getInput();
             if (inputElement) {

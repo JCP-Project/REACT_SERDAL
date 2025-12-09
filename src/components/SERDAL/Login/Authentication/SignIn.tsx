@@ -78,15 +78,15 @@ const handleSubmit = async (e: React.FormEvent) => {
           ID: 0,
           Email: formData.email,
           Password: formData.password,
-        };     
+        };         
 
         try {
           const response = await fetch(`${apiUrl}/api/Users/login`, {
             method: "POST",
             headers: {
-              "Content-Type": "application/json", // Indicating that the data is in JSON format
+              "Content-Type": "application/json",
             },
-            body: JSON.stringify(data), // Convert the JavaScript object to a JSON string
+            body: JSON.stringify(data),
           });
   
           if (response.ok) {
@@ -326,7 +326,7 @@ const handleSubmit = async (e: React.FormEvent) => {
 
           <div className="w-full border-stroke dark:border-strokedark xl:w-1/2 xl:border-l-2">
             <div className="w-full p-4 sm:p-12.5 xl:p-17.5">
-              <h2 className="mb-9 text-2xl font-bold text-black dark:text-white sm:text-title-xl2">
+              <h2 className="mb-9 text-2xl font-bold text-black sm:text-title-xl2">
                 Sign In to SERDAL
               </h2>
 
@@ -334,7 +334,7 @@ const handleSubmit = async (e: React.FormEvent) => {
 
 
                 <div className="mb-4">
-                  <label className="mb-2.5 block font-medium text-black dark:text-white">
+                  <label className="mb-2.5 block font-medium text-black ">
                     Email
                   </label>
                   <div className="relative">
@@ -347,7 +347,7 @@ const handleSubmit = async (e: React.FormEvent) => {
                       value={formData.email}
                       placeholder="Enter your email"
                       autoComplete="email" 
-                      className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                      className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 text-black outline-none focus:border-primary focus-visible:shadow-none"
                     />
 
                     <span className="absolute right-4 top-4">
@@ -371,7 +371,7 @@ const handleSubmit = async (e: React.FormEvent) => {
                 </div>
 
                 <div className="mb-6">
-                  <label className="mb-2.5 block font-medium text-black dark:text-white">
+                  <label className="mb-2.5 block font-medium text-black">
                     Password
                   </label>
                   <div className="relative">
@@ -384,7 +384,7 @@ const handleSubmit = async (e: React.FormEvent) => {
                       value={formData.password}
                       placeholder="Enter your password"
                       autoComplete="current-password"
-                      className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                      className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 text-black outline-none focus:border-primary focus-visible:shadow-none"
                     />
 
                     <span className="absolute right-4 top-4">
@@ -419,7 +419,7 @@ const handleSubmit = async (e: React.FormEvent) => {
                 <div className="mb-5">
                   <button
                     type="submit"
-                    className="w-full cursor-pointer rounded-lg border border-primary bg-primary p-4 text-white transition hover:bg-opacity-90"
+                    className="w-full cursor-pointer rounded-lg border border-primary bg-primary p-4 text-black transition hover:bg-opacity-90"
                   >Sign In</button>
                 </div>
 

@@ -24,6 +24,21 @@ const SERDALVideo: iSERDALVideo[]  =
         title: 'SERDAL vid3',
         vid: 'https://drive.google.com/file/d/15Uk_91Rp2X0yYPUpgljuZkCBNrd492Yv/preview'
     },
+    {
+		id: 3,
+        title: 'SERDAL vid3',
+        vid: 'https://drive.google.com/file/d/1M5n5mVDShRKZPLVfkgNMI0nhFpfhvvCq/preview'
+    },
+        {
+		id: 4,
+        title: 'SERDAL vid3',
+        vid: 'https://drive.google.com/file/d/1jBXgcUauCKRBYRcilFF3ZYNGkJRcY1fy/preview'
+    },
+        {
+		id: 5,
+        title: 'SERDAL vid3',
+        vid: 'https://drive.google.com/file/d/108WrP25eTL6lbf2GQNK49D8_kn3fshqK/preview'
+    }    
 
 
 

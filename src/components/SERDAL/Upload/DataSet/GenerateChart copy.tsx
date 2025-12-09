@@ -189,7 +189,6 @@ const formattedSeries1 = () => {
       const response = await fetch(`${apiUrl}/api/Dataset/DataById/${Id}`);
       if (response.ok) {
         const jsonData: iData = await response.json();
-        console.log(jsonData);
 
         setDataSet(jsonData.datasetResult);
 
@@ -197,7 +196,6 @@ const formattedSeries1 = () => {
           value: Number(key),
           label: value,
         }));
-        console.log(options);
         setVariableOtions(options);
         
 
@@ -216,19 +214,16 @@ const formattedSeries1 = () => {
 
   const fetchDatasetBySelectedVariable = async (variable : number) => {
     const [chartId] = dataset.split('-');
-    console.log("Chart ID", Number(chartId), variable);
     setLoading(true);
     seterrorMessage("");
     try {
       const response = await fetch(`${apiUrl}/api/Dataset/DataByVariables?Id=${Number(chartId)}&variableId=${variable}`);
       if (response.ok) {
         const jsonData: DataSets = await response.json();
-        console.log(jsonData);
 
        setDataSet(jsonData);
         
       } else {
-        console.error("Error fetching data");
         seterrorMessage("Failed to fetch Data from the server.");
       }
     } catch (error) {

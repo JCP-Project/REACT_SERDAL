@@ -25,6 +25,7 @@ interface APIData {
   keywords: string;
   isDeleted: number;
   publicationDate:string;
+  publicationYear: number
   journal: string;
   citation: string;
   publication_Institutions: string;
@@ -321,11 +322,14 @@ const getUniversity =  (id:number) =>{
              <p className="text-black-980 text-black-800 text-xs md:text-sm mt-auto mb-3 text-right">
                 <FontAwesomeIcon icon={faCalendarAlt} className="mr-1" />
                   <span>
-                  {new Date(`${data?.publicationDate}Z`).toLocaleDateString('en-US', {
+                  {/* {new Date(`${data?.publicationDate}Z`).toLocaleDateString('en-US', {
                     year: 'numeric',
                     month: 'long',
                     day: 'numeric',
-                  })}
+                  })} */}
+                  {
+                    data.publicationYear
+                  }
                   </span>
               </p>            
         </div>
@@ -333,11 +337,11 @@ const getUniversity =  (id:number) =>{
         <div className="text-left py-2 md:py-10"><h1 className="font-optima font-bold text-sm lg:text-3xl md:text-4xl leading-relaxed text-primary text-center">  {data?.title} </h1></div>
 
         <div className="py-2 text-xs lg:text-lg leading-relaxed">
-          <div><h5><span className="font-bold">Authors: </span>{data?.author}</h5></div>
+          <div><h5><span className="font-bold">Author/s: </span>{data?.author}</h5></div>
         </div>
 
         <div className="py-2 text-xs lg:text-lg leading-relaxed">
-          <div><h5><span className="font-bold">Institutions: </span>{data?.publication_Institutions}</h5></div>
+          <div><h5><span className="font-bold">Institution/s: </span>{data?.publication_Institutions}</h5></div>
         </div>
 
         <div className="yp-2 lg:py-5 text-xs md:text-lg leading-relaxed">
@@ -382,7 +386,7 @@ const getUniversity =  (id:number) =>{
 
         <div className="py-1 text-xs lg:text-lg lg:py-5">
           
-          {
+          {/* {
             !data?.pdfFile || data?.pdfFile.trim() === "" ? 
             (
               <div>PDF File: ---</div>
@@ -390,7 +394,7 @@ const getUniversity =  (id:number) =>{
             ):(
               <div><span className="font-bold">PDF File: </span><a href={data?.pdfFile} target="_blank" className="pl-1 hover:text-primary"><span className="text-red"><FontAwesomeIcon icon={faFilePdf}/></span>View PDF</a></div>
             )
-          }
+          } */}
           
           
           {
@@ -435,11 +439,14 @@ const getUniversity =  (id:number) =>{
                               <p className="text-black-980 text-black-800 text-xs md:text-xs mt-auto mb-3">
                                 <FontAwesomeIcon icon={faCalendarAlt} className="mr-1" />
                                   <span>
-                                  {new Date(`${createdDate}Z`).toLocaleDateString('en-US', {
+                                  {/* {new Date(`${createdDate}Z`).toLocaleDateString('en-US', {
                                     year: 'numeric',
                                     month: 'long',
                                     day: 'numeric',
-                                  })}
+                                  })} */}
+                                  {
+                                    data.publicationYear
+                                  }
                                   </span>
                               </p> 
                             </div>

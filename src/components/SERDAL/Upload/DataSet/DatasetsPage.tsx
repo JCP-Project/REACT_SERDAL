@@ -342,7 +342,7 @@ function DatasetsPage() {
           animate={{ x: 0 }}
           transition={{ type: 'spring', stiffness: 100 }}
         >
-          <h1 className={`text-2xl font-bold text-left text-white px-3 ${adminStatus ? 'lg:px-5' : 'lg:px-40'}  `}>Datasets</h1>
+          <h1 className={`text-2xl font-bold text-left text-white px-3 ${adminStatus ? 'lg:px-5' : 'lg:px-40'}  `}>Dashboard</h1>
         </motion.div>
       </div>
 

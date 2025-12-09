@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { Link, useLocation } from "react-router-dom";
 import Loader2 from "../../../common/Loader/Loader2";
 import titleHeader from "../components/titleHeader";
+import ImagePreview from "../components/ImageView";
 
 import aboutUsData, { AboutUsData } from "../Resources/AboutUs/aboutData";
 import partnersLogo, {parteners} from "../Resources/AboutUs/partners";
@@ -30,7 +31,7 @@ function AboutUs () {
         const id = location.hash.replace("#", "");
         const el = document.getElementById(id);
         if (el) {
-        el.scrollIntoView({ behavior: "smooth" }); // or just { behavior: "auto" }
+        el.scrollIntoView({ behavior: "smooth" });
         }
     }
     }, [location]);
@@ -53,7 +54,7 @@ function AboutUs () {
                             {data[0].summary}
                         </div>
                         <div className="w-full flex-1 flex items-center justify-center p-5 order-1 lg:order-2">
-                            <img src= {data[0].img} />
+                            <ImagePreview src= {data[0].img} />
                         </div>
                     </div>
 
@@ -64,11 +65,7 @@ function AboutUs () {
                         <div className="basis-[50%] flex justify-center">
                             <div className="relative w-full max-w-[500px] my-20">
                                 {/* MAIN IMAGE */}
-                                <img
-                                src={data[1].img}
-                                alt="Main visual"
-                                className="w-[400px] object-cover my-10"
-                                />
+                                <img src={data[1].img}  alt="Main visual" className="w-[400px] object-cover my-10"/>
 
                                 {/* OVERLAY LOGO (scales with image) */}
                                 {
@@ -76,14 +73,14 @@ function AboutUs () {
                                     <div key={`key${p.id}`} id={`id${p.id}`} className={`absolute flex flex-col items-center justify-center w-[30%] aspect-square text-center ${p.logolocation}`}>
                                         {
                                            ![7,6].includes(p.id) && (
-                                            <Link to={p?.link} className="z-50 cursor-pointer" >
-                                                <label className={`text-white font-bold z-10 hover:underline cursor-pointer`}>{p.name}</label>
+                                            <Link to={p?.link} className="z-5 cursor-pointer" >
+                                                <label className={`text-white font-bold z-5 hover:underline cursor-pointer`}>{p.name}</label>
                                            </Link>
                                         )
                                         }                                        
                                         <a href={p?.link} target={p?.id == 0 ? undefined:"_blank"}
                                             rel="noopener noreferrer"
-                                             className={`block ${p.imgsize} z-10`}
+                                             className={`block ${p.imgsize} z-5`}
                                         >
                                             
                                             <motion.img
@@ -97,8 +94,8 @@ function AboutUs () {
                                         </a>
                                         {
                                            [7,6].includes(p.id) && (
-                                            <Link to={p?.link} className="z-50" >
-                                                <label className="text-white font-bold z-10 hover:underline cursor-pointer">{p.name}</label>
+                                            <Link to={p?.link} className="z-5" >
+                                                <label className="text-white font-bold z-5 hover:underline cursor-pointer">{p.name}</label>
                                            </Link>)
                                         }
 
@@ -117,14 +114,14 @@ function AboutUs () {
                                         <Cloud />
                                         </motion.div>
 
-                                        <div className={`absolute  flex items-center p-1 justify-center aspect-square rounded-full bg-black-2 group-hover:scale-110 transition-transform duration-300 ease-in-out ${p.pinLocation} z-10`}>
+                                        {/* <div className={`absolute  flex items-center p-1 justify-center aspect-square rounded-full bg-black-2 group-hover:scale-110 transition-transform duration-300 ease-in-out ${p.pinLocation} z-5`}>
                                             {
                                                 p?.id == 0 ?(
                                                 <MdLocationPin className="relative font-bold h-8 w-8" />  
                                                 ):( <MdLocationPin className="relative font-bold h-4 w-4 group-hover:text-primary" />  )
                                             }
                                                          
-                                        </div>
+                                        </div> */}
                                     </div>
                                     ))
                                 }
@@ -136,20 +133,20 @@ function AboutUs () {
                     </div>
 
                     <div className="py-5 md:py-10">
-                        <h1 className="font-optima text-3xl font-bold py-5 text-center">check our videos</h1>
-                        <div id="" className="flex items-center justify-center md:px-10 flex-col md:flex-row">
-                            {
-                                videoData.map((v) => (
-                                    <div key={`K-${v.id}`} id={`ID-${v.id}`} className="w-full flex-1 flex items-center justify-center p-2 order-1 lg:order-2">
-                                        <iframe
-                                            src={v.vid}
-                                            className="w-full h-[200px] md:h-[255px] rounded shadow-lg"
-                                            allow="autoplay"
-                                            title={v.title}
-                                        ></iframe>
-                                    </div>
-                                ))
-                            }
+                        <h1 className="font-optima text-3xl font-bold py-5 text-center">SERDAL in Action</h1>
+                        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-3 px-4 md:px-10">
+                        {
+                            videoData.map((v) => (
+                            <div key={`K-${v.id}`} id={`ID-${v.id}`} className="w-full">
+                                <iframe
+                                src={v.vid}
+                                className="w-full h-[200px] md:h-[255px] rounded shadow-lg"
+                                allow="autoplay"
+                                title={v.title}
+                                ></iframe>
+                            </div>
+                            ))
+                        }
                         </div>
                     </div>
 

@@ -63,23 +63,18 @@ function RecentUpload()
                   
                 setPublications(jsonData.publications);
                 setInstitution(jsonData.institution);
-                console.log(institution);   
                 
               }
             } catch (error) {
               console.error('Error fetching publications:', error);
             } finally {
               setLoading(false);
-              console.log(publications);
             }
           };
       //#endregion
 
       const getUniversity = (id:number) =>{
-        //console.log(institution);
-        //console.log(id);
         const filter = institution.find((uni) => uni.id === id);
-       // console.log(filter);
         return filter ? filter?.label : "Unknown Institution"; 
     
       }

@@ -1,10 +1,16 @@
+import { ReactNode } from 'react'
+
+//Cover photo
 import DataManagement from '../Training/Data Management.png'
 import OpenData from '../Training/Open Data.png'
 import MetaAnalysis from '../Training/Meta-analysis.png'
 import ImpactAssesment from '../Training/Impact Assessment.png'
 import Nvivo from '../Training/NVivo.png'
 import FuturesThinking from '../Training/Futures Thinking.png'
-import { ReactNode } from 'react'
+import STATACourse from '../Training/Short Course on STATA.png'
+import StrategicForesightandPlanning from '../Training/Strategic Foresight and Planning.png'
+import DataManagementforCDA from '../Training/Data Management for CDA.png'
+
 
 
 //Event Photos
@@ -25,6 +31,22 @@ import Nvivo3 from '../Training/Event Photos/NVivo3.jpg'
 import FuturesThinking1 from '../Training/Event Photos/Futures Thinking 1.jpg'
 import FuturesThinking2 from '../Training/Event Photos/Futures Thinking 2.jpg'
 import FuturesThinking3 from '../Training/Event Photos/Futures Thinking 3.jpg'
+import STATA1 from '../Training/Event Photos//STATA 1.jpg'
+import STATA2 from '../Training/Event Photos/STATA 2.jpg'
+import StrategicForesightandPlanning1 from '../Training/Event Photos/Strategic Foresight and Planning 1.jpg'
+import StrategicForesightandPlanning2 from '../Training/Event Photos/Strategic Foresight and Planning 2.jpg'
+import DataManagementforCDA1 from '../Training/Event Photos/CDA Data Management 1.jpg'
+import DataManagementforCDA2 from '../Training/Event Photos/CDA Data Management 2.jpg'
+
+import VCACover from '../Training/Event Photos/VCA_Cover.png'
+import VCA1 from '../Training/Event Photos/VCA1.png'
+import VCA2 from '../Training/Event Photos/VCA2.png'
+
+import SERDANCover from '../Training/Event Photos/SERDAN.png'
+import SERDAN1 from '../Training/Event Photos/SERDAN1.jpg'
+import SERDAN2 from '../Training/Event Photos/SERDAN2.jpg'
+import SERDAN3 from '../Training/Event Photos/SERDAN3.jpg'
+
 
 export interface TrainingData {
     id: number;
@@ -169,6 +191,108 @@ const trainingData: TrainingData[] = [
             img: FuturesThinking,
             eventPhotos: [FuturesThinking1,FuturesThinking2,FuturesThinking3],
         },
+        {
+            id: 6,
+            title: "UPLB SERDAL’s Short Course on STATA: Enhancing Data Analytics in the Public Sector",
+            info:"On May 8, 2025, UPLB SERDAL, in partnership with the UPLB College of Economics Alumni Foundation, Inc. (CEMAFI), conducted its first institution-based paid training workshop titled Short Course on STATA. Held at the SERDAL Facility in ICOPED, UPLB, the event was designed to enhance the data analysis skills of staff from the Department of Agriculture Regional Field Office IV-A.",
+            summary: (
+                <div>
+                  <p>
+                    On May 8, 2025, UPLB SERDAL, in partnership with the UPLB College of Economics Alumni Foundation, Inc. (CEMAFI), conducted its first institution-based paid training workshop titled Short Course on STATA. Held at the SERDAL Facility in ICOPED, UPLB, the event was designed to enhance the data analysis skills of staff from the Department of Agriculture Regional Field Office IV-A.
+                  </p>
+                  <p className="mt-3">
+                   Facilitated by Ms. Lianne Maxine A. Tabanggay, instructor from the Department of Agricultural and Applied Economics, the one-day workshop covered key topics such as data management, data visualization, and hypothesis testing using STATA software.
+                  </p>
+                  <p className="mt-3">
+                    Fifteen participants from DA RFO IV-A’s Planning, Monitoring, and Evaluation Department took part in the hands-on sessions using their own datasets. The training was highly interactive and practical, sparking interest in the software’s integration into their office operations.
+                  </p>
+                  <p className="mt-3">
+                    This initiative reflects UPLB SERDAL’s continuing efforts to support evidence-based decision-making and capacity building in government agencies through applied data training.
+                  </p>
+                </div>
+              ),
+            img: STATACourse,
+            eventPhotos: [STATA1,STATA2],
+        },
+        {
+            id: 7,
+            title: "UPLB SERDAL’s Strategic Foresight and Planning Workshop: Building a Unified Roadmap for the SERDAL–SERDACs–Satellite SERDACs Network",
+            info:"UPLB SERDAL, in partnership with DOST-PCAARRD, held a three-day Strategic Foresight and Planning Workshop from March 17 to 19, 2025. The event gathered representatives from SERDAL, SERDACs, and their satellite centers to develop a unified strategic roadmap for the network.",
+            summary: (
+                <div>
+                  <p>
+                    UPLB SERDAL, in partnership with DOST-PCAARRD, held a three-day Strategic Foresight and Planning Workshop from March 17 to 19, 2025. The event gathered representatives from SERDAL, SERDACs, and their satellite centers to develop a unified strategic roadmap for the network.
+                  </p>
+                  <p className="mt-3">
+                   Sessions covered drivers and signals, strategic programme management, scenario planning, and partnership development. The third day, facilitated by DOST-PCAARRD, focused on aligning plans and priorities across centers. The participating universities included Central Luzon State University, Bicol University, UP Visayas, Western Mindanao State University, and University of Southern Mindanao.
+                  </p>
+                  <p className="mt-3">
+                    The workshop concluded with a shared direction and actionable steps to harmonize operations, streamline services, and strengthen the network’s support for socio-economics R&D nationwide.
+
+                  </p>
+                </div>
+              ),
+            img: StrategicForesightandPlanning,
+            eventPhotos: [StrategicForesightandPlanning1,StrategicForesightandPlanning2],
+        },
+        {
+            id: 8,
+            title: "UPLB SERDAL’s Data Management Training for CDA Region IV-A: Enhancing Data Handling Capabilities",
+            info:"The two-day Data Management Training held on June 4–5, 2025, at UPLB was organized by UPLB SERDAL and ICOPED-UPLB for the Cooperative Development Authority Region IV-A. The workshop aimed to equip CDA personnel with essential skills in data lifecycle management, security, integration, and analysis. Led by Asst. Prof. Reginald Neil C. Recario and supported by the SERDAL and ICOPED team, the training combined theory and hands-on exercises to enhance participants’ data handling capabilities.",
+            summary: (
+                <div>
+                  <p>
+                    The two-day Data Management Training held on June 4–5, 2025, at UPLB was organized by UPLB SERDAL and ICOPED-UPLB for the Cooperative Development Authority Region IV-A. The workshop aimed to equip CDA personnel with essential skills in data lifecycle management, security, integration, and analysis. Led by Asst. Prof. Reginald Neil C. Recario and supported by the SERDAL and ICOPED team, the training combined theory and hands-on exercises to enhance participants’ data handling capabilities.
+                  </p>
+                  <p className="mt-3">
+                   This initiative strengthens CDA Region IV-A’s capacity for data-driven decision-making and improved service delivery. It reflects a shared commitment between UPLB and CDA to advancing data literacy and management excellence within government agencies, ultimately supporting more transparent and effective cooperative development programs.
+                  </p>
+                </div>
+              ),
+            img: DataManagementforCDA,
+            eventPhotos: [DataManagementforCDA1,DataManagementforCDA2],
+        },
+        {
+            id: 9,
+            title: "UPLB SERDAL’s Value Chain Analysis Training for the Department of Agriculture – Bureau of Animal Industry: Enhancing Honey Value Chain Competitiveness",
+            info:"From August 11-13, 2025, UPLB SERDAL conducted a Value Chain Analysis Training for the Department of Agriculture – Bureau of Animal Industry. The training focused on strengthening participants’ understanding of the honey value chain, covering key topics such as value chain analysis concepts, development frameworks, analytical tools, and insights from the Beeconomy Initiative and Beeconomic Success.",
+            summary: (
+                <div>
+                  <p>
+                  From August 11-13, 2025, UPLB SERDAL conducted a Value Chain Analysis Training for the Department of Agriculture – Bureau of Animal Industry. The training focused on strengthening participants’ understanding of the honey value chain, covering key topics such as value chain analysis concepts, development frameworks, analytical tools, and insights from the Beeconomy Initiative and Beeconomic Success.,                    
+                  </p>
+                  <p className="mt-3">
+                   The training was enriched by seasoned VCA experts from CEM, Dr. Julieta A. Delos Reyes and Asst. Prof. Paul Joseph B. Ramirez, whose expertise guided participants through the intricacies of value chain analysis. Adding a special buzz to the event was Dr. Cleofas R. Cervancia, fondly known as the Queen Bee, along with Ms. Jessica B. Baroga-Barbecho, both from the UPLB Bee Program dedicated to advancing bee-related research and industry development.
+                  </p>
+                  <p className="mt-3">
+                  The training enabled participants to gain a deeper understanding of how value is created, added, and distributed across the honey value chain. It also supported them in identifying gaps, improving efficiency, and developing strategies that enhance competitiveness and benefit all stakeholders.
+                  </p>
+                </div>
+              ),
+            img: VCACover,
+            eventPhotos: [VCA1,VCA2],
+        },
+        {
+            id: 10,
+            title: "UPLB SERDAL’s Proposal Writing Workshop: Improvement of Strategies for the Harmonized Capacity Building and Data Repository of SERDAN",
+            info:"From October 20-22, 2025, UPLB SERDAL, in partnership with DOST-PCAARRD, conducted the SERDAN Workshop aimed at enhancing strategies for harmonizing the network’s capacity-building initiatives and data repository systems. The three-day workshop guided participants through the key components of project proposal development, including reviewing action plans, identifying collaboration opportunities, refining project objectives, outlining activities and timelines, planning budgets, and defining expected outputs.",
+            summary: (
+                <div>
+                  <p>
+                  From October 20-22, 2025, UPLB SERDAL, in partnership with DOST-PCAARRD, conducted the SERDAN Workshop aimed at enhancing strategies for harmonizing the network’s capacity-building initiatives and data repository systems. The three-day workshop guided participants through the key components of project proposal development, including reviewing action plans, identifying collaboration opportunities, refining project objectives, outlining activities and timelines, planning budgets, and defining expected outputs.                    
+                  </p>
+                  <p className="mt-3">
+                   The workshop gathered representatives from the Socio-Economics Research and Data Analytics Network, with participants from Central Luzon State University, Bicol University, Visayas State University, University of Southeastern Philippines, Western Mindanao State University, and University of Southern Mindanao.
+                  </p>
+                  <p className="mt-3">
+                  Participants were able to develop two concept notes—one on capacity building and another on data repository development—by collectively reviewing existing initiatives, identifying gaps, and formulating approaches for strengthened collaboration and standardization across the network. This effort supports the development of harmonized strategies that enhance coherence, efficiency, and shared direction within the network.
+                  </p>
+                </div>
+              ),
+            img: SERDANCover,
+            eventPhotos: [SERDAN1,SERDAN2, SERDAN3],
+        },
+        
 
     ]
 
