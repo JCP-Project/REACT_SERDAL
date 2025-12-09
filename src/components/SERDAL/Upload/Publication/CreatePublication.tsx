@@ -68,7 +68,7 @@ const [formData, setFormData] = useState<FormData>({
 
 
 const currentYear = new Date().getFullYear();
- const [selectedYear, setSelectedYear] = useState<Number | null>(currentYear);
+const [selectedYear, setSelectedYear] = useState<any>(null);
 const YearOptions = Array.from({ length: currentYear - 1900 + 1 }, (_, i) => {
   const year = currentYear - i;
   return { value: year, label: year.toString() };
@@ -428,7 +428,10 @@ const YearOptions = Array.from({ length: currentYear - 1900 + 1 }, (_, i) => {
                 id="year"
                 placeholder="Select Publication Year"
                 value={selectedYear}
-                onChange={(e) => setSelectedYear(e)}
+                onChange={(option) => {
+                    setSelectedYear(option);
+                    setFormData(prev => ({ ...prev, publicationYear: option.value }));
+                }}
                 options={YearOptions}
                 styles={customStyles}
                 className="!text-lg"

@@ -136,7 +136,7 @@ const PublicationsList: React.FC<datas> = ({data, university}) =>{
                             <p>{truncateTitle(post.citation)}</p>
                         </div>
 
-                        <div className="mt-4 flex">
+                        {/* <div className="mt-4 flex">
                         {
                             post.pdfFile &&(
                               <div className="">
@@ -171,7 +171,7 @@ const PublicationsList: React.FC<datas> = ({data, university}) =>{
 
 
                         </div>
- 
+  */}
                     </div>
                 ))}
 
