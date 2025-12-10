@@ -376,7 +376,7 @@ function Publications()
 
 
     return(
-    <div className="bg-white lg:min-h-[90vh]">
+    <div id="topHeader" className="bg-white lg:min-h-[90vh]">
       {SlidingTitleHeader("Publications")}
 
       <div className="px-0 lg:px-40 ">
@@ -513,6 +513,7 @@ function Publications()
                       publications && totalCount > pageSize && (
                         <div className="flex items-center justify-end my-2">
                         {/* Previous Button */}
+                        <a href="#topHeader">
                         <button
                           onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
                           disabled={currentPage === 1}
@@ -520,10 +521,12 @@ function Publications()
                         >
                           Prev
                         </button>
+                        </a>
   
                         {/* Page Numbers */}
                         <div className="flex space-x-2">
                           {pageNumbers.map((page) => (
+                            <a href="#topHeader">
                             <button
                               key={page}
                               onClick={() => setCurrentPage(page)}
@@ -535,17 +538,20 @@ function Publications()
                             >
                               {page}
                             </button>
+                            </a>
                           ))}
                         </div>
   
                         {/* Next Button */}
+                        <a href="#topHeader">
                         <button
                           onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
                           disabled={currentPage === totalPages}
                           className="mx-3 px-4 py-2 text-sm font-semibold text-white bg-primary rounded-r-lg hover:bg-secondary disabled:bg-gray-400"
                         >
-                          Next
+                         Next
                         </button>
+                        </a>
                       </div>
                       )
 
